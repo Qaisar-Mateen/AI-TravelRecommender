@@ -62,4 +62,26 @@ def fun(row):
                 row['keywords'] += ' ' + set4[i]
         return row
 
+def fun2(row):
+    if 'mix' in row['keywords']:
+        row['keywords'] = row['keywords'].replace('mix', '')
+        row['climate'] = 'mix'
+        row['keywords'] = row['keywords'].replace('  ', ' ')
+        return row
+    elif 'hot' in row['keywords']:
+        row['keywords'] = row['keywords'].replace('hot', '')
+        row['climate'] = 'hot'
+        row['keywords'] = row['keywords'].replace('  ', ' ')
+        return row
+    elif 'cold' in row['keywords']:
+        row['keywords'] = row['keywords'].replace('cold', '')
+        row['climate'] = 'cold'
+        row['keywords'] = row['keywords'].replace('  ', ' ')
+        return row
+
+def convert(row):
+    row['avg cost per day'] = int(row['avg cost per day'])
+    # if row['country'] == 'Sri Lanka':
+    #     row['avg cost per day'] = int(data[data['country'] == 'Sri Lanka'].groupby('country')['avg cost per day'].mean().astype(int))
+    return row
 
