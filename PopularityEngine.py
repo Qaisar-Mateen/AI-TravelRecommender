@@ -27,6 +27,11 @@ class PopularityRecommender():
         
         self.dataset['Popularity'] = self.dataset.apply(CalculatePopularityScore, axis=1)
 
+        def NormalizePopularity(row):
+            return row['Popularity'] / np.max(self.dataset['Popularity'])
+        
+        self.dataset['Popularity'] = self.dataset.apply(NormalizePopularity, axis=1)
+
     def Recommend(self):
         self.CalculatePopularity()
         
