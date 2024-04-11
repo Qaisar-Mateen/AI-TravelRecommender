@@ -20,3 +20,13 @@ class PopularityRecommender():
             return a
         
         self.dataset['Popularity'] = self.dataset.apply(CalculatePopularityScore, axis=1)
+
+    def Recommend(self):
+        self.CalculatePopularity()
+
+        return self.dataset
+
+
+if __name__ == '__main__':
+    PR = PopularityRecommender('world-popularity.csv')
+    print(PR.Recommend())
