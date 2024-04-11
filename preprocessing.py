@@ -294,3 +294,10 @@ def calculate_visitors(country):
     else:
         return random.randrange(100_000, 2_000_000)
 
+#popularity['Popularity Index'] = popularity['country'].apply(calculate_popularity)
+
+#popularity['Avg Visitors'] = popularity['Country'].apply(calculate_visitors)
+
+popularity.drop_duplicates(inplace=True)
+
+print(popularity)
