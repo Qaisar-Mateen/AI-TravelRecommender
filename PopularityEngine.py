@@ -15,6 +15,12 @@ class PopularityRecommender():
     def CalculatePopularity(self):
 
         def CalculatePopularityScore(row):
+
+            """
+            Popularity Formula:
+            Popularity = ((alpha * Popularity Index) * (beta * Avg Visitors) / mean(Popularity Index))/ Max Popularity
+            """
+
             a = (self.alpha * row['Popularity Index'])*(self.beta * row['Avg Visitors'])
             a /= np.mean(self.dataset['Popularity Index'])
             return a
@@ -23,7 +29,10 @@ class PopularityRecommender():
 
     def Recommend(self):
         self.CalculatePopularity()
-
+        
+        print('Popularity mean: ', np.mean(self.dataset['Popularity']))
+        print('popularity max, min: ', np.max(self.dataset['Popularity']), np.min(self.dataset['Popularity']))
+        
         return self.dataset
 
 
