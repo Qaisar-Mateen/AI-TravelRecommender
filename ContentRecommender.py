@@ -161,3 +161,12 @@ class ContentBaseRecommender:
                     break
         
         return recommendation
+
+
+    def get_CountVectorizer_recomendation(self, country, budget, num_of_rec=5):
+        
+        idx = self.data[self.data['country'].str.lower() == country.lower()].index[0] -1
+        sim_scores = list(enumerate(self.sim[idx]))
+
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        print('score: ',sim_scores)
