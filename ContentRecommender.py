@@ -205,3 +205,6 @@ class ContentBaseRecommender:
             print('\n\nTF-IDF Score Recomendation:\n')
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
 
+        if count_vectorizer:
+            print('\n\nCount Vectorizer Score Recomendation:\n')
+            print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
