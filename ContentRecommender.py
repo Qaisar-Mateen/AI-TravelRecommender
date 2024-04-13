@@ -136,3 +136,16 @@ class ContentBaseRecommender:
         print('data processed')
         s(self.wait)
         return data
+
+
+    def get_TF_IDF_recomendation(self, country, budget, num_of_rec=5):
+
+        idx = self.data[self.data['country'].str.lower() == country.lower()].index[0] -1
+        
+        sim_scores = list(enumerate(self.cosine_sim[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        
+        country_indices = [i[0] for i in sim_scores]
+
+        reced = 0
+        recommendation = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
