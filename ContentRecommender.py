@@ -39,3 +39,27 @@
 
 # vec = CountVectorizer(stop_words='english')
 # vec_matrix = vec.fit_transform(data['keywords'])
+
+# print('calculating similarity...')
+
+# cosine_sim = cosine_similarity(tf_idf_matrix, tf_idf_matrix)
+# sim = cosine_similarity(vec_matrix, vec_matrix)
+
+# def recomender(country, budget, num_of_rec=5):
+#     print('recommending...')
+
+#     global data, cosine_sim, sim
+#     idx = data[data['country'].str.lower() == country.lower()].index[0]
+#     sim_scores = list(enumerate(cosine_sim[idx]))
+#     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+#     #sim_scores = sim_scores[:6]
+#     country_indices = [i[0] for i in sim_scores]
+#     print("\n\nTF-IDF Scores:\n")
+    
+#     reced = 0
+#     recommend1 = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
+#     for index, score in zip(country_indices, sim_scores):
+#         if data['country'].iloc[index].lower() != country.lower() and data['avg cost per day'].iloc[index] <= budget+5:
+#             recommend1 = recommend1._append({'Country': data['country'].iloc[index], 
+#                                                   'Cost Per Day': data['avg cost per day'].iloc[index], 
+#                                                   'Score': score[1]}, ignore_index=True)
