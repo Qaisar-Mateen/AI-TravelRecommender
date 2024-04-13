@@ -189,3 +189,19 @@ class ContentBaseRecommender:
         return recommendation
     
 
+    def recommend(self, country, budget, num_of_rec=5, tf_idf=True, count_vectorizer=True):
+
+        like_df = self.data[self.data['country'].str.lower() == country.lower()]
+        
+        if like_df.empty:
+            print('Country not found')
+            exit(0)
+        print(like_df)
+
+        print('generating recommendations...')
+        s(self.wait)
+        
+        if tf_idf:
+            print('\n\nTF-IDF Score Recomendation:\n')
+            print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
+
