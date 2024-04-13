@@ -99,3 +99,27 @@ from time import sleep as s
 import warnings
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
+class ContentBaseRecommender:
+
+    def __init__(self, data_file='world-countries.csv', wait_time=0.1):
+        self.data = pd.read_csv(data_file)
+        self.wait = wait_time
+        self.data = self.process_data(self.data)
+        print(self.data)
+
+        print('performing vectorization...')
+        s(self.wait)
+        
+        self.tf_idf = TfidfVectorizer(stop_words='english')
+        self.vec = CountVectorizer(stop_words='english')
+        
+        self.tf_idf_matrix = self.tf_idf.fit_transform(self.data['keywords'])
+        self.vec_matrix = self.vec.fit_transform(self.data['keywords'])
+
+        print('calculating similarity...')
+        s(self.wait)
+ 
+        self.cosine_sim = cosine_similarity(self.tf_idf_matrix, self.tf_idf_matrix)
+        self.sim = cosine_similarity(self.vec_matrix, self.vec_matrix)
+
