@@ -149,3 +149,15 @@ class ContentBaseRecommender:
 
         reced = 0
         recommendation = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
+        
+        for index, score in zip(country_indices, sim_scores):
+            if self.data['country'].iloc[index].lower() != country.lower() and self.data['avg cost per day'].iloc[index] <= budget+5:
+                recommendation = recommendation._append({'Country': self.data['country'].iloc[index], 
+                                                  'Cost Per Day': self.data['avg cost per day'].iloc[index], 
+                                                  'Score': score[1]}, ignore_index=True)
+                reced += 1
+        
+                if reced == num_of_rec:
+                    break
+        
+        return recommendation
