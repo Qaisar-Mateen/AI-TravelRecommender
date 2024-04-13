@@ -3,7 +3,7 @@ import numpy as np
 
 
 class PopularityRecommender():
-    def __init__(self, dataset='world-popularity.csv', alpha=0.5, beta=1):
+    def __init__(self, dataset='world-popularity.csv', alpha=0.5, beta=0.5):
         self.dataset = pd.read_csv(dataset)
         self.alpha = alpha
         self.beta = beta
@@ -20,7 +20,9 @@ class PopularityRecommender():
 
         def CalculatePopularityScore(row):
 
-            a = (self.alpha * row['Popularity Index'])*(self.beta * row['Avg Visitors'])
+            a = (row['Popularity Index'])*(row['Avg Visitors'])
+            a += row['Popularity Index']*self.alpha
+            a += row['Avg Visitors']*self.beta 
             a /= np.mean(self.dataset['Popularity Index'])
 
             return a
@@ -42,5 +44,5 @@ class PopularityRecommender():
 
 
 if __name__ == '__main__':
-    PR = PopularityRecommender('world-popularity.csv')
+    PR = PopularityRecommender('world-popularity.csv', alpha=0.7, beta=0.1)
     print(PR.Recommend())
