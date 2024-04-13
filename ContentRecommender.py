@@ -123,3 +123,16 @@ class ContentBaseRecommender:
         self.cosine_sim = cosine_similarity(self.tf_idf_matrix, self.tf_idf_matrix)
         self.sim = cosine_similarity(self.vec_matrix, self.vec_matrix)
 
+
+    def process_data(self, data):
+        
+        print('processing data...')
+        s(self.wait)
+
+        data['keywords'] = data.apply(lambda row: str(row['keywords']) + ' ' + str(row['climate']), axis=1)
+        data.drop('climate', axis=1, inplace=True)
+        data = data.drop_duplicates(subset='country')
+        
+        print('data processed')
+        s(self.wait)
+        return data
