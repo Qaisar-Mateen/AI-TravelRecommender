@@ -208,3 +208,10 @@ class ContentBaseRecommender:
         if count_vectorizer:
             print('\n\nCount Vectorizer Score Recomendation:\n')
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
+
+
+if __name__ == '__main__':
+    recommender = ContentBaseRecommender('world-countries.csv', .5)
+    country = input('Enter a country you like: ')
+    budget = int(input('Enter your budget: '))
+    recommender.recommend(country, budget, 5, tf_idf=True, count_vectorizer=True)
