@@ -182,3 +182,10 @@ class ContentBaseRecommender:
                                                   'Cost Per Day': self.data['avg cost per day'].iloc[index], 
                                                   'Score': score[1]}, ignore_index=True)
                 reced += 1
+        
+                if reced == num_of_rec:
+                    break
+        
+        return recommendation
+    
+
