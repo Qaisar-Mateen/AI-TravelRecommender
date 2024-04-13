@@ -63,3 +63,30 @@
 #             recommend1 = recommend1._append({'Country': data['country'].iloc[index], 
 #                                                   'Cost Per Day': data['avg cost per day'].iloc[index], 
 #                                                   'Score': score[1]}, ignore_index=True)
+#             reced += 1
+#             if reced == num_of_rec:
+#                 break
+#     print(recommend1)
+
+#     idx = data[data['country'].str.lower() == country.lower()].index[0]
+#     sim_scores = list(enumerate(sim[idx]))
+#     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+#     #sim_scores = sim_scores[:6]
+#     country_indices = [i[0] for i in sim_scores]
+#     print("\n\nCount Vectorizer Scores:\n")
+    
+#     reced = 0
+#     recommend2 = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
+#     for index, score in zip(country_indices, sim_scores):
+#         if data['country'].iloc[index].lower() != country.lower() and data['avg cost per day'].iloc[index] <= budget+5:
+#             print(data['country'].iloc[index], data['avg cost per day'].iloc[index], score[1])
+#             recommend2 = recommend2._append({'Country': data['country'].iloc[index], 
+#                                                   'Cost Per Day': data['avg cost per day'].iloc[index], 
+#                                                   'Score': score[1]}, ignore_index=True)
+#             reced += 1
+#             if reced == num_of_rec:
+#                 break
+
+#     print(recommend2)
+
+# recomender(country, budget)
