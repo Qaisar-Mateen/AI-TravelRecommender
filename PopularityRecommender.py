@@ -8,10 +8,12 @@ class PopularityRecommender():
         self.alpha = alpha
         self.beta = beta
 
+
     def UpdateWeights(self, a, b):
         self.alpha = a
         self.beta = b
     
+
     def CalculatePopularity(self):
         """
             Popularity Formula:
@@ -33,6 +35,7 @@ class PopularityRecommender():
             return row['Popularity'] / np.max(self.dataset['Popularity'])
         
         self.dataset['Popularity'] = self.dataset.apply(NormalizePopularity, axis=1)
+
 
     def Recommend(self):
         self.CalculatePopularity()
