@@ -97,6 +97,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from time import sleep as s
 import warnings
+from gensim import models, similarities
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -128,11 +129,11 @@ class ContentBaseRecommender:
         
         print('processing data...')
         s(self.wait)
-
         data['keywords'] = data.apply(lambda row: str(row['keywords']) + ' ' + str(row['climate']), axis=1)
         data.drop('climate', axis=1, inplace=True)
         data = data.drop_duplicates(subset='country')
-        
+        data['keywords'] = data['keywords'].str.replace(r'\s+', ' ')
+
         print('data processed')
         s(self.wait)
         return data
@@ -210,8 +211,44 @@ class ContentBaseRecommender:
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
 
 
+class ContentBasedModelRecommender:
+
+    def __init__(self, data_file='world-countries.csv'):
+        self.data = pd.read_csv(data_file)
+        self.data = self.process_data(self.data)
+        print(self.data)
+
+        # Create a corpus from the processed data
+        self.corpus = [self.dictionary.doc2bow(text) for text in self.data['keywords']]
+
+        # Train the LSI model
+        self.lsi = models.LsiModel(self.corpus, id2word=self.dictionary, num_topics=2)
+
+
+    def process_data(self, data):
+        
+        data['keywords'] = data.apply(lambda row: str(row['keywords']) + ' ' + str(row['climate']), axis=1)
+        data.drop('climate', axis=1, inplace=True)
+        data = data.drop_duplicates(subset='country')
+        data['keywords'] = data['keywords'].str.replace(r'\s+', ' ')
+        return data
+
+    def predict(self, item_id):
+        # Get the LSI representation for the item
+        item_lsi = self.lsi[self.corpus[item_id]]
+
+        # Compute cosine similarity between the item and all other items
+        index = similarities.MatrixSimilarity(self.lsi[self.corpus])
+        sims = index[item_lsi]
+
+        # Sort the similarities by descending order and return the top items
+        return sorted(enumerate(sims), key=lambda item: -item[1])
+
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
     country = input('Enter a country you like: ')
     budget = int(input('Enter your budget: '))
     recommender.recommend(country, budget, 5, tf_idf=True, count_vectorizer=True)
+
+    rec2 = ContentBasedModelRecommender('world-countries.csv')
+    print(rec2.predict(0))
