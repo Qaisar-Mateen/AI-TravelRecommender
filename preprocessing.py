@@ -316,26 +316,11 @@ def calculate_visitors(country):
 a = pd.read_csv('world-popularity.csv')
 b = pd.read_csv('world-countries.csv')
 
-# assign id to each country
-# b['id'] = range(1, 1+len(b))
-# a['id'] = range(1, 1+len(a))
-
-# print(a)
-# print(b)
-
-# # Get countries in 'b' that are not in 'a'
-# missing_countries = b[~b['Country'].isin(a['Country'])]
-
-# print(missing_countries)
-# print(a.__len__())
-# print(b.__len__())
-
-
 
 print(a)
 print(b)
 
-b.to_csv('world-popularity.csv', index=True)
+# b.to_csv('world-countries.csv', index=True)
 
 # print(b[a['Country'] != b['country']])
 
