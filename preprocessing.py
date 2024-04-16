@@ -330,24 +330,12 @@ b = pd.read_csv('world-countries.csv')
 # print(a.__len__())
 # print(b.__len__())
 
-# Create a mapping from country to index in dataframe 'b'
-index_mapping = b.reset_index().set_index('Country')['index'].to_dict()
 
-# Apply the mapping to the 'Country' column of dataframe 'a'
-a['Country'] = a['Country'].map(index_mapping)
-
-# Sort dataframe 'a' by the new 'Country' column
-a.sort_values('Country', inplace=True)
-
-# Reset the index of dataframe 'a'
-a.reset_index(drop=True, inplace=True)
-
-a['Country'] = b['Country'].iloc[(a['Country']).astype(int)-1]
 
 print(a)
 print(b)
 
-a.to_csv('world-popularity.csv', index=False)
+b.to_csv('world-popularity.csv', index=True)
 
 # print(b[a['Country'] != b['country']])
 
