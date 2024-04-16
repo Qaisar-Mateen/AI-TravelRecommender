@@ -2,8 +2,8 @@ import pandas as pd
 import random
 
 
-data = pd.read_csv('world-cities.csv')
-df = pd.read_csv('world-countries.csv')
+#data = pd.read_csv('world-cities.csv')
+#df = pd.read_csv('world-countries.csv')
 # print(data)
 
 # Add a new column with random values
@@ -313,17 +313,15 @@ def calculate_visitors(country):
 # popularity.to_csv('world-popularity.csv', index=False)
 #df.to_csv('world-countries.csv', index=False)
 
-a = pd.read_csv('world-popularity.csv')
-b = pd.read_csv('world-countries.csv')
+# a = pd.read_csv('world-popularity.csv')
+# b = pd.read_csv('world-countries.csv')
 
-a['ID'] = -1
-f=0
-for i in range(len(b)):
-    for j in range(len(a)):
-        if b['Country'][i] == a['Country'][j]:
-            f+=1  
-            print(f,b['Country'][i], a['Country'][j], 'at index', i, j)
-            a['ID'][j] = b['ID'][i]
+# f=0
+# for i in range(len(b)):
+#     for j in range(len(a)):
+#         if b['Country'][i] == a['Country'][j]:
+#             f+=1  
+#             print(f,b['Country'][i], a['Country'][j], 'at index', i, j)
             
 
 
@@ -331,9 +329,10 @@ for i in range(len(b)):
 
 
 
-print(a)
-print(b)
+#print(a)
+#print(b)
 
-input()
+countries = pd.read_csv('world-countries.csv')
+popularity = pd.read_csv('world-popularity.csv')
 
-a.to_csv('world-popularity.csv', index=False)
+users = pd.read_csv('users-rating.csv')
