@@ -95,7 +95,7 @@ def convert(row):
 
 #popularity['Country'] = df['country']
 
-popularity = pd.read_csv('world-popularity.csv')
+#popularity = pd.read_csv('world-popularity.csv')
 
 popular = ['France','Spain','United States','China','Italy','Mexico','Turkey','Germany','United Kingdom','Thailand','Japan','Canada',
 'Russia','Malaysia','Greece','Portugal','Austria','Australia','Netherlands','Switzerland','Singapore','South Korea','Hong Kong',
@@ -298,17 +298,32 @@ def calculate_visitors(country):
 
 #popularity['Avg Visitors'] = popularity['Country'].apply(calculate_visitors)
 
-popularity.drop_duplicates(inplace=True)
+#popularity.drop_duplicates(inplace=True)
 
-print(popularity)
+#print(popularity)
 
-while True:
-    print('Enter the country: ')
-    country = input()
-    if country == 'exit':
-        break
-    else:
-        print(popularity[popularity['Country'].str.lower() == country.lower()])
+# while True:
+#     print('Enter the country: ')
+#     country = input()
+#     if country == 'exit':
+#         break
+#     else:
+#         print(popularity[popularity['Country'].str.lower() == country.lower()])
         
-popularity.to_csv('world-popularity.csv', index=False)
+# popularity.to_csv('world-popularity.csv', index=False)
 #df.to_csv('world-countries.csv', index=False)
+
+a = pd.read_csv('world-popularity.csv')
+b = pd.read_csv('world-countries.csv')
+
+# assign id to each country
+b['id'] = range(1, 1+len(b))
+a['id'] = range(1, 1+len(a))
+
+print(a.__len__())
+print(b.__len__())
+
+print(b[a['Country'] != b['country']])
+
+print(a[a[('id','Country')] == b[('id','country')]])
+
