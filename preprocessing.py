@@ -316,13 +316,14 @@ def calculate_visitors(country):
 a = pd.read_csv('world-popularity.csv')
 b = pd.read_csv('world-countries.csv')
 
-
-# f=0
-# for i in range(len(b)):
-#     for j in range(len(a)):
-#         if b['Country'][i] == a['Country'][j]:
-#             f+=1  
-#             print(f,b['Country'][i], a['Country'][j], 'at index', i, j)
+a['ID'] = -1
+f=0
+for i in range(len(b)):
+    for j in range(len(a)):
+        if b['Country'][i] == a['Country'][j]:
+            f+=1  
+            print(f,b['Country'][i], a['Country'][j], 'at index', i, j)
+            a['ID'][j] = b['ID'][i]
             
 
 
@@ -330,6 +331,9 @@ b = pd.read_csv('world-countries.csv')
 
 
 
-
 print(a)
 print(b)
+
+input()
+
+a.to_csv('world-popularity.csv', index=False)
