@@ -249,6 +249,3 @@ if __name__ == '__main__':
     country = input('Enter a country you like: ')
     budget = int(input('Enter your budget: '))
     recommender.recommend(country, budget, 5, tf_idf=True, count_vectorizer=True)
-
-    rec2 = ContentBasedModelRecommender('world-countries.csv')
-    print(rec2.predict(0))
