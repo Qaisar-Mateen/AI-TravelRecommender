@@ -211,21 +211,6 @@ class ContentBaseRecommender:
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
 
 
-class ContentBasedModelRecommender:
-
-    def __init__(self, data_file='world-countries.csv'):
-        self.data = pd.read_csv(data_file)
-        self.data = self.process_data(self.data)
-        print(self.data)
-
-        # Create a corpus from the processed data
-        self.corpus = [self.dictionary.doc2bow(text) for text in self.data['keywords']]
-
-        # Train the LSI model
-        self.lsi = models.LsiModel(self.corpus, id2word=self.dictionary, num_topics=2)
-
-
-
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
     country = input('Enter a country you like: ')
