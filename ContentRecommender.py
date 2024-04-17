@@ -97,7 +97,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from time import sleep as s
 import warnings
-from gensim import models, similarities
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -209,21 +208,6 @@ class ContentBaseRecommender:
         if count_vectorizer:
             print('\n\nCount Vectorizer Score Recomendation:\n')
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
-
-
-class ContentBasedModelRecommender:
-
-    def __init__(self, data_file='world-countries.csv'):
-        self.data = pd.read_csv(data_file)
-        self.data = self.process_data(self.data)
-        print(self.data)
-
-        # Create a corpus from the processed data
-        self.corpus = [self.dictionary.doc2bow(text) for text in self.data['keywords']]
-
-        # Train the LSI model
-        self.lsi = models.LsiModel(self.corpus, id2word=self.dictionary, num_topics=2)
-
 
 
 if __name__ == '__main__':
