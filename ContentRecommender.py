@@ -233,17 +233,6 @@ class ContentBasedModelRecommender:
         data['keywords'] = data['keywords'].str.replace(r'\s+', ' ')
         return data
 
-    def predict(self, item_id):
-        # Get the LSI representation for the item
-        item_lsi = self.lsi[self.corpus[item_id]]
-
-        # Compute cosine similarity between the item and all other items
-        index = similarities.MatrixSimilarity(self.lsi[self.corpus])
-        sims = index[item_lsi]
-
-        # Sort the similarities by descending order and return the top items
-        return sorted(enumerate(sims), key=lambda item: -item[1])
-
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
     country = input('Enter a country you like: ')
