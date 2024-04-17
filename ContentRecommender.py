@@ -225,13 +225,6 @@ class ContentBasedModelRecommender:
         self.lsi = models.LsiModel(self.corpus, id2word=self.dictionary, num_topics=2)
 
 
-    def process_data(self, data):
-        
-        data['keywords'] = data.apply(lambda row: str(row['keywords']) + ' ' + str(row['climate']), axis=1)
-        data.drop('climate', axis=1, inplace=True)
-        data = data.drop_duplicates(subset='country')
-        data['keywords'] = data['keywords'].str.replace(r'\s+', ' ')
-        return data
 
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
