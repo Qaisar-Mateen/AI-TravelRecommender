@@ -81,7 +81,7 @@ def train():
 
     print('model trained')
 
-    model.save('model.bin')
+    model.save('CF_Model.bin')
 
 
 if __name__ == "__main__":
