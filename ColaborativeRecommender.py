@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import tez
 from sklearn import model_selection, preprocessing
+from sklearn.metrics import accuracy_score
 import torch
 import torch.nn as nn
 
@@ -18,7 +19,10 @@ class RecommenderModel(tez.Model):
     def moniter_metrics(self, outputs, targets):
         outputs = outputs.cpu().detach().numpy()
         targets = targets.cpu().detach().numpy()
-        return {'rmse': np.sqrt(((outputs - targets) ** 2).mean())}
+        acc = accuracy_score(targets, outputs)
+        return {'rmse': np.sqrt(((outputs - targets) ** 2).mean()),
+                'accuracy': acc
+                }
 
     def forward(self, user, country, rating):
         user = self.user_embed(user)
