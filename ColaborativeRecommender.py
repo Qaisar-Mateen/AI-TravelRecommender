@@ -73,8 +73,7 @@ def train():
 
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-
-    model.fit(train_dataset, test_dataset, train_bs=1024, valid_bs=1024, fp16=True)
+    model.fit(train_dataset, test_dataset, train_bs=1024, valid_bs=1024, fp16=False)
 
     print('model trained')
 
