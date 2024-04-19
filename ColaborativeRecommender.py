@@ -19,10 +19,7 @@ class RecommenderModel(tez.Model):
     def moniter_metrics(self, outputs, targets):
         outputs = outputs.cpu().detach().numpy()
         targets = targets.cpu().detach().numpy()
-        acc = accuracy_score(targets, outputs)
-        return {'rmse': np.sqrt(((outputs - targets) ** 2).mean()),
-                'accuracy': acc
-                }
+        return {'rmse': np.sqrt(((outputs - targets) ** 2).mean())}
 
     def forward(self, user, country, rating):
         user = self.user_embed(user)
