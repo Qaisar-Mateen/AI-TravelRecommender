@@ -1,15 +1,9 @@
 import pandas as pd
 import numpy as np
-import tez
+from tez import tez
 from sklearn import model_selection, preprocessing
 import torch
 import torch.nn as nn
-
-# class CollaborativeRecommender:
-#     def __init__(self, data):
-#         self.data = data
-
-train_df, test_df = None, None
 
 class RecommenderModel(tez.Model):
     def __init__(self, num_users, num_country):
@@ -45,21 +39,42 @@ class RecommenderModel(tez.Model):
         return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5, gamma=0.1)
 
 
+class Dataset:
+    def __init__(self, user, country, rating):
+        self.user = user
+        self.country = country
+        self.rating = rating
+    
+    def __len__(self):
+        return len(self.user)
+    
+    def __getitem__(self, item):
+        return {
+            'user': torch.tensor(self.user[item], dtype=torch.long),
+            'country': torch.tensor(self.country[item], dtype=torch.long),
+            'rating': torch.tensor(self.rating[item], dtype=torch.float)
+        }
+
+
 def train():
-    global train_df, test_df
     df = pd.DataFrame('ratings.csv')
 
     lbl_user = preprocessing.LabelEncoder()
     lbl_country = preprocessing.LabelEncoder()
 
-    df['user'] = lbl_user.fit_transform(df['user'])
-    df['country'] = lbl_country.fit_transform(df['country'])
+    df.user = lbl_user.fit_transform(df.user.values)
+    df.country = lbl_country.fit_transform(df.country.values)
 
-    train_df, test_df = model_selection.train_test_split(df, test_size=0.2, random_state=42, stratify=df['rating'])
+    train_df, test_df = model_selection.train_test_split(df, test_size=0.2, random_state=42, stratify=df.rating.values)
 
-    model = RecommenderModel(num_users=df['user'].nunique(), num_country=df['country'].nunique())
+    train_dataset = Dataset(user=train_df.user.values, country=train_df.country.values, rating=train_df.rating.values)
 
-    model.fit(train_df, test_df, train_bs=1024, valid_bs=1024, fp16=True)
+    test_dataset = Dataset(user=test_df.user.values, country=test_df.country.values, rating=test_df.rating.values)
+
+
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=lbl_country.classes_)
+
+    model.fit(train_dataset, test_dataset, train_bs=1024, valid_bs=1024, fp16=True)
 
     if __name__ == "__main__":
         train()
