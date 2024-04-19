@@ -57,7 +57,7 @@ class Dataset:
 
 
 def train():
-    df = pd.DataFrame('ratings.csv')
+    df = pd.read_csv('ratings.csv')
 
     lbl_user = preprocessing.LabelEncoder()
     lbl_country = preprocessing.LabelEncoder()
