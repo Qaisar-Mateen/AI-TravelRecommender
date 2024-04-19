@@ -37,7 +37,7 @@ class RecommenderModel(tez.Model):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
     
     def fetch_scheduler(self):
-        return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=3, gamma=0.7)
+        return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5, gamma=0.1)
 
 
 class Dataset:
@@ -74,7 +74,7 @@ def train():
 
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.fit(train_dataset, test_dataset, train_bs=1024, valid_bs=1024, fp16=False)
+    model.fit(train_dataset, test_dataset, train_bs=500, valid_bs=500, fp16=False)
 
     print('model trained')
 
