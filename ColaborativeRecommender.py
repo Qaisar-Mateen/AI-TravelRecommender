@@ -15,7 +15,7 @@ class RecommenderModel(tez.Model):
         self.sigmoid = nn.Sigmoid()
         self.step_scheduler_after = 'epoch'
 
-    def moniterMetrics(self, outputs, targets):
+    def moniter_metrics(self, outputs, targets):
         outputs = outputs.cpu().detach().numpy()
         targets = targets.cpu().detach().numpy()
         return {'rmse': np.sqrt(((outputs - targets) ** 2).mean())}
@@ -28,14 +28,14 @@ class RecommenderModel(tez.Model):
         out = self.sigmoid(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
-        metrics = self.moniterMetrics(out, rating.view(-1, 1))
+        cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
 
-        return out, loss, metrics
+        return out, loss, cal_metrics
     
-    def fetchOptimizer(self):
+    def fetch_optimizer(self):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
     
-    def fetchScheduler(self):
+    def fetch_scheduler(self):
         return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=3, gamma=0.7)
 
 
