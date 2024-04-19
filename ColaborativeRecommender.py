@@ -72,7 +72,7 @@ def train():
     test_dataset = Dataset(user=test_df.user.values, country=test_df.country.values, rating=test_df.rating.values)
 
 
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=lbl_country.classes_)
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
 
     model.fit(train_dataset, test_dataset, train_bs=1024, valid_bs=1024, fp16=True)
 
@@ -81,5 +81,5 @@ def train():
     model.save('model.bin')
 
 
-    if __name__ == "__main__":
-        train()
+if __name__ == "__main__":
+    train()
