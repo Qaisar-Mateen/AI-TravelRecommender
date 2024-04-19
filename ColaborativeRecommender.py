@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from tez import tez
+import tez
 from sklearn import model_selection, preprocessing
 import torch
 import torch.nn as nn
