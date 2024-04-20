@@ -14,9 +14,10 @@ class RecommenderModel(tez.Model):
         self.learning_rate = lr
         self.user_embed = nn.Embedding(num_users, 32)   
         self.country_embed = nn.Embedding(num_country, 32)
-        self.out = nn.Linear(128, 1)
+        
+        self.hidden = nn.Linear(64, 64)
+        self.out = nn.Linear(64, 1)
         self.relu = nn.ReLU()
-        self.hidden = nn.Linear(64, 128)
         self.step_scheduler_after = 'epoch'
 
     def moniter_metrics(self, outputs, targets):
@@ -32,7 +33,6 @@ class RecommenderModel(tez.Model):
         out = self.hidden(out)
         out = self.relu(out)
         out = self.out(out)
-        #out = self.sigmoid(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
         cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
