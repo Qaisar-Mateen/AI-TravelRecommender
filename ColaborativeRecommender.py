@@ -1,19 +1,22 @@
 import pandas as pd
 import numpy as np
 import tez
+from tez.callbacks import EarlyStopping
 from sklearn import model_selection, preprocessing
 import torch
 import torch.nn as nn
 
 
 class RecommenderModel(tez.Model):
-    def __init__(self, num_users, num_country):
+    def __init__(self, num_users, num_country, lr=1e-3):
         super().__init__()
 
-        self.user_embed = nn.Embedding(num_users, 32)
-        self.country_embed = nn.Embedding(num_country, 32)
-        self.out = nn.Linear(64, 1)
-        self.sigmoid = nn.Sigmoid()
+        self.learning_rate = lr
+        self.user_embed = nn.Embedding(num_users, 64)   
+        self.country_embed = nn.Embedding(num_country, 64)
+        self.out = nn.Linear(128, 1)
+        self.relu = nn.ReLU()
+        self.hidden = nn.Linear(128, 128)
         self.step_scheduler_after = 'epoch'
 
     def moniter_metrics(self, outputs, targets):
@@ -25,8 +28,11 @@ class RecommenderModel(tez.Model):
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
+        
+        out = self.hidden(out)
+        out = self.relu(out)
         out = self.out(out)
-        out = self.sigmoid(out)
+        #out = self.sigmoid(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
         cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
@@ -34,7 +40,7 @@ class RecommenderModel(tez.Model):
         return out, loss, cal_metrics
     
     def fetch_optimizer(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-2)
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
     
     def fetch_scheduler(self):
         return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=3, gamma=0.7)
@@ -82,9 +88,10 @@ def train_NN():
 
     test_dataset = Dataset(user=test_df.user.values, country=test_df.country.values, rating=test_df.rating.values)
 
+    #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20, callbacks=[es])
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-2)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
 
     print('model trained')
 
