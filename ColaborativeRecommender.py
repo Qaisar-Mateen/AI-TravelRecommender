@@ -58,8 +58,13 @@ class Dataset:
 
 
 def train():
-    df = pd.read_csv('ratings.csv')
+    df = pd.read_csv('ratings1.csv')
 
+    # df = df.dropna()
+    # df = df[['userId', 'movieId', 'rating']]
+
+    # df.columns = ['user', 'country', 'rating']
+    
     lbl_user = preprocessing.LabelEncoder()
     lbl_country = preprocessing.LabelEncoder()
 
