@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 import tez
 from sklearn import model_selection, preprocessing
-from sklearn.metrics import accuracy_score
 import torch
 import torch.nn as nn
+
 
 class RecommenderModel(tez.Model):
     def __init__(self, num_users, num_country):
@@ -58,7 +58,12 @@ class Dataset:
 
 
 def train_NN():
-    df = pd.read_csv('ratings1.csv')
+    df = pd.read_csv('ratin.csv')
+    
+    print('for 5 ratin rating scale')
+
+    #print('for 10 rat rating scale')
+
 
     # df = df.dropna()
     # df = df[['userId', 'movieId', 'rating']]
@@ -87,6 +92,9 @@ def train_NN():
 
     model.save('CF_Neural_Model.bin')
 
+
+def train_SVD():
+    pass
 
 if __name__ == "__main__":
     train_NN()
