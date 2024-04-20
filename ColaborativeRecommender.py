@@ -57,7 +57,7 @@ class Dataset:
         }
 
 
-def train():
+def train_NN():
     df = pd.read_csv('ratings1.csv')
 
     # df = df.dropna()
@@ -85,8 +85,8 @@ def train():
 
     input('press any key to save the model')
 
-    model.save('CF_Model.bin')
+    model.save('CF_Neural_Model.bin')
 
 
 if __name__ == "__main__":
-    train()
+    train_NN()
