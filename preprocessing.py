@@ -336,3 +336,5 @@ countries = pd.read_csv('world-countries.csv')
 popularity = pd.read_csv('world-popularity.csv')
 
 users = pd.read_csv('users-rating.csv')
+
+countries['keywords'] = countries['keywords'].str.replace(r'plains', 'plain')
