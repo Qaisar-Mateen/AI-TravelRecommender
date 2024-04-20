@@ -34,7 +34,7 @@ class RecommenderModel(tez.Model):
         return out, loss, cal_metrics
     
     def fetch_optimizer(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-3)
+        return torch.optim.Adam(self.parameters(), lr=1e-2)
     
     def fetch_scheduler(self):
         return torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=3, gamma=0.7)
@@ -84,7 +84,7 @@ def train_NN():
 
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20, callbacks=[es])
 
     print('model trained')
 
