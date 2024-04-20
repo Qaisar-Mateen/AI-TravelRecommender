@@ -58,11 +58,11 @@ class Dataset:
 
 
 def train_NN():
-    df = pd.read_csv('ratin.csv')
-    
-    print('for 5 ratin rating scale')
+    df = pd.read_csv('rat.csv')
+    df = df[df['rating'] != -1]
+    #print('for 5 ratin rating scale')
 
-    #print('for 10 rat rating scale')
+    print('for 10 rat rating scale')
 
 
     # df = df.dropna()
@@ -84,7 +84,7 @@ def train_NN():
 
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
 
     print('model trained')
 
