@@ -66,9 +66,6 @@ class Dataset:
 def train_NN():
     df = pd.read_csv('rat.csv')
     df = df[df['rating'] != -1]
-    #print('for 5 ratin rating scale')
-
-    print('for 10 rat rating scale')
 
 
     # df = df.dropna()
@@ -91,7 +88,7 @@ def train_NN():
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=8e-4)
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=30)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=21)
 
     print('model trained')
 
