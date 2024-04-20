@@ -15,9 +15,9 @@ class RecommenderModel(tez.Model):
         self.user_embed = nn.Embedding(num_users, 32)   
         self.country_embed = nn.Embedding(num_country, 32)
         
-        self.hidden = nn.Linear(64, 64)
+        #self.hidden = nn.Linear(64, 64)
         self.out = nn.Linear(64, 1)
-        self.relu = nn.ReLU()
+        #self.relu = nn.ReLU()
         self.step_scheduler_after = 'epoch'
 
     def moniter_metrics(self, outputs, targets):
@@ -30,8 +30,8 @@ class RecommenderModel(tez.Model):
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
         
-        out = self.hidden(out)
-        out = self.relu(out)
+        #out = self.hidden(out)
+        #out = self.relu(out)
         out = self.out(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
@@ -90,7 +90,7 @@ def train_NN():
 
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-2)
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
     model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
 
     print('model trained')
