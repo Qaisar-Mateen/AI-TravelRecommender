@@ -1,0 +1,1 @@
+CF_Neural_Model2: rmse=2.5, loss=6.4

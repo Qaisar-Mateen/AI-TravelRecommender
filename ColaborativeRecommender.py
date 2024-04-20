@@ -90,18 +90,14 @@ def train_NN():
 
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=8e-4)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=30)
 
     print('model trained')
 
     input('press any key to save the model')
 
-    model.save('CF_Neural_Model.bin')
-
-
-def train_SVD():
-    pass
+    model.save('CF_Neural_Model2.1.bin')
 
 if __name__ == "__main__":
     train_NN()
