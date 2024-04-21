@@ -3,5 +3,5 @@ CF_Neural_Model2.1(5 rating version): (overfitting) rmse=1.32, loss=1.75 (traine
 CF_Neural_Model2.1: (overfitting) rmse=2.44, loss=5.9 (trained with lr=0.0008, epochnum=30) shoud stoped at 20
 CF_Neural_Model2.1: rmse=2.43, loss=5.9 (trained with lr=0.0008, epochnum=20)
 CF_Neural_Model2.2: rmse=1.5, loss=2.3, (trained with lr=0.001, epochnum=20) [hidden layer in 32, out 20] i.e compression
-CF_Neural_Model2.3: rmse=, loss=, (trained with lr=0.001, epochnum=20)
-CF_Neural_Model2.2: rmse=, loss=, (trained with lr=0.001, epochnum=20) [hidden layer in 32, out 32]
+CF_Neural_Model2.3: rmse=1.5, loss=2.3, (trained with lr=0.001, epochnum=20)*
+CF_Neural_Model2.4: rmse=1.5, loss=2.3, (trained with lr=0.001, epochnum=20) [hidden layer in 32, out 32]
