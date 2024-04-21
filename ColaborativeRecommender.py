@@ -45,7 +45,7 @@ class RecommenderModel(tez.Model):
         out = self.out(out)
         
         if rating is None:
-            return out, user, country
+            return out
         
         loss = nn.MSELoss()(out, rating.view(-1, 1))
         cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
@@ -110,14 +110,21 @@ def train_NN(dataset_name, model_name):
 
 
 
-def CollaborativeRecommender(user, model_name, top_n=10):
+def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_name=None):
     
+    if train:
+        if dataset_name is None:
+            raise ValueError('Please provide dataset_name for trainig the model')
+        else:
+            train_NN(dataset_name, model_name)
+
+    # loading encoders used during training
     with open('user_encoder.pkl', 'rb') as f:
         lbl_user = pickle.load(f)
-
     with open('country_encoder.pkl', 'rb') as f:
         lbl_country = pickle.load(f)
 
+    # loading pre_trained model
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
     model.load('Models/' + model_name, device='cpu')
 
@@ -125,14 +132,14 @@ def CollaborativeRecommender(user, model_name, top_n=10):
 
     user_id = torch.tensor([user_id] * len(lbl_country.classes_)).long()
     country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
-    print(country_ids, user_id)
+
+    
     with torch.no_grad():
         predictions = (model(user_id, country_ids))
     
-    print(predictions)
 
     # Get the top N country IDs
-    top_n_country_ids = predictions.argsort(descending=True)[:top_n]
+    top_n_country_ids = predictions.flatten().argsort(descending=True)[:top_n]
 
     return top_n_country_ids
 
@@ -140,9 +147,7 @@ def CollaborativeRecommender(user, model_name, top_n=10):
 
 if __name__ == "__main__":
 
-    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.7.bin')
-
-    # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    # df = pd.read_csv('world-countries.csv')
-    # print(top_n_country_ids)
-    # print(df[df['ID'] == top_n_country_ids[0].item()]['Country'])
+    top_n_country_ids = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
+    df = pd.read_csv('world-countries.csv')
+    print(top_n_country_ids)
+    print(df[df['ID'] == top_n_country_ids[0].item()]['Country'])
