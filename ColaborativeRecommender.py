@@ -91,7 +91,7 @@ def train_NN(dataset_name, model_name):
 
     input('press any key to save the model')
 
-    model.save(model_name)
+    model.save('Models/' + model_name)
 
     with open('user_encoder.pkl', 'wb') as f:
         pickle.dump(lbl_user, f)
@@ -123,14 +123,20 @@ def CollaborativeRecommender(user, model_name, top_n=10):
         lbl_country = pickle.load(f)
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.load(model_name)
+    model.load('Models/' + model_name)
 
-    user = lbl_user.transform([user])[0]
+    user_id = lbl_user.transform([user])[0]
+
+    user_ids = torch.tensor([user_id] * len(lbl_country.classes_)).long()
+    country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
+
+    with torch.no_grad():
+        predictions = model(user_ids, country_ids)
     
+    # Get the top N country IDs
+    top_n_country_ids = predictions.argsort(descending=True)[:top_n]
 
-    output = model.predict(user, country)
-
-    return output
+    return top_n_country_ids
 
 
 if __name__ == "__main__":
