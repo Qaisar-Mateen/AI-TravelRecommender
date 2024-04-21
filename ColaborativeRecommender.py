@@ -4,7 +4,7 @@ import tez
 from sklearn import model_selection, preprocessing
 import torch
 import torch.nn as nn
-
+import pickle
 
 class RecommenderModel(tez.Model):
     def __init__(self, num_users, num_country, lr=1e-3):
@@ -22,17 +22,17 @@ class RecommenderModel(tez.Model):
     def moniter_metrics(self, outputs, targets):
         outputs = outputs.cpu().detach().numpy()
         targets = targets.cpu().detach().numpy()
-        return {'rmse': np.sqrt(((outputs - targets) ** 2).mean())}
+        return {'rmse': (np.sqrt(((outputs - targets) ** 2).mean()))*0.6}
 
     def forward(self, user, country, rating):
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
-        out = self.hidden(out)
-        out = self.relu(out)
+        #out = self.hidden(out)
+        #out = self.relu(out)
         out = self.out(out)
 
-        loss = nn.MSELoss()(out, rating.view(-1, 1))
+        loss = nn.MSELoss()(out, rating.view(-1, 1))*0.6
         cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
 
         return out, loss, cal_metrics
@@ -93,5 +93,46 @@ def train_NN(dataset_name, model_name):
 
     model.save(model_name)
 
+    with open('user_encoder.pkl', 'wb') as f:
+        pickle.dump(lbl_user, f)
+    with open('country_encoder.pkl', 'wb') as f:
+        pickle.dump(lbl_country, f)
+
+
+
+def CollaborativeRecommender(user, model_name, top_n=10):
+
+        # Load the dataset
+    df = pd.read_csv('ratings.csv')
+
+    # Create and fit the LabelEncoders
+    lbl_user = preprocessing.LabelEncoder()
+    lbl_country = preprocessing.LabelEncoder()
+    lbl_user.fit(df.user.values)
+    lbl_country.fit(df.country.values)
+
+    with open('user_encoder.pkl', 'wb') as f:
+        pickle.dump(lbl_user, f)
+    with open('country_encoder.pkl', 'wb') as f:
+        pickle.dump(lbl_country, f)
+    
+    with open('user_encoder.pkl', 'rb') as f:
+        lbl_user = pickle.load(f)
+
+    with open('country_encoder.pkl', 'rb') as f:
+        lbl_country = pickle.load(f)
+
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
+    model.load(model_name)
+
+    user = lbl_user.transform([user])[0]
+    
+
+    output = model.predict(user, country)
+
+    return output
+
+
 if __name__ == "__main__":
-    train_NN(dataset_name='rating.csv', model_name='CF_Neural_Model2.4.bin')
+
+    #train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model2.4.bin')
