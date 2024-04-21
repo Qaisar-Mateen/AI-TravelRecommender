@@ -14,8 +14,8 @@ class RecommenderModel(tez.Model):
         self.user_embed = nn.Embedding(num_users, 16)   
         self.country_embed = nn.Embedding(num_country, 16)
         
-        self.hidden = nn.Linear(32, 20)
-        self.out = nn.Linear(20, 1)
+        self.hidden = nn.Linear(32, 32)
+        self.out = nn.Linear(32, 1)
         self.relu = nn.ReLU()
         self.step_scheduler_after = 'epoch'
 
@@ -28,9 +28,8 @@ class RecommenderModel(tez.Model):
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
-        
-        out = self.hidden(out)
-        out = self.relu(out)
+        #out = self.hidden(out)
+        #out = self.relu(out)
         out = self.out(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
@@ -71,7 +70,6 @@ def train_NN(dataset_name, model_name):
 
     # df.columns = ['user', 'country', 'rating']
 
-
     lbl_user = preprocessing.LabelEncoder()
     lbl_country = preprocessing.LabelEncoder()
 
@@ -96,4 +94,4 @@ def train_NN(dataset_name, model_name):
     model.save(model_name)
 
 if __name__ == "__main__":
-    train_NN(dataset_name='rating.csv', model_name='CF_Neural_Model2.2.bin')
+    train_NN(dataset_name='rating.csv', model_name='CF_Neural_Model2.3.bin')

@@ -1,4 +1,4 @@
+CF_Neural_Model2: rmse=2.5, loss=6.4 (trained with lr=0.0005, epochnum=25)
 CF_Neural_Model2.1(5 rating version): rmse=1.32, loss=1.75 (trained with lr=0.0008, epochnum=30)
 CF_Neural_Model2.1: (overfitting) rmse=2.44, loss=5.9 (trained with lr=0.0008, epochnum=30) shoud stoped at 20
-CF_Neural_Model2: rmse=2.5, loss=6.4 (trained with lr=0.0005, epochnum=25)
 CF_Neural_Model2.1: rmse=2.43, loss=5.9 (trained with lr=0.0008, epochnum=20)
