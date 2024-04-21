@@ -149,5 +149,7 @@ if __name__ == "__main__":
 
     top_n_country_ids = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
     df = pd.read_csv('world-countries.csv')
-    print(top_n_country_ids)
-    print(df[df['ID'] == top_n_country_ids[0].item()]['Country'])
+    print(top_n_country_ids.flatten().tolist())
+
+    for id in top_n_country_ids.flatten().tolist():
+        print(df[df['ID'] == id]['Country'].item())
