@@ -17,7 +17,7 @@ class RecommenderModel(tez.Model):
         self.hidden1 = nn.Linear(128, 128)
         self.hidden2 = nn.Linear(128, 128)
         self.hidden3 = nn.Linear(128, 128)
-        
+
         self.out = nn.Linear(128, 1)
         self.relu = nn.ReLU()
         self.step_scheduler_after = 'epoch'
@@ -140,7 +140,7 @@ def CollaborativeRecommender(user, model_name, top_n=10):
 
 if __name__ == "__main__":
 
-    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.6.bin')
+    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.7.bin')
 
     # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model2.3.bin', top_n=10)
     # df = pd.read_csv('world-countries.csv')
