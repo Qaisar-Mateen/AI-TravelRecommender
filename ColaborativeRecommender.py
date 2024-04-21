@@ -28,8 +28,8 @@ class RecommenderModel(tez.Model):
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
-        #out = self.hidden(out)
-        #out = self.relu(out)
+        out = self.hidden(out)
+        out = self.relu(out)
         out = self.out(out)
 
         loss = nn.MSELoss()(out, rating.view(-1, 1))
@@ -94,4 +94,4 @@ def train_NN(dataset_name, model_name):
     model.save(model_name)
 
 if __name__ == "__main__":
-    train_NN(dataset_name='rating.csv', model_name='CF_Neural_Model2.3.bin')
+    train_NN(dataset_name='rating.csv', model_name='CF_Neural_Model2.4.bin')
