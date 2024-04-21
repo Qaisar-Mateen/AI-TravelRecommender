@@ -22,17 +22,20 @@ class RecommenderModel(tez.Model):
     def moniter_metrics(self, outputs, targets):
         outputs = outputs.cpu().detach().numpy()
         targets = targets.cpu().detach().numpy()
-        return {'rmse': (np.sqrt(((outputs - targets) ** 2).mean()))*0.6}
+        return {'rmse': (np.sqrt(((outputs - targets) ** 2).mean()))}
 
-    def forward(self, user, country, rating):
+    def forward(self, user, country, rating=None):
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
         #out = self.hidden(out)
         #out = self.relu(out)
         out = self.out(out)
-
-        loss = nn.MSELoss()(out, rating.view(-1, 1))*0.6
+        
+        if rating is None:
+            return out, user, country
+        
+        loss = nn.MSELoss()(out, rating.view(-1, 1))
         cal_metrics = self.moniter_metrics(out, rating.view(-1, 1))
 
         return out, loss, cal_metrics
@@ -64,12 +67,7 @@ class Dataset:
 def train_NN(dataset_name, model_name):
     
     df = pd.read_csv(dataset_name)
-
-    # df = df.dropna()
-    # df = df[['userId', 'movieId', 'rating']]
-
-    # df.columns = ['user', 'country', 'rating']
-
+    
     lbl_user = preprocessing.LabelEncoder()
     lbl_country = preprocessing.LabelEncoder()
 
@@ -93,28 +91,14 @@ def train_NN(dataset_name, model_name):
 
     model.save('Models/' + model_name)
 
-    with open('user_encoder.pkl', 'wb') as f:
+    with open('user_encoder2.pkl', 'wb') as f:
         pickle.dump(lbl_user, f)
-    with open('country_encoder.pkl', 'wb') as f:
+    with open('country_encoder2.pkl', 'wb') as f:
         pickle.dump(lbl_country, f)
 
 
 
 def CollaborativeRecommender(user, model_name, top_n=10):
-
-        # Load the dataset
-    df = pd.read_csv('ratings.csv')
-
-    # Create and fit the LabelEncoders
-    lbl_user = preprocessing.LabelEncoder()
-    lbl_country = preprocessing.LabelEncoder()
-    lbl_user.fit(df.user.values)
-    lbl_country.fit(df.country.values)
-
-    with open('user_encoder.pkl', 'wb') as f:
-        pickle.dump(lbl_user, f)
-    with open('country_encoder.pkl', 'wb') as f:
-        pickle.dump(lbl_country, f)
     
     with open('user_encoder.pkl', 'rb') as f:
         lbl_user = pickle.load(f)
@@ -123,22 +107,30 @@ def CollaborativeRecommender(user, model_name, top_n=10):
         lbl_country = pickle.load(f)
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.load('Models/' + model_name)
+    model.load('Models/' + model_name, device='cpu')
 
     user_id = lbl_user.transform([user])[0]
 
-    user_ids = torch.tensor([user_id] * len(lbl_country.classes_)).long()
+    user_id = torch.tensor([user_id] * len(lbl_country.classes_)).long()
     country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
-
+    print(country_ids, user_id)
     with torch.no_grad():
-        predictions = model(user_ids, country_ids)
+        predictions = (model(user_id, country_ids))
     
+    print(predictions)
+
     # Get the top N country IDs
     top_n_country_ids = predictions.argsort(descending=True)[:top_n]
 
     return top_n_country_ids
 
 
+
 if __name__ == "__main__":
 
-    #train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model2.4.bin')
+    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.2.bin')
+
+    # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model2.3.bin', top_n=10)
+    # df = pd.read_csv('world-countries.csv')
+    # print(top_n_country_ids)
+    # print(df[df['ID'] == top_n_country_ids[0].item()]['Country'])
