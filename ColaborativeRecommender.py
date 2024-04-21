@@ -11,11 +11,14 @@ class RecommenderModel(tez.Model):
         super().__init__()
 
         self.learning_rate = lr
-        self.user_embed = nn.Embedding(num_users, 16)   
-        self.country_embed = nn.Embedding(num_country, 16)
+        self.user_embed = nn.Embedding(num_users, 64)   
+        self.country_embed = nn.Embedding(num_country, 64)
         
-        self.hidden = nn.Linear(32, 32)
-        self.out = nn.Linear(32, 1)
+        self.hidden1 = nn.Linear(128, 128)
+        self.hidden2 = nn.Linear(128, 128)
+        self.hidden3 = nn.Linear(128, 128)
+        
+        self.out = nn.Linear(128, 1)
         self.relu = nn.ReLU()
         self.step_scheduler_after = 'epoch'
 
@@ -25,11 +28,20 @@ class RecommenderModel(tez.Model):
         return {'rmse': (np.sqrt(((outputs - targets) ** 2).mean()))}
 
     def forward(self, user, country, rating=None):
+        
         user = self.user_embed(user)
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
-        #out = self.hidden(out)
-        #out = self.relu(out)
+        
+        out = self.hidden(out)
+        out = self.relu(out)
+
+        out = self.hidden2(out)
+        out = self.relu(out)
+
+        out = self.hidden3(out)
+        out = self.relu(out)
+
         out = self.out(out)
         
         if rating is None:
@@ -82,7 +94,7 @@ def train_NN(dataset_name, model_name):
 
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-3)
+    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-2)
     model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
 
     print('model trained')
@@ -91,9 +103,9 @@ def train_NN(dataset_name, model_name):
 
     model.save('Models/' + model_name)
 
-    with open('user_encoder2.pkl', 'wb') as f:
+    with open('user_encoder.pkl', 'wb') as f:
         pickle.dump(lbl_user, f)
-    with open('country_encoder2.pkl', 'wb') as f:
+    with open('country_encoder.pkl', 'wb') as f:
         pickle.dump(lbl_country, f)
 
 
@@ -128,7 +140,7 @@ def CollaborativeRecommender(user, model_name, top_n=10):
 
 if __name__ == "__main__":
 
-    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.2.bin')
+    train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.6.bin')
 
     # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model2.3.bin', top_n=10)
     # df = pd.read_csv('world-countries.csv')
