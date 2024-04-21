@@ -33,7 +33,7 @@ class RecommenderModel(tez.Model):
         country = self.country_embed(country)
         out = torch.cat([user, country], 1)
         
-        out = self.hidden(out)
+        out = self.hidden1(out)
         out = self.relu(out)
 
         out = self.hidden2(out)
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
     train_NN(dataset_name='ratings.csv', model_name='CF_Neural_Model3.7.bin')
 
-    # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model2.3.bin', top_n=10)
+    # top_n_country_ids = CollaborativeRecommender(user=1, model_name='CF_Neural_Model3.7.bin', top_n=10)
     # df = pd.read_csv('world-countries.csv')
     # print(top_n_country_ids)
     # print(df[df['ID'] == top_n_country_ids[0].item()]['Country'])
