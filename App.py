@@ -23,8 +23,12 @@ class Card(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self.body, text=title, corner_radius=cr, font=('Arial', 14, 'bold'))
         self.title.grid(row=0, column=3, pady=5, padx=5)
         
-        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr)
+        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=self.view_detail)
         self.button_detail.grid(row=1, column=3, pady=8, padx=5)
+
+    def view_detail(self):
+        pass
+    
     
 if __name__ == '__main__':
 
