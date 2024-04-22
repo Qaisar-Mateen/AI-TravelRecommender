@@ -125,8 +125,8 @@ def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_na
         lbl_country = pickle.load(f)
 
     # loading pre_trained model
-    model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-    model.load('Models/' + model_name, device='cpu')
+    pre_trained_model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
+    pre_trained_model.load('Models/' + model_name, device='cpu')
 
     user_id = lbl_user.transform([user])[0]
 
@@ -135,7 +135,7 @@ def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_na
 
     
     with torch.no_grad():
-        predictions = (model(user_id, country_ids))
+        predictions = (pre_trained_model(user_id, country_ids))
     
 
     # Get the top N country IDs
