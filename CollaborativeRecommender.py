@@ -153,11 +153,11 @@ class CollaborativeRecommender:
         
         recommendation = recommendation.drop(columns=['ID', 'keywords', 'climate', 'avg cost per day'])
 
-        recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
+        #recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
 
-        print(recommendation)
-        
-        return recommendation
+        #print(recommendation[['Country', 'Rating']])
+
+        return recommendation[['Country', 'Rating']]
 
     
 
@@ -202,10 +202,3 @@ if __name__ == "__main__":
 
     model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
     model.recommend()
-
-    top_n_country_ids = Recommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    df = pd.read_csv('world-countries.csv')
-    print(top_n_country_ids.flatten().tolist())
-
-    for id in top_n_country_ids.flatten().tolist():
-        print(df[df['ID'] == id]['Country'].item())
