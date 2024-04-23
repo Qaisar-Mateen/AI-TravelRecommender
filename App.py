@@ -44,13 +44,21 @@ class Card(ctk.CTkFrame):
         
         try:
             self.map_widget.set_address(self.search_entry.get(), marker=True)
-            self.map_widget.set_zoom(8)
+            self.map_widget.set_zoom(10)
             self.map_widget.update()
 
         except Exception as e:
             tk.messagebox.showerror('Error', str(e))
 
+    def satelite_tile(self):
+        if self.map_widget.tile_server != "https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga":
+            self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
+            self.map_widget.update()
 
+    def default_tile(self):
+        if self.map_widget.tile_server != "https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga":
+            self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
+            self.map_widget.update()
 
     def view_detail(self):
             
@@ -78,10 +86,22 @@ class Card(ctk.CTkFrame):
         self.map_widget = map.TkinterMapView(map_frame, width=750, height=450, corner_radius=19)
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
-        # self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
 
         self.map_widget.set_address('Pakistan')
-        self.map_widget.set_zoom(5)
+        self.map_widget.set_zoom(8)
+
+        sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
+                                #image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
+                                corner_radius=2, fg_color='#333333', hover_color='#555555'
+                                )
+        sat_but.place(x=15, y=81, anchor='nw')
+
+        def_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.default_tile,
+                                #image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
+                                corner_radius=2, fg_color='#333333', hover_color='#555555'
+                                )
+        def_but.place(x=15, y=114, anchor='nw')
+
 
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19)#, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
