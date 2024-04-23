@@ -35,14 +35,55 @@ class Card(ctk.CTkFrame):
         self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=self.view_detail)
         self.button_detail.grid(row=1, column=3, pady=8, padx=5)
 
+
+    def search(self):
+        self.map_widget.delete_all_marker()
+        if self.search_entry.get() == '':
+            return
+        
+        try:
+            self.map_widget.set_address(self.search_entry.get(), marker=True)
+            self.map_widget.set_zoom(8)
+            self.map_widget.update()
+
+        except Exception as e:
+            tk.messagebox.showerror('Error', str(e))
+
+
+
     def view_detail(self):
-            # create map widget
+            
         top = ctk.CTkToplevel()
         top.title('Details')
-        top.geometry('800x600')
-        
-        map_widget = map.TkinterMapView(top, width=800, height=600, corner_radius=0)
-        map_widget.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        top.geometry('900x700')
+        top.columnconfigure((0,6), weight=1)
+
+        search_frame = ctk.CTkFrame(top, width=400, height=40, corner_radius=19, fg_color='transparent')
+        search_frame.grid(row=0, column=1, padx=10, pady=(10,5), columnspan=3)
+        search_frame.columnconfigure((0,7), weight=1)
+
+        self.search_entry = ctk.CTkEntry(search_frame, width=400, height=30, corner_radius=19)
+        self.search_entry.grid(row=0, column=1)
+
+        search_button = ctk.CTkButton(search_frame, text='', width=20, height=30, fg_color='#1A1A1A',
+                                    corner_radius=19, command=self.search, hover_color='#373737',
+                                    image=ctk.CTkImage(dark_image=Image.open('Images/search.png'),size=(15,15)))
+        search_button.grid(row=0, column=2, padx=5)
+
+        map_frame = ctk.CTkFrame(top, width=800, height=500)
+        map_frame.grid(row=1, column=1, padx=10, pady=10)
+        map_frame.columnconfigure((0,7), weight=1)
+
+        self.map_widget = map.TkinterMapView(map_frame, width=750, height=450, corner_radius=19)
+        self.map_widget.grid(row=0, column=1, padx=1, pady=1)
+        self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
+        # self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
+
+        self.map_widget.set_address('Pakistan')
+        self.map_widget.set_zoom(5)
+
+        detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19)#, fg_color='black')
+        detail.grid(row=2, column=1, padx=10, pady=10)
 
         top.grab_set()
         top.mainloop()
@@ -58,6 +99,8 @@ if __name__ == '__main__':
     app = ctk.CTk()
     app.title('CustomTkinter')
     app.geometry('1323x650')
+
+    app.resizable(False, False)
 
     x = 0
     y = 0
@@ -101,7 +144,5 @@ if __name__ == '__main__':
     
     card8 = Card(home, title='Title8', cr=19, fg_color='gray29', border_width=5)
     card8.grid(row=1, column=3, padx=(40, 0), pady=(40, 0))
-
-    move()
 
     app.mainloop()
