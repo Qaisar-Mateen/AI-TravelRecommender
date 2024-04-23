@@ -26,17 +26,31 @@ class HybridRecommender:
         if self.content_model is not None:
             content_recs = self.content_model.recommend()
 
-        # Combine the recommendations
-        recommendations = list(set(popularity_recs + collaborative_recs + content_recs))
-
-        # Score the recommendations
         scores = {}
-        for rec in recommendations:
-            scores[rec] = (self.alpha * (rec in popularity_recs) +
-                           (1 - self.alpha - self.beta) * (rec in collaborative_recs) +
-                           self.beta * (rec in content_recs))
 
-        # Sort the recommendations by score in descending order
+        if self.content_model is None:
+            recommendations = list(set(collaborative_recs + popularity_recs))
+                        
+            for rec in recommendations:
+                scores[rec] = (self.alpha * (rec in popularity_recs) +
+                            self.beta * (rec in collaborative_recs))
+                
+        elif self.collaborative_model is None:
+            recommendations = list(set(popularity_recs + content_recs))
+
+            for rec in recommendations:
+                scores[rec] = (self.alpha * (rec in popularity_recs) +
+                            self.gamma * (rec in content_recs))
+                
+        else:
+            recommendations = list(set(popularity_recs + collaborative_recs + content_recs))
+
+            for rec in recommendations:
+                scores[rec] = (self.alpha * (rec in popularity_recs) +
+                            self.beta * (rec in collaborative_recs) +
+                            self.gamma * (rec in content_recs))
+
+
         recommendations.sort(key=lambda x: scores[x], reverse=True)
 
         return recommendations[:top_n]
