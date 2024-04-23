@@ -153,7 +153,7 @@ class CollaborativeRecommender:
         
         recommendation = recommendation.drop(columns=['ID', 'keywords', 'climate', 'avg cost per day'])
 
-        #recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
+        recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
 
         #print(recommendation[['Country', 'Rating']])
 
@@ -201,4 +201,4 @@ if __name__ == "__main__":
     #train_NN('ratings.csv', 'CF_Neural_Model3.7.bin')
 
     model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    model.recommend()
+    print(model.recommend())
