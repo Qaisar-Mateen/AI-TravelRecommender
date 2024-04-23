@@ -195,7 +195,6 @@ def Recommender(user, model_name, top_n=10, train=False, dataset_name=None):
     return top_n_country_ids
 
 
-
 if __name__ == "__main__":
 
     #train_NN('ratings.csv', 'CF_Neural_Model3.7.bin')
