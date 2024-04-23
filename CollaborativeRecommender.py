@@ -110,7 +110,7 @@ def train_NN(dataset_name, model_name):
 
 
 class CollaborativeRecommender:
-    def __init__(self, user: int, model_name, top_n: int=10, train: bool=False, dataset_name=None):
+    def __init__(self, user: int, model_name, top_n: int=222, train: bool=False, dataset_name=None):
         self.user = user
         self.model_name = model_name
         self.top_n = top_n
@@ -199,5 +199,5 @@ if __name__ == "__main__":
 
     #train_NN('ratings.csv', 'CF_Neural_Model3.7.bin')
 
-    model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
+    model = CollaborativeRecommender(user=1484, model_name='CF_Neural_Model3.7.bin', top_n=10)
     print(model.recommend())
