@@ -1,5 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
+import tkinter as tk
+import tkintermapview as map
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
@@ -34,7 +36,16 @@ class Card(ctk.CTkFrame):
         self.button_detail.grid(row=1, column=3, pady=8, padx=5)
 
     def view_detail(self):
-        pass
+            # create map widget
+        top = ctk.CTkToplevel()
+        top.title('Details')
+        top.geometry('800x600')
+        
+        map_widget = map.TkinterMapView(top, width=800, height=600, corner_radius=0)
+        map_widget.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        top.grab_set()
+        top.mainloop()
     
 
 home = None
@@ -51,7 +62,7 @@ if __name__ == '__main__':
     x = 0
     y = 0
 
-    home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0)
+    home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=x, y=y, anchor='nw')
 
 
@@ -59,12 +70,13 @@ if __name__ == '__main__':
         global home, x, y
         if home is None:
             return
+        
         x = x+70
         home.place_configure(x=x, y=y, anchor='nw')
         if x < 1900 and y < 800:
             app.after(1, move)
-
     
+   
     card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
     card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
     
@@ -75,7 +87,7 @@ if __name__ == '__main__':
     card3.grid(row=0, column=2, padx=(40, 0), pady=(40, 0))
     
     card4 = Card(home, title='Title4', cr=19, fg_color='gray29', border_width=5)
-    card4.grid(row=2, column=1, padx=(40, 0), pady=(40, 0))
+    card4.grid(row=0, column=3, padx=(40, 0), pady=(40, 0))
 
 
     card5 = Card(home, title='Title5', cr=19, fg_color='gray29', border_width=5)
@@ -88,8 +100,8 @@ if __name__ == '__main__':
     card7.grid(row=1, column=2, padx=(40, 0), pady=(40, 0))
     
     card8 = Card(home, title='Title8', cr=19, fg_color='gray29', border_width=5)
-    card8.grid(row=2, column=2, padx=(40, 0), pady=(40, 0))
+    card8.grid(row=1, column=3, padx=(40, 0), pady=(40, 0))
 
-    
+    move()
 
     app.mainloop()
