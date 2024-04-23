@@ -143,60 +143,56 @@ class CollaborativeRecommender:
         with torch.no_grad():
             predictions = (pre_trained_model(user_id, country_ids))
         
-        predictions = predictions.flatten().numpy()
+        predictions = predictions.flatten()
 
-          # Create a DataFrame with country IDs and their corresponding ratings
         recommendation = pd.DataFrame({'ID': country_ids.numpy(), 'Rating': predictions.numpy()})
 
-        # Read the CSV file into a DataFrame
         df = pd.read_csv('world-countries.csv')
 
-        # Merge the two DataFrames on the country ID
         recommendation = pd.merge(recommendation, df, how='left', left_on='ID', right_on='ID')
+        
+        recommendation = recommendation.drop(columns=['ID', 'keywords', 'climate', 'avg cost per day'])
+
+        recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
 
         print(recommendation)
-
-        #recommendation = pd.DataFrame({'Country': lbl_country.inverse_transform(country_ids.numpy()), 'Rating': predictions.numpy()})
-
-        # Get the top N country IDs
-        #top_n_country_ids = predictions.flatten().argsort(descending=True)[:self.top_n]
-
+        
         return recommendation
 
     
 
-# def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_name=None):
+def Recommender(user, model_name, top_n=10, train=False, dataset_name=None):
     
-#     if train:
-#         if dataset_name is None:
-#             raise ValueError('Please provide dataset_name for trainig the model')
-#         else:
-#             train_NN(dataset_name, model_name)
+    if train:
+        if dataset_name is None:
+            raise ValueError('Please provide dataset_name for trainig the model')
+        else:
+            train_NN(dataset_name, model_name)
 
-#     # loading encoders used during training
-#     with open('user_encoder.pkl', 'rb') as f:
-#         lbl_user = pickle.load(f)
-#     with open('country_encoder.pkl', 'rb') as f:
-#         lbl_country = pickle.load(f)
+    # loading encoders used during training
+    with open('user_encoder.pkl', 'rb') as f:
+        lbl_user = pickle.load(f)
+    with open('country_encoder.pkl', 'rb') as f:
+        lbl_country = pickle.load(f)
 
-#     # loading pre_trained model
-#     pre_trained_model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
-#     pre_trained_model.load('Models/' + model_name, device='cpu')
+    # loading pre_trained model
+    pre_trained_model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
+    pre_trained_model.load('Models/' + model_name, device='cpu')
 
-#     user_id = lbl_user.transform([user])[0]
+    user_id = lbl_user.transform([user])[0]
 
-#     user_id = torch.tensor([user_id] * len(lbl_country.classes_)).long()
-#     country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
+    user_id = torch.tensor([user_id] * len(lbl_country.classes_)).long()
+    country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
 
     
-#     with torch.no_grad():
-#         predictions = (pre_trained_model(user_id, country_ids))
+    with torch.no_grad():
+        predictions = (pre_trained_model(user_id, country_ids))
     
 
-#     # Get the top N country IDs
-#     top_n_country_ids = predictions.flatten().argsort(descending=True)[:top_n]
+    # Get the top N country IDs
+    top_n_country_ids = predictions.flatten().argsort(descending=True)[:top_n]
 
-#     return top_n_country_ids
+    return top_n_country_ids
 
 
 
@@ -207,9 +203,9 @@ if __name__ == "__main__":
     model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
     model.recommend()
 
-    # top_n_country_ids = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    # df = pd.read_csv('world-countries.csv')
-    # print(top_n_country_ids.flatten().tolist())
+    top_n_country_ids = Recommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
+    df = pd.read_csv('world-countries.csv')
+    print(top_n_country_ids.flatten().tolist())
 
-    # for id in top_n_country_ids.flatten().tolist():
-    #     print(df[df['ID'] == id]['Country'].item())
+    for id in top_n_country_ids.flatten().tolist():
+        print(df[df['ID'] == id]['Country'].item())
