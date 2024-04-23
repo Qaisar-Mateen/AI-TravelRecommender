@@ -95,7 +95,7 @@ def train_NN(dataset_name, model_name):
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-2)
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=20)
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=18, device='cpu')
 
     print('model trained')
 
@@ -109,6 +109,47 @@ def train_NN(dataset_name, model_name):
         pickle.dump(lbl_country, f)
 
 
+class CollaborativeRecommender:
+    def __init__(self, user, model_name, top_n=10, train=False, dataset_name=None):
+        self.user = user
+        self.model_name = model_name
+        self.top_n = top_n
+        self.train = train
+        self.dataset_name = dataset_name
+
+    def recommend(self):
+        if self.train:
+            if self.dataset_name is None:
+                raise ValueError('Please provide dataset_name for trainig the model')
+            else:
+                train_NN(self.dataset_name, self.model_name)
+
+        # loading encoders used during training
+        with open('user_encoder.pkl', 'rb') as f:
+            lbl_user = pickle.load(f)
+        with open('country_encoder.pkl', 'rb') as f:
+            lbl_country = pickle.load(f)
+
+        # loading pre_trained model
+        pre_trained_model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
+        pre_trained_model.load('Models/' + self.model_name, device='cpu')
+
+        user_id = lbl_user.transform([self.user])[0]
+
+        user_id = torch.tensor([user_id] * len(lbl_country.classes_)).long()
+        country_ids = torch.tensor(range(len(lbl_country.classes_))).long()
+
+        
+        with torch.no_grad():
+            predictions = (pre_trained_model(user_id, country_ids))
+        
+
+        # Get the top N country IDs
+        top_n_country_ids = predictions.flatten().argsort(descending=True)[:self.top_n]
+
+        return top_n_country_ids
+
+    
 
 def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_name=None):
     
@@ -147,9 +188,11 @@ def CollaborativeRecommender(user, model_name, top_n=10, train=False, dataset_na
 
 if __name__ == "__main__":
 
-    top_n_country_ids = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    df = pd.read_csv('world-countries.csv')
-    print(top_n_country_ids.flatten().tolist())
+    train_NN('ratings.csv', 'CF_Neural_Model3.7.bin')
 
-    for id in top_n_country_ids.flatten().tolist():
-        print(df[df['ID'] == id]['Country'].item())
+    # top_n_country_ids = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin', top_n=10)
+    # df = pd.read_csv('world-countries.csv')
+    # print(top_n_country_ids.flatten().tolist())
+
+    # for id in top_n_country_ids.flatten().tolist():
+    #     print(df[df['ID'] == id]['Country'].item())
