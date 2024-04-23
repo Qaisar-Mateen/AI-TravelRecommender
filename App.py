@@ -8,8 +8,15 @@ class Card(ctk.CTkFrame):
         self.image_dim = (width-32, (height*0.4)-7)
 
         if image is None:
-            self.image = ctk.CTkImage(dark_image=Image.open('no image d.png'), 
-                                    light_image=Image.open('no image l.png'), 
+            self.image = ctk.CTkImage(dark_image=Image.open('Images/no image d.png'), 
+                                    light_image=Image.open('Images/no image l.png'), 
+                                    size=self.image_dim)
+            self.image_label = ctk.CTkLabel(self, image=self.image, text='', corner_radius=cr)
+            self.image_label.grid(row=0, column=0, columnspan=3, padx=16, pady=(5, 2), sticky="ewn")
+        
+        else:
+            self.image = ctk.CTkImage(dark_image=Image.open('Images' + image), 
+                                    light_image=Image.open('Images' + image), 
                                     size=self.image_dim)
             self.image_label = ctk.CTkLabel(self, image=self.image, text='', corner_radius=cr)
             self.image_label.grid(row=0, column=0, columnspan=3, padx=16, pady=(5, 2), sticky="ewn")
@@ -39,8 +46,30 @@ if __name__ == '__main__':
     app.title('CustomTkinter')
     app.geometry('800x600')
 
-    card = Card(app, title='Title', cr=19, fg_color='gray29', border_width=5)
+    card = Card(app, title='Title1', cr=19, fg_color='gray29', border_width=5)
     card.grid(row=0, column=0, padx=20, pady=20)
+    
+    card2 = Card(app, title='Title2', cr=19, fg_color='gray29', border_width=5)
+    card2.grid(row=0, column=1, padx=20, pady=20)
 
-    ctk.CTkFrame(app, width=250, height=275, corner_radius=19).grid(row=0, column=1)
+    card3 = Card(app, title='Title3', cr=19, fg_color='gray29', border_width=5)
+    card3.grid(row=0, column=2, padx=20, pady=20)
+    
+    card4 = Card(app, title='Title4', cr=19, fg_color='gray29', border_width=5)
+    card4.grid(row=0, column=3, padx=20, pady=20)
+
+
+    card5 = Card(app, title='Title5', cr=19, fg_color='gray29', border_width=5)
+    card5.grid(row=1, column=0, padx=20, pady=20)
+    
+    card6 = Card(app, title='Title6', cr=19, fg_color='gray29', border_width=5)
+    card6.grid(row=1, column=1, padx=20, pady=20)
+
+    card7 = Card(app, title='Title7', cr=19, fg_color='gray29', border_width=5)
+    card7.grid(row=1, column=2, padx=20, pady=20)
+    
+    card8 = Card(app, title='Title8', cr=19, fg_color='gray29', border_width=5)
+    card8.grid(row=1, column=3, padx=20, pady=20)
+
+
     app.mainloop()
