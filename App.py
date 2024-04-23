@@ -2,12 +2,13 @@ import customtkinter as ctk
 from PIL import Image
 import tkinter as tk
 import tkintermapview as map
+from HybridRecommender import HybridRecommender
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
         super().__init__(*args, corner_radius=cr, width=width, height=height, **kwargs)
 
-        self.image_dim = (width-32, (height*0.4)-7)
+        self.image_dim = (width-32, (height*0.45)-7)
 
         if image is None:
             self.image = ctk.CTkImage(dark_image=Image.open('Images/no image d.png'), 
