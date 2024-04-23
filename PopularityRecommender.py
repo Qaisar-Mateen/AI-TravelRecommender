@@ -40,9 +40,6 @@ class PopularityRecommender():
     def Recommend(self):
         self.CalculatePopularity()
         
-        print('Popularity mean: ', np.mean(self.dataset['Popularity']))
-        print('popularity max, min: ', np.max(self.dataset['Popularity']), np.min(self.dataset['Popularity']))
-        
         return self.dataset
 
 
