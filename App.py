@@ -118,8 +118,23 @@ class Card(ctk.CTkFrame):
         top.grab_set()
         top.mainloop()
     
-#def update_home():
-
+def load_more(cur, cards, btn_fr, home):
+    
+    btn_fr.grid_forget()
+    total = cur + 12
+    if total > 222:
+        total = 222
+    
+    rec = recomendation.recommend(top_n=total)
+    for i in range(cur, total):
+        card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
+        card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
+        cards.append(card)
+    
+    if total < 222:
+        btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
+    else:
+        ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
 
 
 if __name__ == '__main__':
@@ -143,9 +158,10 @@ if __name__ == '__main__':
 
     recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
                     popularity_model=True,
-                    popular_weight=0.2, collab_weight=0.8)
+                    popular_weight=0.2, collab_weight=0.8
+                    )
     
-    rec = recomendation.recommend(top_n=222)
+    rec = recomendation.recommend(top_n=16)
 
     cards = []
 
@@ -153,5 +169,16 @@ if __name__ == '__main__':
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
         card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
         cards.append(card)
+    
+    btn_fr = ctk.CTkFrame(home, fg_color='transparent')
+    btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
+    btn_fr.columnconfigure((0,3), weight=1)
+
+    btn = ctk.CTkButton(btn_fr, text='Load More', font=('Arial', 12), corner_radius=19, fg_color='#1A1A1A', height=30,
+                        hover_color='#373737', command=lambda: load_more(len(cards), cards, btn_fr, home), width=100
+                        )
+    btn.grid(row=0, column=2, padx=10, pady=1)
+
+    ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
     app.mainloop()
