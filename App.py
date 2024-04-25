@@ -2,7 +2,8 @@ import customtkinter as ctk
 from PIL import Image
 import tkinter as tk
 import tkintermapview as map
-from HybridRecommender import HybridRecommender
+from HybridRecommender import HybridRecommender as HR
+import pandas as pd
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
@@ -88,7 +89,7 @@ class Card(ctk.CTkFrame):
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
        
         self.map_widget.set_address('Pakistan')
-        #self.map_widget.set_zoom(8)
+        self.map_widget.set_zoom(8)
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
