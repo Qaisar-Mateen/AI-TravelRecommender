@@ -34,7 +34,7 @@ class HybridRecommender:
             print(recommendations)
 
             
-                      
+
             # for rec in recommendations:
             #     scores[rec] = (self.alpha * (rec in popularity_recs) +
             #                 self.beta * (rec in collaborative_recs))
@@ -57,7 +57,7 @@ class HybridRecommender:
 
         # recommendations.sort(key=lambda x: scores[x], reverse=True)
 
-        return recommendations[:top_n]
+        return recommendations[['ID', 'Country', 'Rec_Score']][:top_n]
     
 
 if __name__ == '__main__':
