@@ -104,14 +104,13 @@ class Card(ctk.CTkFrame):
         def_but.place(x=15, y=114, anchor='nw')
 
 
-        detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19)#, fg_color='black')
+        detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
 
         top.grab_set()
         top.mainloop()
     
 
-home = None
 
 if __name__ == '__main__':
 
@@ -124,47 +123,35 @@ if __name__ == '__main__':
 
     app.resizable(False, False)
 
-    x = 0
-    y = 0
 
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
-    home.place(x=x, y=y, anchor='nw')
+    home.place(x=0, y=0, anchor='nw')
 
-
-    def move():
-        global home, x, y
-        if home is None:
-            return
-        
-        x = x+70
-        home.place_configure(x=x, y=y, anchor='nw')
-        if x < 1900 and y < 800:
-            app.after(1, move)
     
    
-    card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
-    card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
+    # card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
+    # card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
     
-    card2 = Card(home, title='Title2', cr=19, fg_color='gray29', border_width=5)
-    card2.grid(row=0, column=1, padx=(40, 0), pady=(40, 0))
+    # card2 = Card(home, title='Title2', cr=19, fg_color='gray29', border_width=5)
+    # card2.grid(row=0, column=1, padx=(40, 0), pady=(40, 0))
 
-    card3 = Card(home, title='Title3', cr=19, fg_color='gray29', border_width=5)
-    card3.grid(row=0, column=2, padx=(40, 0), pady=(40, 0))
+    # card3 = Card(home, title='Title3', cr=19, fg_color='gray29', border_width=5)
+    # card3.grid(row=0, column=2, padx=(40, 0), pady=(40, 0))
     
-    card4 = Card(home, title='Title4', cr=19, fg_color='gray29', border_width=5)
-    card4.grid(row=0, column=3, padx=(40, 0), pady=(40, 0))
+    # card4 = Card(home, title='Title4', cr=19, fg_color='gray29', border_width=5)
+    # card4.grid(row=0, column=3, padx=(40, 0), pady=(40, 0))
 
 
-    card5 = Card(home, title='Title5', cr=19, fg_color='gray29', border_width=5)
-    card5.grid(row=1, column=0, padx=(40, 0), pady=(40, 0))
+    # card5 = Card(home, title='Title5', cr=19, fg_color='gray29', border_width=5)
+    # card5.grid(row=1, column=0, padx=(40, 0), pady=(40, 0))
     
-    card6 = Card(home, title='Title6', cr=19, fg_color='gray29', border_width=5)
-    card6.grid(row=1, column=1, padx=(40, 0), pady=(40, 0))
+    # card6 = Card(home, title='Title6', cr=19, fg_color='gray29', border_width=5)
+    # card6.grid(row=1, column=1, padx=(40, 0), pady=(40, 0))
 
-    card7 = Card(home, title='Title7', cr=19, fg_color='gray29', border_width=5)
-    card7.grid(row=1, column=2, padx=(40, 0), pady=(40, 0))
+    # card7 = Card(home, title='Title7', cr=19, fg_color='gray29', border_width=5)
+    # card7.grid(row=1, column=2, padx=(40, 0), pady=(40, 0))
     
-    card8 = Card(home, title='Title8', cr=19, fg_color='gray29', border_width=5)
-    card8.grid(row=1, column=3, padx=(40, 0), pady=(40, 0))
+    # card8 = Card(home, title='Title8', cr=19, fg_color='gray29', border_width=5)
+    # card8.grid(row=1, column=3, padx=(40, 0), pady=(40, 0))
 
     app.mainloop()
