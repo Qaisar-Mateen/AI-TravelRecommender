@@ -118,6 +118,8 @@ class Card(ctk.CTkFrame):
         top.grab_set()
         top.mainloop()
     
+#def update_home():
+
 
 
 if __name__ == '__main__':
@@ -134,6 +136,8 @@ if __name__ == '__main__':
 
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=0, y=0, anchor='nw')
+    
+    ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
 
     id=int(input('Login as:' ))
 
@@ -145,11 +149,9 @@ if __name__ == '__main__':
 
     cards = []
 
-    
-
     for i in range(len(rec)):
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
-        card.grid(row=i//4, column=i%4, padx=(40, 0), pady=(40, 0))
+        card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
         cards.append(card)
 
     app.mainloop()
