@@ -34,7 +34,7 @@ class Card(ctk.CTkFrame):
         self.title.grid(row=0, column=3, pady=5, padx=5)
         
         self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=self.view_detail)
-        self.button_detail.grid(row=1, column=3, pady=8, padx=5)
+        self.button_detail.grid(row=1, column=3, pady=(8,13), padx=5)
 
 
     def search(self):
@@ -44,7 +44,7 @@ class Card(ctk.CTkFrame):
         
         try:
             self.map_widget.set_address(self.search_entry.get(), marker=True)
-            self.map_widget.set_zoom(10)
+            #self.map_widget.set_zoom(10)
             self.map_widget.update()
 
         except Exception as e:
@@ -88,7 +88,7 @@ class Card(ctk.CTkFrame):
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
        
         self.map_widget.set_address('Pakistan')
-        self.map_widget.set_zoom(8)
+        #self.map_widget.set_zoom(8)
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
