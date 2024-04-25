@@ -30,12 +30,14 @@ class HybridRecommender:
         scores = {}
 
         if self.content_model is None:
-            recommendations = pd.merge(popularity_recs, collaborative_recs, on='ID', how='outer')
+            recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
             print(recommendations)
-                        
-            for rec in recommendations:
-                scores[rec] = (self.alpha * (rec in popularity_recs) +
-                            self.beta * (rec in collaborative_recs))
+
+            
+                      
+            # for rec in recommendations:
+            #     scores[rec] = (self.alpha * (rec in popularity_recs) +
+            #                 self.beta * (rec in collaborative_recs))
                 
         elif self.collaborative_model is None:
             recommendations = list(set(popularity_recs + content_recs))
@@ -53,7 +55,7 @@ class HybridRecommender:
                             self.gamma * (rec in content_recs))
 
 
-        recommendations.sort(key=lambda x: scores[x], reverse=True)
+        # recommendations.sort(key=lambda x: scores[x], reverse=True)
 
         return recommendations[:top_n]
     
