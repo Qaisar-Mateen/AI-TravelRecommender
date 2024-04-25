@@ -34,7 +34,7 @@ class Card(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self.body, text=title, corner_radius=cr, font=('Arial', 14, 'bold'))
         self.title.grid(row=0, column=3, pady=5, padx=5)
         
-        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=self.view_detail)
+        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=lambda x: self.view_detail(title)
         self.button_detail.grid(row=1, column=3, pady=(8,13), padx=5)
 
 
@@ -61,7 +61,7 @@ class Card(ctk.CTkFrame):
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
             self.map_widget.update()
 
-    def view_detail(self):
+    def view_detail(self, country):
             
         top = ctk.CTkToplevel()
         top.title('Details')
@@ -88,7 +88,7 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
        
-        self.map_widget.set_address('Pakistan')
+        self.map_widget.set_address(country, marker=True)
         self.map_widget.set_zoom(8)
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
@@ -139,31 +139,5 @@ if __name__ == '__main__':
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
         card.grid(row=i//4, column=i%4, padx=(40, 0), pady=(40, 0))
         cards.append(card)
-
-   
-    # card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
-    # card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
-    
-    # card2 = Card(home, title='Title2', cr=19, fg_color='gray29', border_width=5)
-    # card2.grid(row=0, column=1, padx=(40, 0), pady=(40, 0))
-
-    # card3 = Card(home, title='Title3', cr=19, fg_color='gray29', border_width=5)
-    # card3.grid(row=0, column=2, padx=(40, 0), pady=(40, 0))
-    
-    # card4 = Card(home, title='Title4', cr=19, fg_color='gray29', border_width=5)
-    # card4.grid(row=0, column=3, padx=(40, 0), pady=(40, 0))
-
-
-    # card5 = Card(home, title='Title5', cr=19, fg_color='gray29', border_width=5)
-    # card5.grid(row=1, column=0, padx=(40, 0), pady=(40, 0))
-    
-    # card6 = Card(home, title='Title6', cr=19, fg_color='gray29', border_width=5)
-    # card6.grid(row=1, column=1, padx=(40, 0), pady=(40, 0))
-
-    # card7 = Card(home, title='Title7', cr=19, fg_color='gray29', border_width=5)
-    # card7.grid(row=1, column=2, padx=(40, 0), pady=(40, 0))
-    
-    # card8 = Card(home, title='Title8', cr=19, fg_color='gray29', border_width=5)
-    # card8.grid(row=1, column=3, padx=(40, 0), pady=(40, 0))
 
     app.mainloop()
