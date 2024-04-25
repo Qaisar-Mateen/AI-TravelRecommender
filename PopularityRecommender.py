@@ -39,8 +39,8 @@ class PopularityRecommender():
 
     def Recommend(self):
         self.CalculatePopularity()
-        
-        return self.dataset
+
+        return self.dataset[['ID', 'Country', 'Popularity']]
 
 
 if __name__ == '__main__':
