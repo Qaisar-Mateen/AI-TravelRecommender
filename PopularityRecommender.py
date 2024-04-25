@@ -44,5 +44,5 @@ class PopularityRecommender():
 
 
 if __name__ == '__main__':
-    PR = PopularityRecommender('world-popularity.csv', alpha=0.7, beta=0.1)
+    PR = PopularityRecommender()
     print(PR.Recommend())
