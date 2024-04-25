@@ -151,9 +151,9 @@ class CollaborativeRecommender:
 
         recommendation = pd.merge(recommendation, df, how='left', left_on='ID', right_on='ID')
         
-        recommendation = recommendation.drop(columns=['keywords', 'climate', 'avg cost per day'])
+        #recommendation = recommendation.drop(columns=['keywords', 'climate', 'avg cost per day'])
 
-        recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
+        #recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
 
         #print(recommendation[['Country', 'Rating']])
 

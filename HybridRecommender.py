@@ -1,19 +1,20 @@
 from PopularityRecommender import PopularityRecommender
 from CollaborativeRecommender import CollaborativeRecommender
 from ContentRecommender import ContentBaseRecommender
+import pandas as pd
 
 class HybridRecommender:
     def __init__(self, popularity_model: PopularityRecommender=None,
                 collaborative_model: CollaborativeRecommender=None,
                 content_model: ContentBaseRecommender=None,
-                alpha: float=0.3, beta: float=0.3, gamma: float=0.4):
+                popular_weight: float=0.2, collab_weight: float=0.5, content_weight: float=0.4):
         
         self.popularity_model = popularity_model
         self.collaborative_model = collaborative_model
         self.content_model = content_model
-        self.alpha = alpha
-        self.beta = beta
-        self.gamma = gamma
+        self.alpha = popular_weight
+        self.beta = collab_weight
+        self.gamma = content_weight
 
     def recommend(self, top_n=222):
 
@@ -29,7 +30,8 @@ class HybridRecommender:
         scores = {}
 
         if self.content_model is None:
-            recommendations = list(set(collaborative_recs + popularity_recs))
+            recommendations = pd.merge(popularity_recs, collaborative_recs, on='ID', how='outer')
+            print(recommendations)
                         
             for rec in recommendations:
                 scores[rec] = (self.alpha * (rec in popularity_recs) +
@@ -57,4 +59,7 @@ class HybridRecommender:
     
 
 if __name__ == '__main__':
-    cr, pr = CollaborativeRecommender(user=0, ), PopularityRecommender()
+    cr, pr = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin'), PopularityRecommender()
+
+    hr = HybridRecommender(collaborative_model=cr, popularity_model=pr, popular_weight=0.2, collab_weight=0.8)
+    print(hr.recommend())

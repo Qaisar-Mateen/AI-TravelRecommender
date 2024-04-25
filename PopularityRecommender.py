@@ -37,7 +37,7 @@ class PopularityRecommender():
         self.dataset['Popularity'] = self.dataset.apply(NormalizePopularity, axis=1)
 
 
-    def Recommend(self):
+    def recommend(self):
         self.CalculatePopularity()
 
         return self.dataset[['ID', 'Country', 'Popularity']]
