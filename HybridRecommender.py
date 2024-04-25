@@ -46,7 +46,7 @@ class HybridRecommender:
             recommendations['Score'] = recommendations['Popularity']*self.alpha + recommendations['Rating']*self.beta + recommendations['Similarity']*self.gamma
 
 
-        # recommendations.sort(key=lambda x: scores[x], reverse=True)
+        recommendations = recommendations.sort_values(by='Score', ascending=False)
 
         return recommendations[['ID', 'Country', 'Score']][:top_n]
     
@@ -55,4 +55,4 @@ if __name__ == '__main__':
     cr, pr = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin'), PopularityRecommender()
 
     hr = HybridRecommender(collaborative_model=cr, popularity_model=pr, popular_weight=0.2, collab_weight=0.8)
-    print(hr.recommend())
+    print(hr.recommend(top_n=16))

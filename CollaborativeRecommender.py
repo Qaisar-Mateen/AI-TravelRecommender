@@ -110,14 +110,13 @@ def train_NN(dataset_name, model_name):
 
 
 class CollaborativeRecommender:
-    def __init__(self, user: int, model_name, top_n: int=222, train: bool=False, dataset_name=None):
+    def __init__(self, user: int, model_name, train: bool=False, dataset_name=None):
         self.user = user
         self.model_name = model_name
-        self.top_n = top_n
         self.train = train
         self.dataset_name = dataset_name
 
-    def recommend(self):
+    def recommend(self, test=False,  top_n: int=222):
         if self.train:
             if self.dataset_name is None:
                 raise ValueError('Please provide dataset_name for trainig the model')
@@ -141,7 +140,7 @@ class CollaborativeRecommender:
 
         
         with torch.no_grad():
-            predictions = (pre_trained_model(user_id, country_ids))
+            predictions = pre_trained_model(user_id, country_ids)
         
         predictions = predictions.flatten()
 
@@ -151,11 +150,9 @@ class CollaborativeRecommender:
 
         recommendation = pd.merge(recommendation, df, how='left', left_on='ID', right_on='ID')
         
-        #recommendation = recommendation.drop(columns=['keywords', 'climate', 'avg cost per day'])
+        if test:
+            recommendation = recommendation.sort_values(by='Rating', ascending=False).head(top_n)
 
-        #recommendation = recommendation.sort_values(by='Rating', ascending=False).head(self.top_n)
-
-        #print(recommendation[['Country', 'Rating']])
 
         return recommendation[['ID', 'Country', 'Rating']]
 
@@ -199,5 +196,5 @@ if __name__ == "__main__":
 
     #train_NN('ratings.csv', 'CF_Neural_Model3.7.bin')
 
-    model = CollaborativeRecommender(user=1484, model_name='CF_Neural_Model3.7.bin', top_n=10)
-    print(model.recommend())
+    model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin')
+    print(model.recommend(test=True, top_n=16))
