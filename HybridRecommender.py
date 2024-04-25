@@ -22,8 +22,12 @@ class HybridRecommender:
                 raise TypeError('Collaborative Model must be a tuple (preset:bool, user:int, model_name:str)')
         else:
             self.collaborative_model = None
-    
-        self.content_model = content_model
+
+        if content_model:
+            self.content_model = ContentBaseRecommender(content_model)
+        else:
+            self.content_model = None
+        
         self.alpha = popular_weight
         self.beta = collab_weight
         self.gamma = content_weight
@@ -42,8 +46,6 @@ class HybridRecommender:
 
         if self.content_model is None:
             recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
-            print(recommendations, self.alpha, self.beta)
-
 
             recommendations['Score'] = recommendations['Popularity'] * self.alpha + recommendations['Rating'] * self.beta
                 

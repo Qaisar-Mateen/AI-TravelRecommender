@@ -2,8 +2,8 @@ import customtkinter as ctk
 from PIL import Image
 import tkinter as tk
 import tkintermapview as map
-from HybridRecommender import HybridRecommender as HR
-import pandas as pd
+from HybridRecommender import HybridRecommender
+#import pandas as pd
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
@@ -127,7 +127,19 @@ if __name__ == '__main__':
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=0, y=0, anchor='nw')
 
-    HR()
+    recomendation = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
+                    popularity_model=True,
+                    popular_weight=0.2, collab_weight=0.8)
+    
+    rec = recomendation.recommend(top_n=16)
+
+    cards = []
+
+    for i in range(len(rec)):
+        card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
+        card.grid(row=i//4, column=i%4, padx=(40, 0), pady=(40, 0))
+        cards.append(card)
+
    
     # card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
     # card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
