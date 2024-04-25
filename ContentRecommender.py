@@ -55,19 +55,20 @@ class ContentBaseRecommender:
 
     def get_TF_IDF_recomendation(self, country, budget, num_of_rec=5):
 
-        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0] -1
+        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
         
         sim_scores = list(enumerate(self.cosine_sim[idx]))
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        
+        #print(sim_scores)
         country_indices = [i[0] for i in sim_scores]
 
         reced = 0
-        recommendation = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
+        recommendation = pd.DataFrame(columns=['ID', 'Country', 'Cost Per Day', 'Score'])
         
         for index, score in zip(country_indices, sim_scores):
             if self.data['Country'].iloc[index].lower() != country.lower() and self.data['avg cost per day'].iloc[index] <= budget+5:
-                recommendation = recommendation._append({'Country': self.data['Country'].iloc[index], 
+                recommendation = recommendation._append({'ID': self.data['ID'].iloc[index],
+                                                  'Country': self.data['Country'].iloc[index], 
                                                   'Cost Per Day': self.data['avg cost per day'].iloc[index], 
                                                   'Score': score[1]}, ignore_index=True)
                 reced += 1
@@ -80,20 +81,21 @@ class ContentBaseRecommender:
 
     def get_CountVectorizer_recomendation(self, country, budget, num_of_rec=5):
         
-        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0] -1
+        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
         sim_scores = list(enumerate(self.sim[idx]))
 
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        print('score: ',sim_scores)
+        #print('score: ',sim_scores)
 
         country_indices = [i[0] for i in sim_scores]
 
         reced = 0
-        recommendation = pd.DataFrame(columns=['Country', 'Cost Per Day', 'Score'])
+        recommendation = pd.DataFrame(columns=['ID', 'Country', 'Cost Per Day', 'Score'])
         
         for index, score in zip(country_indices, sim_scores):
             if self.data['Country'].iloc[index].lower() != country.lower() and self.data['avg cost per day'].iloc[index] <= budget+5:
-                recommendation = recommendation._append({'Country': self.data['Country'].iloc[index], 
+                recommendation = recommendation._append({'ID': self.data['ID'].iloc[index],
+                                                  'Country': self.data['Country'].iloc[index], 
                                                   'Cost Per Day': self.data['avg cost per day'].iloc[index], 
                                                   'Score': score[1]}, ignore_index=True)
                 reced += 1
@@ -104,7 +106,7 @@ class ContentBaseRecommender:
         return recommendation
     
 
-    def recommend(self, country, budget, num_of_rec=5, tf_idf=True, count_vectorizer=True):
+    def recommend(self, country, budget, num_of_rec=5, tf_idf=True, count_vectorizer=False):
 
         like_df = self.data[self.data['Country'].str.lower() == country.lower()]
         
@@ -122,11 +124,11 @@ class ContentBaseRecommender:
 
         if count_vectorizer:
             print('\n\nCount Vectorizer Score Recomendation:\n')
-            print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
+            print(self.get_CountVectorizer_recomendation(country, budget, num_of_rec))
 
 
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
     country = input('Enter a country you like: ')
     budget = int(input('Enter your budget: '))
-    recommender.recommend(country, budget, 5, tf_idf=True, count_vectorizer=True)
+    recommender.recommend(country, budget, 5, count_vectorizer=True)

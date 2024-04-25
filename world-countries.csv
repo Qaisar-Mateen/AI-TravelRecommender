@@ -72,7 +72,7 @@ ID,Country,keywords,avg cost per day,climate
 70,Micronesia,asia island beach,143,hot
 71,Iraq,asia culture desert,114,hot
 72,Iran,asia culture desert mountain food history,124,hot
-73,Pakistan,asia history beach mountain food culture,113,mix
+73,Pakistan,asia history beach mountain food culture desert,113,mix
 74,Iceland,europe mountain beach,117,cold
 75,India,asia beach mountain island skyscrapper history food culture desert wildlife,112,mix
 76,Japan,asia mountain beach island food culture history skyscrapper,112,mix
@@ -118,7 +118,7 @@ ID,Country,keywords,avg cost per day,climate
 116,Honduras,africa food history,112,hot
 117,Haiti,northamerica food history culture mountain forest,112,mix
 118,Hungary,europe food history culture beach,114,mix
-119,Indonesia,asia food history culture beach mountain,113,mix
+119,Indonesia,asia food history culture beach mountain island,113,mix
 120,Ireland,europe food history culture,116,cold
 121,Isle of Man,asia island food history,120,hot
 122,Jersey,europe food history culture beach,119,mix
