@@ -54,3 +54,7 @@ class HybridRecommender:
         recommendations.sort(key=lambda x: scores[x], reverse=True)
 
         return recommendations[:top_n]
+    
+
+if __name__ == '__main__':
+    cr, pr = CollaborativeRecommender(user=0, ), PopularityRecommender()
