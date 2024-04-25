@@ -5,6 +5,8 @@ import tkintermapview as map
 from HybridRecommender import HybridRecommender
 #import pandas as pd
 
+special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon', 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
+
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
         super().__init__(*args, corner_radius=cr, width=width, height=height, **kwargs)
@@ -34,7 +36,7 @@ class Card(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self.body, text=title, corner_radius=cr, font=('Arial', 14, 'bold'))
         self.title.grid(row=0, column=3, pady=5, padx=5)
         
-        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=lambda x: self.view_detail(title)
+        self.button_detail = ctk.CTkButton(self.body, text='View Detail', corner_radius=cr, command=lambda: self.view_detail(title))
         self.button_detail.grid(row=1, column=3, pady=(8,13), padx=5)
 
 
@@ -62,7 +64,8 @@ class Card(ctk.CTkFrame):
             self.map_widget.update()
 
     def view_detail(self, country):
-            
+        global special_cases
+
         top = ctk.CTkToplevel()
         top.title('Details')
         top.geometry('900x700')
@@ -87,9 +90,13 @@ class Card(ctk.CTkFrame):
         self.map_widget = map.TkinterMapView(map_frame, width=750, height=450, corner_radius=19)
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
-       
-        self.map_widget.set_address(country, marker=True)
-        self.map_widget.set_zoom(8)
+        
+        if special_cases.get(country):
+            country = special_cases.get(country)
+
+        a = self.map_widget.set_address(country, marker=True)
+        if a == False:
+            tk.messagebox.showerror('Error', str('Address Not Found!!'))
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
@@ -118,7 +125,7 @@ if __name__ == '__main__':
     ctk.set_default_color_theme('dark-blue')
 
     app = ctk.CTk()
-    app.title('CustomTkinter')
+    app.title('AI-Travel Recommender')
     app.geometry('1323x650')
 
     app.resizable(False, False)
@@ -127,13 +134,17 @@ if __name__ == '__main__':
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=0, y=0, anchor='nw')
 
-    recomendation = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
+    id=int(input('Login as:' ))
+
+    recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
                     popularity_model=True,
                     popular_weight=0.2, collab_weight=0.8)
     
-    rec = recomendation.recommend(top_n=16)
+    rec = recomendation.recommend(top_n=222)
 
     cards = []
+
+    
 
     for i in range(len(rec)):
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
