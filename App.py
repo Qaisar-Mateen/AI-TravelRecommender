@@ -127,7 +127,7 @@ if __name__ == '__main__':
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=0, y=0, anchor='nw')
 
-    
+    HR()
    
     # card = Card(home, title='Title1', cr=19, fg_color='gray29', border_width=5)
     # card.grid(row=0, column=0, padx=(40, 0), pady=(40, 0))
