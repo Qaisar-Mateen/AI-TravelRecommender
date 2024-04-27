@@ -28,14 +28,16 @@ def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
     df = df[df['country'] == country]['name'].sample(n=min(5, len(df)))
     print(df)
-    city_cords = [geocoder.osm(df[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df[i]+", "+country).ok]
-
+    city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
+    print(city_cords)
     # get an iso geometry id for each city
     iso_urls = [get_iso(city_cords[i][0], city_cords[i][1])['properties']['id'] for i in range(len(city_cords))]
-
+    print('iso')
     # get places for each city with the iso geometry id
-    places = [get_places for i in range(len(iso_urls.))]
+    places = [get_places for i in range(len(iso_urls))]
 
+    print(places)
+    
 
 
 
@@ -141,7 +143,9 @@ class Card(ctk.CTkFrame):
         def_but.place(x=15, y=114, anchor='nw')
 
 
-        get_spots(country)
+        places = get_spots(country, self.map_widget)
+
+
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
 
