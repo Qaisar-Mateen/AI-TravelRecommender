@@ -4,7 +4,7 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-
+#id = -1
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
 
@@ -136,8 +136,12 @@ def load_more(cur, cards, btn_fr, home):
     else:
         ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
 
-def login(master):
-    id = -1
+def login():
+    global id
+
+    master = tk.Tk()
+    master.title('Login')
+    master.geometry('1323x650')
     fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
     fr.place(x=1323//2, y=650/2, anchor='center')
     fr.columnconfigure((0,7), weight=1)
@@ -151,7 +155,7 @@ def login(master):
             if user_id in ids:
                 fr.destroy()
                 id = user_id
-            else:            
+            else:
                 raise ValueError('User ID not found!!')
         except ValueError as e:
             tk.messagebox.showerror('Error', str(e))
@@ -163,25 +167,25 @@ def login(master):
 
     ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
     ent.grid(row=1, column=1, pady=10, padx=10)
-    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), fr))
+    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
     btn.grid(row=2, column=1, pady=10, padx=10)
-
-    return id
+    
+    master.mainloop()
 
 if __name__ == '__main__':
-
-    ctk.AppearanceModeTracker.set_appearance_mode('dark')
-    ctk.set_default_color_theme('dark-blue')
-
-    app = ctk.CTk()
-    app.title('AI-Travel Recommender')
-    app.geometry('1323x650')
-    app.resizable(False, False)
-
-    id=-1
-    id = login(app)
+    global id
+    
+    id = input('LoginID: ')#login()
     print(id)
-    if id != -1:
+    if id != -1 or id is not None:
+        ctk.AppearanceModeTracker.set_appearance_mode('dark')
+        ctk.set_default_color_theme('dark-blue')
+
+        app = ctk.CTk()
+        app.title('AI-Travel Recommender')
+        app.geometry('1323x650')
+        app.resizable(False, False)
+
         home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
         home.place(x=0, y=0, anchor='nw')
         ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
