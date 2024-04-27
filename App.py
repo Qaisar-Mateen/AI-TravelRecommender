@@ -8,7 +8,7 @@ import requests
 from requests.structures import CaseInsensitiveDict
 url = '''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
 accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
-&conditions=named,access.yes&filter=geometry:9bf70c418b06f172dbd53d509b13b913&bias=proximity:74.3271803,31.5826618
+&conditions=named,access.yes&filter=geometry:9bf70c418b06f172dbd53d509b13b913
 &limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
 
 
