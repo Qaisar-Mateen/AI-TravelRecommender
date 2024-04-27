@@ -138,12 +138,24 @@ def load_more(cur, cards, btn_fr, home):
 
 def login(master):
     id = -1
+    fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
 
     def login_action(user_id):
-        global id
-        ids = pd.read_csv('ratings.csv')
+        global id, fr
+        try:
+            ids = pd.read_csv('ratings.csv')
+            ids = ids['User_ID'].unique()
+            if int(user_id) in ids:
+                id = int(user_id)
+                fr
+                fr.destroy()
+            else:            
+                raise ValueError('User ID not found!!')
+        except ValueError as e:
+            tk.messagebox.showerror('Error', str(e))
+        except Exception as e:
+            tk.messagebox.showerror('Error', 'An unexpected error occurred: ' + str(e))
 
-    fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
     fr.place(x=1323//2, y=650/2, anchor='center')
     fr.columnconfigure((0,7), weight=1)
 
