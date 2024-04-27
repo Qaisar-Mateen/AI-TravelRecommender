@@ -21,6 +21,9 @@ special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Banglades
 
 def get_spots(country):
     df = pd.read_csv('world-cities.csv')
+    df = df[df['country'] == country]['name'].sample(n=min(5, len(df)))
+    print(df)
+
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
@@ -124,7 +127,7 @@ class Card(ctk.CTkFrame):
         def_but.place(x=15, y=114, anchor='nw')
 
 
-
+        get_spots(country)
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
 
