@@ -139,16 +139,18 @@ def load_more(cur, cards, btn_fr, home):
 def login(master):
     id = -1
     fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
+    fr.place(x=1323//2, y=650/2, anchor='center')
+    fr.columnconfigure((0,7), weight=1)
 
-    def login_action(user_id):
-        global id, fr
+    def login_action(user_id, fr):
+        global id
         try:
+            user_id = int(user_id)
             ids = pd.read_csv('ratings.csv')
-            ids = ids['User_ID'].unique()
-            if int(user_id) in ids:
-                id = int(user_id)
-                fr
+            ids = ids['user'].unique()
+            if user_id in ids:
                 fr.destroy()
+                id = user_id
             else:            
                 raise ValueError('User ID not found!!')
         except ValueError as e:
@@ -156,14 +158,12 @@ def login(master):
         except Exception as e:
             tk.messagebox.showerror('Error', 'An unexpected error occurred: ' + str(e))
 
-    fr.place(x=1323//2, y=650/2, anchor='center')
-    fr.columnconfigure((0,7), weight=1)
 
     ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(10, 20))
 
-    ent = ctk.CTkEntry(fr, width=300, placeholder_text='Enter User ID', height=30, corner_radius=19)
-    ent.grid(row=1, column=1, pady=10)
-    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, command=lambda: login_action(ent.get()))
+    ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
+    ent.grid(row=1, column=1, pady=10, padx=10)
+    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), fr))
     btn.grid(row=2, column=1, pady=10, padx=10)
 
     return id
@@ -178,33 +178,34 @@ if __name__ == '__main__':
     app.geometry('1323x650')
     app.resizable(False, False)
 
-
-    home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
-    home.place(x=0, y=0, anchor='nw')
-    ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
+    id=-1
+    id = login(app)
+    print(id)
+    if id != -1:
+        home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
+        home.place(x=0, y=0, anchor='nw')
+        ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
     
-    id=int(input('Login as:' ))
-
-    recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
+        recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
                     popularity_model=True,
                     popular_weight=0.2, collab_weight=0.8
                     )
-    rec = recomendation.recommend(top_n=16)
+        rec = recomendation.recommend(top_n=16)
 
-    cards = []
-    for i in range(len(rec)):
-        card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
-        card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
-        cards.append(card)
+        cards = []
+        for i in range(len(rec)):
+            card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
+            card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
+            cards.append(card)
     
-    btn_fr = ctk.CTkFrame(home, fg_color='transparent')
-    btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
-    btn_fr.columnconfigure((0,3), weight=1)
+        btn_fr = ctk.CTkFrame(home, fg_color='transparent')
+        btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
+        btn_fr.columnconfigure((0,3), weight=1)
 
-    btn = ctk.CTkButton(btn_fr, text='Load More', font=('Arial', 12), corner_radius=19, fg_color='#1A1A1A', height=30,
+        btn = ctk.CTkButton(btn_fr, text='Load More', font=('Arial', 12), corner_radius=19, fg_color='#1A1A1A', height=30,
                         hover_color='#373737', command=lambda: load_more(len(cards), cards, btn_fr, home), width=100
                         )
-    btn.grid(row=0, column=2, padx=10, pady=1)
-    ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
+        btn.grid(row=0, column=2, padx=10, pady=1)
+        ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
     app.mainloop()
