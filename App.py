@@ -3,7 +3,7 @@ from PIL import Image
 import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
-#import pandas as pd
+import pandas as pd
 
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
@@ -136,6 +136,25 @@ def load_more(cur, cards, btn_fr, home):
     else:
         ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
 
+def login(master):
+    id = -1
+
+    def login_action(user_id):
+        global id
+        ids = pd.read_csv('ratings.csv')
+
+    fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
+    fr.place(x=1323//2, y=650/2, anchor='center')
+    fr.columnconfigure((0,7), weight=1)
+
+    ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(10, 20))
+
+    ent = ctk.CTkEntry(fr, width=300, placeholder_text='Enter User ID', height=30, corner_radius=19)
+    ent.grid(row=1, column=1, pady=10)
+    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, command=lambda: login_action(ent.get()))
+    btn.grid(row=2, column=1, pady=10, padx=10)
+
+    return id
 
 if __name__ == '__main__':
 
@@ -145,26 +164,22 @@ if __name__ == '__main__':
     app = ctk.CTk()
     app.title('AI-Travel Recommender')
     app.geometry('1323x650')
-
     app.resizable(False, False)
 
 
     home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
     home.place(x=0, y=0, anchor='nw')
-    
     ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
-
+    
     id=int(input('Login as:' ))
 
     recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
                     popularity_model=True,
                     popular_weight=0.2, collab_weight=0.8
                     )
-    
     rec = recomendation.recommend(top_n=16)
 
     cards = []
-
     for i in range(len(rec)):
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
         card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
@@ -178,7 +193,6 @@ if __name__ == '__main__':
                         hover_color='#373737', command=lambda: load_more(len(cards), cards, btn_fr, home), width=100
                         )
     btn.grid(row=0, column=2, padx=10, pady=1)
-
     ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
     app.mainloop()
