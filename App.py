@@ -8,7 +8,7 @@ import requests
 from requests.structures import CaseInsensitiveDict
 url = '''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
 accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
-&conditions=named,access.yes&filter=rect:74.22959761223339,31.579216747009035,74.45430105791357,31.408456010437583&
+&conditions=named,access.yes&filter=geometry:9bf70c418b06f172dbd53d509b13b913&bias=proximity:74.3271803,31.5826618
 &limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
 
 
@@ -18,6 +18,9 @@ accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bic
 
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
+
+def get_spots(country):
+    df = pd.read_csv('world-cities.csv')
 
 class Card(ctk.CTkFrame):
     def __init__(self, *args, title=None, width: int = 250, height: int = 275, cr: int = 19, image=None, **kwargs):
@@ -103,7 +106,7 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        
+
         a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
         if a == False:
             tk.messagebox.showerror('Error', str('Address Not Found!!'))
@@ -119,6 +122,7 @@ class Card(ctk.CTkFrame):
                                 corner_radius=2, fg_color='#333333', hover_color='#555555'
                                 )
         def_but.place(x=15, y=114, anchor='nw')
+
 
 
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
