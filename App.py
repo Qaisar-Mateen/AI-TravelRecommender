@@ -4,25 +4,39 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-import requests
-from requests.structures import CaseInsensitiveDict
-url = '''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
-accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
-&conditions=named,access.yes&filter=geometry:9bf70c418b06f172dbd53d509b13b913
-&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+import requests, geocoder
 
+def get_places(geo_id):
+    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
+    accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
+    &conditions=named,access.yes&filter=geometry:{geo_id}
+    &limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+    result = requests.get(url)
+    return result.json()
 
-# res = requests.get(url)
-# print(res.json())
+def get_iso(lat, lon):
+    url_iso = f'https://api.geoapify.com/v1/isoline?lat={lat}&lon={lon}&type=time&mode=drive&range=1500&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'
+    result = requests.get(url_iso)
+    return result.json()
+
 
 
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
 
-def get_spots(country):
+def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
     df = df[df['country'] == country]['name'].sample(n=min(5, len(df)))
     print(df)
+    city_cords = [geocoder.osm(df[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df[i]+", "+country).ok]
+
+    # get an iso geometry id for each city
+    iso_urls = [get_iso(city_cords[i][0], city_cords[i][1])['properties']['id'] for i in range(len(city_cords))]
+
+    # get places for each city with the iso geometry id
+    places = [get_places for i in range(len(iso_urls.))]
+
+
 
 
 class Card(ctk.CTkFrame):
