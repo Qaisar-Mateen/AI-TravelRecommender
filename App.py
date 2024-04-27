@@ -4,7 +4,18 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-#id = -1
+import requests
+from requests.structures import CaseInsensitiveDict
+url = '''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
+accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
+&conditions=named,access.yes&filter=rect:74.22959761223339,31.579216747009035,74.45430105791357,31.408456010437583&
+&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+
+
+# res = requests.get(url)
+# print(res.json())
+
+
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
 
@@ -92,10 +103,8 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        if special_cases.get(country):
-            country = special_cases.get(country)
-
-        a = self.map_widget.set_address(country, marker=True)
+        
+        a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
         if a == False:
             tk.messagebox.showerror('Error', str('Address Not Found!!'))
 
