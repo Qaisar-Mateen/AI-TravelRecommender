@@ -26,18 +26,23 @@ special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Banglades
 
 def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
-    df = df[df['country'] == country]['name'].sample(n=min(5, len(df)))
+    df = df[df['country'] == country][['name', 'lat', 'lng']].sample(n=min(5, len(df)))
     print(df)
-    city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
-    print(city_cords)
+    #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
+    #print(city_cords)
     # get an iso geometry id for each city
-    iso_urls = [get_iso(city_cords[i][0], city_cords[i][1])['properties']['id'] for i in range(len(city_cords))]
-    print('iso')
+    iso = [get_iso(df.iloc[i]['lat'], df.iloc[i]['lng'])['properties']['id'] for i in range(len(df))]
+    print(iso)
     # get places for each city with the iso geometry id
-    places = [get_places for i in range(len(iso_urls))]
+    places = [get_places(iso[i]) for i in range(len(iso))]
 
     print(places)
+
+    for i in range(len(places)):
+        for place in places[i]['features']:
+            map.add_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
     
+    map.update()
 
 
 

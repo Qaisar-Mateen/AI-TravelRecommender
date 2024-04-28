@@ -16,13 +16,13 @@ def askAI():
     users preferences for a travel destination. The keywords are: ['europe', 'history', 'mountain', 'cold', 'skyscrapper', 'desert', 'beach',
     'asia', 'hot', 'food', 'culture', 'island', 'northamerica', 'southamerica',
     'africa', 'plain', 'wildlife', 'australia', 'forest'].',
-    'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
-    'Assistant': 'keywords are: beach, culture, food, hot - 76',
-    'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
+    'Assistant': 'keywords are: keyword0,keyword1,keyword2,keyword3... - budget per day (if given)',
+    'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather',
     }""",
-      #  "temperature":0.75,
-      #  "topP":0.9,
-       "maxTokens": 6000
+      "temperature":0,
+      "topP":0.3,
+      "lengthPenality":0.3,
+       "maxTokens": 200
     }, stream=True)
       # str = response.text
       # print(str)
@@ -36,7 +36,12 @@ def askAI():
 #while True:
 #try:
 text = askAI()
-print('text',text)
+text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
+text = text.replace("Based on the user's prompt, the keywords that most accurately describe their preferences for a travel destination are: ", '')
+
+#_, budget = text.split('$')
+
+print('Llama3:',text)#, budget)
 # keywords_and_budget = []
 # # Split the text on the colon to separate the keywords and budget from the rest of the text
 # keywords_and_budget.append(text.split(':'))
@@ -50,3 +55,20 @@ print('text',text)
 #     #break
 # #except ValueError:
 #     #print("Error: The text is missing something. Trying again...")
+
+
+# ({
+# f'prompt': """{
+#     'systemPrompt': 'You have to analyse the user prompt and generate keywords for the following keywords that most accurately describes 
+#     users preferences for a travel destination. The keywords are: ['europe', 'history', 'mountain', 'cold', 'skyscrapper', 'desert', 'beach',
+#     'asia', 'hot', 'food', 'culture', 'island', 'northamerica', 'southamerica',
+#     'africa', 'plain', 'wildlife', 'australia', 'forest'].',
+#     'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
+#     'Assistant': #'keywords are: beach, culture, food, hot - 76',
+#     'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
+#     }""",
+#       "temperature":0,
+#       "topP":0.1,
+#       "lengthPenality":0.3,
+#        "maxTokens": 200
+#     }, stream=True)
