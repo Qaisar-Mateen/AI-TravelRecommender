@@ -15,8 +15,9 @@ def askAI():
     'systemPrompt': 'You have to analyse the user prompt and generate keywords for the following keywords that most accurately describes 
     users preferences for a travel destination. The keywords are: ['europe', 'history', 'mountain', 'cold', 'skyscrapper', 'desert', 'beach',
     'asia', 'hot', 'food', 'culture', 'island', 'northamerica', 'southamerica',
-    'africa', 'plain', 'wildlife', 'australia', 'forest'].', 
-    'Assistant': 'keyword1,keyword2,keyword3... - budget per day(if given)', 
+    'africa', 'plain', 'wildlife', 'australia', 'forest'].',
+    'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
+    'Assistant': 'keywords are: beach, culture, food, hot - 76',
     'user': 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt for 2 days is 152',
     }""",
       #  "temperature":0.75,
@@ -29,21 +30,23 @@ def askAI():
     for chunk in response.iter_content(chunk_size=1024):  
         if chunk:
             text += chunk.decode('utf-8')
-    print(text)
+    #print(text)
     return text
 
-while True:
-    try:
-        text = askAI()
-
-        # Split the text on the colon to separate the keywords and budget from the rest of the text
-        _, keywords_and_budget = text.split(':')
-        keywords, budget = keywords_and_budget.split('-')
-        keywords = keywords_and_budget
-        budget = ''
-        keywords = keywords.strip()
-        budget = budget.strip()
-        print(keywords)
-        break
-    except ValueError:
-        print("Error: The text is missing something. Trying again...")
+#while True:
+#try:
+text = askAI()
+print('text',text)
+# keywords_and_budget = []
+# # Split the text on the colon to separate the keywords and budget from the rest of the text
+# keywords_and_budget.append(text.split(':'))
+# print('keywords & budget',keywords_and_budget)
+# #keywords, budget = keywords_and_budget.split('-')
+# #print('keywords, budget',keywords, budget)
+# keywords = keywords_and_budget[1]
+# #keywords = keywords.strip()
+# #budget = budget.strip()
+# print(keywords)
+#     #break
+# #except ValueError:
+#     #print("Error: The text is missing something. Trying again...")
