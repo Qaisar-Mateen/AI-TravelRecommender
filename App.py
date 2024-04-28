@@ -4,13 +4,10 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-import requests, geocoder
+import requests, threading
 
-def get_places(geo_id):
-    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,
-    accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment
-    &conditions=named,access.yes&filter=geometry:{geo_id}
-    &limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+def get_places(geo_id, lat, lan):
+    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=geometry:{geo_id}&bias=proximity:{lat},{lan}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
     result = requests.get(url)
     return result.json()
 
@@ -27,20 +24,22 @@ special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Banglades
 def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
     df = df[df['country'] == country][['name', 'lat', 'lng']].sample(n=min(5, len(df)))
-    print(df)
+    #print(df)
     #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
     #print(city_cords)
     # get an iso geometry id for each city
-    iso = [get_iso(df.iloc[i]['lat'], df.iloc[i]['lng'])['properties']['id'] for i in range(len(df))]
-    print(iso)
+    #iso = [get_iso(df.iloc[i]['lat'], df.iloc[i]['lng'])['properties']['id'] for i in range(len(df))]
+    #print(iso)
     # get places for each city with the iso geometry id
-    places = [get_places(iso[i]) for i in range(len(iso))]
+    #places = [get_places(iso[i],df.iloc[i]['lat'],df.iloc[i]['lng']) for i in range(len(iso))]
 
-    print(places)
+    #rint(places)
 
-    for i in range(len(places)):
-        for place in places[i]['features']:
-            map.add_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+    df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
+
+    #for i in range(len(places)):
+    #    for place in places[i]['features']:
+    #        map.add_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
     
     map.update()
 
@@ -148,7 +147,7 @@ class Card(ctk.CTkFrame):
         def_but.place(x=15, y=114, anchor='nw')
 
 
-        places = get_spots(country, self.map_widget)
+        threading.Thread(target=get_spots(country, self.map_widget)).start()
 
 
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
