@@ -177,6 +177,9 @@ def load_more(cur, cards, btn_fr, home):
 def login():
     global id
 
+if __name__ == '__main__':
+    id = -1
+    
     master = tk.Tk()
     master.title('Login')
     master.geometry('1323x650')
@@ -191,8 +194,8 @@ def login():
             ids = pd.read_csv('ratings.csv')
             ids = ids['user'].unique()
             if user_id in ids:
-                fr.destroy()
                 id = user_id
+                fr.destroy()
             else:
                 raise ValueError('User ID not found!!')
         except ValueError as e:
@@ -209,12 +212,9 @@ def login():
     btn.grid(row=2, column=1, pady=10, padx=10)
     
     master.mainloop()
-
-if __name__ == '__main__':
-    global id
-    
-    id = input('LoginID: ')#login()
     print(id)
+    #id = input('LoginID: ')#login()
+    #print(id)
     if id != -1 or id is not None:
         ctk.AppearanceModeTracker.set_appearance_mode('dark')
         ctk.set_default_color_theme('dark-blue')
