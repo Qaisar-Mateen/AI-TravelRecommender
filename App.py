@@ -174,15 +174,15 @@ def load_more(cur, cards, btn_fr, home):
     else:
         ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
 
-def login():
-    global id
 
 if __name__ == '__main__':
     id = -1
     
-    master = tk.Tk()
+    master = ctk.CTk()
     master.title('Login')
     master.geometry('1323x650')
+    master.resizable(False, False)
+    
     fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
     fr.place(x=1323//2, y=650/2, anchor='center')
     fr.columnconfigure((0,7), weight=1)
@@ -213,8 +213,7 @@ if __name__ == '__main__':
     
     master.mainloop()
     print(id)
-    #id = input('LoginID: ')#login()
-    #print(id)
+    
     if id != -1 or id is not None:
         ctk.AppearanceModeTracker.set_appearance_mode('dark')
         ctk.set_default_color_theme('dark-blue')
