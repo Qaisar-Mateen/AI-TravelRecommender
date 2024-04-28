@@ -107,6 +107,8 @@ class Card(ctk.CTkFrame):
         top = ctk.CTkToplevel()
         top.title('Details')
         top.geometry('900x700')
+        top.grab_set()
+        top.resizable(False, False)
         top.columnconfigure((0,6), weight=1)
 
         search_frame = ctk.CTkFrame(top, width=400, height=40, corner_radius=19, fg_color='transparent')
@@ -146,14 +148,10 @@ class Card(ctk.CTkFrame):
                                 )
         def_but.place(x=15, y=114, anchor='nw')
 
-
-        threading.Thread(target=get_spots(country, self.map_widget)).start()
-
-
         detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
 
-        top.grab_set()
+        threading.Thread(target=get_spots(country, self.map_widget)).start()
         top.mainloop()
     
 def load_more(cur, cards, btn_fr, home):
