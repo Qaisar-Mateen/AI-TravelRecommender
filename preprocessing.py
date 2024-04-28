@@ -343,15 +343,23 @@ def calculate_visitors(country):
 # countries.to_csv('world-countries.csv', index=False)
 
 import geocoder
+import time
 
 cites = pd.read_csv('world-cities.csv') 
 
+x = []
+for city,country in cites[['name', 'country']].values:
+    print(city, country)
+    x.append(geocoder.osm(city+", "+country).latlng)
 
-x = [geocoder.osm(city).latlng for city in cites['name']]
+    
+#x = [geocoder.osm(city+", "+country).latlng for city,country in cites[['name', 'country']].values]
+print('x done')
 
 cites['lat'] = [i[0] for i in x]
 cites['lng'] = [i[1] for i in x]
 
 print(cites)
 input()
+
 cites.to_csv('world-cities.csv', index=False)
