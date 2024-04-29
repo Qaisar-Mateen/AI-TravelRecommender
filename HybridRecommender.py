@@ -50,12 +50,13 @@ class HybridRecommender:
             recommendations['Score'] = recommendations['Popularity'] * self.alpha + recommendations['Rating'] * self.beta
                 
         elif self.collaborative_model is None:
-            recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
+            recommendations = pd.merge(popularity_recs, content_recs, on=('ID', 'Country'), how='outer')
 
             recommendations['Score'] = recommendations['Popularity'] * self.alpha + recommendations['Similarity'] * self.gamma
                 
         else:
             recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
+            recommendations = pd.merge(recommendations, content_recs, on=('ID', 'Country'), how='outer')
 
             recommendations['Score'] = recommendations['Popularity']*self.alpha + recommendations['Rating']*self.beta + recommendations['Similarity']*self.gamma
 
