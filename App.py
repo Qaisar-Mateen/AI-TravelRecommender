@@ -23,7 +23,10 @@ special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Banglades
 
 def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
-    df = df[df['country'] == country][['name', 'lat', 'lng']].sample(n=min(5, len(df)))
+    df = df[df['country'] == country][['name', 'lat', 'lng']]#
+    
+    if len(df)>5:
+        df = df.sample(n=min(5, len(df)))
     #print(df)
     #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
     #print(city_cords)
@@ -227,10 +230,10 @@ if __name__ == '__main__':
         home.place(x=0, y=0, anchor='nw')
         ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
     
-        recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
-                    popularity_model=True,
-                    popular_weight=0.2, collab_weight=0.8
-                    )
+        recomendation = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
+                        popularity_model=True, content_model=True,
+                        popular_weight=0.15, collab_weight=0.7, content_weight=0.15
+                        )
         rec = recomendation.recommend(top_n=16)
 
         cards = []

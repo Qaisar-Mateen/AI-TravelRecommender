@@ -76,10 +76,11 @@ if __name__ == '__main__':
                         popularity_model=True,
                         popular_weight=0.2, collab_weight=0.8)
     print(hr.recommend(top_n=16))
+    print()
 
     hr2 = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
                         popularity_model=True, content_model=True,
-                        popular_weight=0.2, collab_weight=0.6, content_weight=0.2
+                        popular_weight=0.15, collab_weight=0.7, content_weight=0.15
                         )
     
     print(hr2.recommend(top_n=16))
