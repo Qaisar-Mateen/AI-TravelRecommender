@@ -180,9 +180,11 @@ if __name__ == '__main__':
     master.title('Login')
     master.geometry('1323x650')
     master.resizable(False, False)
-    
-    fr = ctk.CTkFrame(master, width=400, height=200, corner_radius=19)
-    fr.place(x=1323//2, y=650/2, anchor='center')
+    master.columnconfigure((0,7), weight=1)
+    master.rowconfigure((0,7), weight=1)
+
+    fr = ctk.CTkFrame(master, width=600, height=300, corner_radius=19)
+    fr.grid(row=1, column=1)
     fr.columnconfigure((0,7), weight=1)
 
     def login_action(user_id, fr):
@@ -202,10 +204,10 @@ if __name__ == '__main__':
             tk.messagebox.showerror('Error', 'An unexpected error occurred: ' + str(e))
 
 
-    ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(10, 20))
+    ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(20, 30))
 
     ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
-    ent.grid(row=1, column=1, pady=10, padx=10)
+    ent.grid(row=1, column=1, pady=10, padx=30)
     btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
     btn.grid(row=2, column=1, pady=10, padx=10)
     
