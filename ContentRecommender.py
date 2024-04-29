@@ -12,11 +12,12 @@ class ContentBaseRecommender:
     def __init__(self, data_file='world-countries.csv', wait_time=0.1):
         self.data = pd.read_csv(data_file)
         self.wait = wait_time
-        self.data = self.process_data(self.data)
-        print(self.data)
 
-        print('performing vectorization...')
-        s(self.wait)
+        self.data = self.process_data(self.data)
+        #print(self.data)
+
+        #print('performing vectorization...')
+        #s(self.wait)
         
         self.tf_idf = TfidfVectorizer(stop_words='english')
         self.vec = CountVectorizer(stop_words='english')
@@ -24,8 +25,8 @@ class ContentBaseRecommender:
         self.tf_idf_matrix = self.tf_idf.fit_transform(self.data['keywords'])
         self.vec_matrix = self.vec.fit_transform(self.data['keywords'])
 
-        print('calculating similarity...')
-        s(self.wait)
+        #print('calculating similarity...')
+        #s(self.wait)
  
         self.cosine_sim = cosine_similarity(self.tf_idf_matrix, self.tf_idf_matrix)
         self.sim = cosine_similarity(self.vec_matrix, self.vec_matrix)
@@ -33,8 +34,8 @@ class ContentBaseRecommender:
 
     def process_data(self, data):
         
-        print('processing data...')
-        s(self.wait)
+        #print('processing data...')
+        #s(self.wait)
 
         def update_keywords(row):
             keywords = str(row['keywords'])
@@ -48,8 +49,8 @@ class ContentBaseRecommender:
         data = data.drop_duplicates(subset='Country')
         data['keywords'] = data['keywords'].str.replace(r'\s+', ' ')
 
-        print('data processed')
-        s(self.wait)
+        #print('data processed')
+        #s(self.wait)
         return data
 
 
@@ -66,7 +67,7 @@ class ContentBaseRecommender:
         recommendation = pd.DataFrame(columns=['ID', 'Country', 'Cost Per Day', 'Similarity'])
         
         for index, score in zip(country_indices, sim_scores):
-            if self.data['Country'].iloc[index].lower() != country.lower() and self.data['avg cost per day'].iloc[index] <= budget+5:
+            if self.data['Country'].iloc[index].lower() != country.lower():# and self.data['avg cost per day'].iloc[index] <= budget+5:
                 recommendation = recommendation._append({'ID': self.data['ID'].iloc[index],
                                                   'Country': self.data['Country'].iloc[index], 
                                                   'Cost Per Day': self.data['avg cost per day'].iloc[index], 
@@ -106,7 +107,7 @@ class ContentBaseRecommender:
         return recommendation
     
 
-    def recommend(self, country, budget, num_of_rec=5, tf_idf=True, count_vectorizer=False):
+    def recommend(self, country, budget=200, num_of_rec=5, tf_idf=True, count_vectorizer=False):
 
         like_df = self.data[self.data['Country'].str.lower() == country.lower()]
         
@@ -115,15 +116,15 @@ class ContentBaseRecommender:
             exit(0)
         print(like_df)
 
-        print('generating recommendations...')
-        s(self.wait)
+        # print('generating recommendations...')
+        # s(self.wait)
         
         if tf_idf:
-            print('\n\nTF-IDF Score Recomendation:\n')
+            #print('\n\nTF-IDF Score Recomendation:\n')
             print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
 
         if count_vectorizer:
-            print('\n\nCount Vectorizer Score Recomendation:\n')
+            #print('\n\nCount Vectorizer Score Recomendation:\n')
             print(self.get_CountVectorizer_recomendation(country, budget, num_of_rec))
 
 
