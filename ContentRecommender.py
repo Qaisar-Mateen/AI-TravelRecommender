@@ -107,7 +107,7 @@ class ContentBaseRecommender:
         return recommendation
     
 
-    def recommend(self, country, budget=200, num_of_rec=5, tf_idf=True, count_vectorizer=False):
+    def recommend(self, country, budget=200, num_of_rec=222, tf_idf=True, count_vectorizer=False):
 
         like_df = self.data[self.data['Country'].str.lower() == country.lower()]
         
