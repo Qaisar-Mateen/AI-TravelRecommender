@@ -24,7 +24,7 @@ class HybridRecommender:
             self.collaborative_model = None
 
         if content_model:
-            self.content_model = ContentBaseRecommender(content_model)
+            self.content_model = ContentBaseRecommender(wait_time=0)
         else:
             self.content_model = None
         
@@ -71,3 +71,10 @@ if __name__ == '__main__':
                         popularity_model=True,
                         popular_weight=0.2, collab_weight=0.8)
     print(hr.recommend(top_n=16))
+
+    hr2 = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
+                        popularity_model=True, content_model=True,
+                        popular_weight=0.2, collab_weight=0.6, content_weight=0.2
+                        )
+    
+    print(hr2.recommend(top_n=16))
