@@ -94,10 +94,10 @@ class ContentBaseRecommender:
         recommendation = pd.DataFrame(columns=['ID', 'Country', 'Cost Per Day', 'Similarity'])
         
         for index, score in zip(country_indices, sim_scores):
-            if self.data['Country'].iloc[index].lower() != country.lower() and self.data['avg cost per day'].iloc[index] <= budget+5:
+            if self.data['Country'].iloc[index].lower() != country.lower():# and self.data['avg cost per day'].iloc[index] <= budget+5:
                 recommendation = recommendation._append({'ID': self.data['ID'].iloc[index],
                                                   'Country': self.data['Country'].iloc[index], 
-                                                  'Cost Per Day': self.data['avg cost per day'].iloc[index], 
+                                                  #'Cost Per Day': self.data['avg cost per day'].iloc[index], 
                                                   'Similarity': score[1]}, ignore_index=True)
                 reced += 1
         
@@ -114,18 +114,22 @@ class ContentBaseRecommender:
         if like_df.empty:
             print('Country not found')
             exit(0)
-        print(like_df)
+        #print(like_df)
 
         # print('generating recommendations...')
         # s(self.wait)
         
-        if tf_idf:
+        if tf_idf and count_vectorizer:
             #print('\n\nTF-IDF Score Recomendation:\n')
-            print(self.get_TF_IDF_recomendation(country, budget, num_of_rec))
+            rec1 = self.get_TF_IDF_recomendation(country, budget, num_of_rec)
+            rec2 = self.get_CountVectorizer_recomendation(country, budget, num_of_rec)
+            return rec1, rec2
+        
+        elif tf_idf:
+            return self.get_TF_IDF_recomendation(country, budget, num_of_rec)
 
-        if count_vectorizer:
-            #print('\n\nCount Vectorizer Score Recomendation:\n')
-            print(self.get_CountVectorizer_recomendation(country, budget, num_of_rec))
+        elif count_vectorizer:
+            return self.get_CountVectorizer_recomendation(country, budget, num_of_rec)
 
 
 if __name__ == '__main__':
