@@ -55,6 +55,7 @@ class HybridRecommender:
             recommendations['Score'] = recommendations['Popularity'] * self.alpha + recommendations['Similarity'] * self.gamma
                 
         else:
+            country = collaborative_recs[collaborative_recs['Rating'] == max(collaborative_recs['Rating'])]['Country']
             recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
             recommendations = pd.merge(recommendations, content_recs, on=('ID', 'Country'), how='outer')
 
