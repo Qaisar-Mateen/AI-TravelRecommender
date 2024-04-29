@@ -23,10 +23,13 @@ special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Banglades
 
 def get_spots(country, map):
     df = pd.read_csv('world-cities.csv')
-    df = df[df['country'] == country][['name', 'lat', 'lng']]#
-    
-    if len(df)>5:
-        df = df.sample(n=min(5, len(df)))
+    df = df[df['country'] == country][['name', 'lat', 'lng']]
+    if len(df) > 4:
+        top_three = df.iloc[:3]
+        remaining = df.iloc[3:]
+        remaining = remaining.sample(n=min(5, len(remaining)))
+        df = pd.concat([top_three, remaining])
+
     #print(df)
     #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
     #print(city_cords)
@@ -134,7 +137,7 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-
+        self.map_widget.set_marker()
         a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
         if a == False:
             tk.messagebox.showerror('Error', str('Address Not Found!!'))

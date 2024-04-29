@@ -1,27 +1,18 @@
 name,country,avg cost per day,lat,lng
 les Escaldes,Andorra,119,42.5090019,1.5404067
 Andorra la Vella,Andorra,113,42.5069391,1.5212467
+Dubai,United Arab Emirates,84,25.2653471,55.2924914
+Abu Dhabi,United Arab Emirates,132,24.4538352,54.3774014
+Sharjah,United Arab Emirates,84,25.2311534,54.21900831355923
 Umm Al Quwain City,United Arab Emirates,129,25.5520435,55.5474977
 Ras Al Khaimah City,United Arab Emirates,104,25.7737705,55.938232
 Zayed City,United Arab Emirates,150,23.6515354,53.7019687
-Khawr Fakkān,United Arab Emirates,85,25.3358878,56.367105
-Dubai,United Arab Emirates,84,25.2653471,55.2924914
 Dibba Al-Fujairah,United Arab Emirates,146,25.602261,56.3070733
 Dibba Al-Hisn,United Arab Emirates,141,25.6153314,56.2672918
-Sharjah,United Arab Emirates,84,25.2311534,54.21900831355923
-Ar Ruways,United Arab Emirates,84,24.4688693,52.3153737
-Al Fujairah City,United Arab Emirates,150,-1.0,-1.0
 Al Ain City,United Arab Emirates,127,24.2248697,55.7452211
 Ajman City,United Arab Emirates,115,25.3936557,55.4451432
-Adh Dhayd,United Arab Emirates,144,-1.0,-1.0
-Abu Dhabi,United Arab Emirates,132,24.4538352,54.3774014
-Khalifah A City,United Arab Emirates,109,-1.0,-1.0
 Bani Yas City,United Arab Emirates,109,24.3296146,54.531343510139095
-Musaffah,United Arab Emirates,99,24.3488731,54.49043800470386
-Al Shamkhah City,United Arab Emirates,80,-1.0,-1.0
-Reef Al Fujairah City,United Arab Emirates,132,-1.0,-1.0
-Zaranj,Afghanistan,99,30.9317531,62.0020915
-Bāzār-e Yakāwlang,Afghanistan,77,34.735252,66.973785
+Kabul,Afghanistan,101,34.5260109,69.1776838
 Taloqan,Afghanistan,105,36.7356491,69.5350725
 Shīnḏanḏ,Afghanistan,149,33.254378,62.380804
 Shibirghān,Afghanistan,127,36.5816654,65.7274006
@@ -47,7 +38,6 @@ Khāsh,Afghanistan,99,36.940308,70.725663
 Khanabad,Afghanistan,77,36.603113,69.104049
 Karukh,Afghanistan,112,34.503923,62.663431
 Kandahār,Afghanistan,123,31.6205738,65.7157573
-Kabul,Afghanistan,101,34.5260109,69.1776838
 Jalālābād,Afghanistan,100,34.430195,70.460128
 Jabal os Saraj,Afghanistan,141,35.1186016,69.1936826
 Herāt,Afghanistan,95,34.3508273,62.2164003
@@ -68,7 +58,6 @@ Baghlān,Afghanistan,94,35.75,69.0
 Asadābād,Afghanistan,137,34.868317,71.130031
 Andkhōy,Afghanistan,144,36.852884,65.285764
 Bāzārak,Afghanistan,107,35.306217,69.5178094
-Markaz-e Woluswalī-ye Āchīn,Afghanistan,119,-1.0,-1.0
 Saint John’s,Antigua and Barbuda,142,17.1184569,-61.8448509
 The Valley,Anguilla,139,18.2145861,-63.0517759
 Sarandë,Albania,117,39.8752198,20.0065258
@@ -416,6 +405,10 @@ Geidorf,Austria,101,47.0846675,15.4428962
 Sankt Leonhard,Austria,104,47.0682874,15.4563438
 Andritz,Austria,83,47.1035542,15.422318
 Gries,Austria,142,47.0380876,11.4798884
+Darwin,Australia,88,-12.46044,130.8410469
+Sydney,Australia,144,-33.8698439,151.2082848
+Surry Hills,Australia,142,-33.8845123,151.2100301
+Seaford,Australia,132,-38.1040134,145.1282259
 Scarborough,Australia,116,-31.8959841,115.7592114
 Rockingham,Australia,143,-32.2851899,115.7426524
 Perth,Australia,111,-31.9558933,115.8605855
@@ -426,7 +419,6 @@ Kwinana,Australia,126,-32.233854,115.82114839519188
 Gosnells,Australia,116,-32.0673135,115.99773042056074
 Geraldton,Australia,109,-28.77035,114.6147159
 Gawler,Australia,106,-34.5973311,138.7448933
-Darwin,Australia,88,-12.46044,130.8410469
 Byford,Australia,127,-32.2160061,116.01467
 Busselton,Australia,106,-33.644499,115.3488754
 Bunbury,Australia,137,-33.3267797,115.636698
@@ -457,8 +449,6 @@ Templestowe,Australia,95,-37.7540588,145.1486152
 Tarneit,Australia,78,-37.83833625,144.70385573568504
 Taree,Australia,148,-31.912864,152.4608481
 Tamworth,Australia,119,-31.0900743,150.9290159
-Sydney,Australia,144,-33.8698439,151.2082848
-Surry Hills,Australia,142,-33.8845123,151.2100301
 Surfers Paradise,Australia,106,-27.9989899,153.42398
 Sunbury,Australia,146,-37.5796938,144.7295281
 Strathfield,Australia,97,-33.8798136,151.07850600180825
@@ -467,7 +457,6 @@ South Yarra,Australia,107,-37.8377695,144.9918537
 Southport,Australia,81,-27.9687807,153.4066696
 Shepparton,Australia,112,-36.381072,145.3993172
 Seven Hills,Australia,76,-27.480314,153.07765781454387
-Seaford,Australia,132,-38.1040134,145.1282259
 Saint Kilda,Australia,145,-33.9999379,151.122295
 Saint Ives,Australia,75,-27.6294829,152.9715187
 Saint Albans,Australia,109,-35.5395275,147.8931882
@@ -722,7 +711,6 @@ Lankaran,Azerbaijan,111,38.7618973,48.84377839683471
 Imishli,Azerbaijan,120,39.8716243,48.0594743
 Fizuli,Azerbaijan,109,39.58356755,47.38069980839441
 Jalilabad,Azerbaijan,128,39.23163585,48.42726801802222
-Pushkino,Azerbaijan,94,-1.0,-1.0
 Beylagan,Azerbaijan,128,39.7671115,47.6153495
 Astara,Azerbaijan,118,38.51559775,48.82832234412608
 Şirvan,Azerbaijan,106,39.93361245,48.93422932366694
@@ -844,7 +832,6 @@ Chhāgalnāiya,Bangladesh,142,23.046112049999998,91.48502399505728
 Lālmohan,Bangladesh,131,22.3410585,90.7334333
 Khagrachhari,Bangladesh,121,23.1077999,91.9889955
 Chhātak,Bangladesh,119,25.033745,91.6618288
-Bhātpāra Abhaynagar,Bangladesh,127,-1.0,-1.0
 Bherāmāra,Bangladesh,88,24.0202276,88.9971604
 Bhairab Bāzār,Bangladesh,115,24.0511302,90.8700871
 Bāndarban,Bangladesh,98,21.787476,92.41247516698711
@@ -868,7 +855,6 @@ Kesabpur,Bangladesh,114,-1.0,-1.0
 Hājīganj,Bangladesh,149,23.2512936,90.8526116
 Farīdpur,Bangladesh,150,24.1606327,89.4427491
 Dinājpur,Bangladesh,102,25.6260712,88.6346228
-Uttar Char Fasson,Bangladesh,142,-1.0,-1.0
 Chattogram,Bangladesh,135,22.333778,91.8344348
 Char Bhadrāsan,Bangladesh,99,23.5658513,90.0038798
 Bera,Bangladesh,136,24.0779947,89.6103537
@@ -2607,7 +2593,9 @@ San Ignacio,Belize,121,17.1527588,-89.0761718
 Orange Walk,Belize,81,17.78310235,-88.85774809337599
 Belmopan,Belize,135,17.250199,-88.770018
 Belize City,Belize,91,17.5002768,-88.1988737
-Abbotsford,Canada,136,49.0521162,-122.329479
+Toronto,Canada,140,43.6534817,-79.3839347
+Richmond Hill,Canada,121,43.8801166,-79.4392925
+Montréal,Canada,104,45.5031824,-73.5698065
 Agincourt North,Canada,92,43.8080383,-79.2664391
 Airdrie,Canada,138,51.28597,-114.01062
 Ajax,Canada,99,43.8505287,-79.0208814
@@ -2727,7 +2715,6 @@ Miramichi,Canada,117,47.030058,-65.4707468
 Mission,Canada,97,49.1589351,-122.283583
 Mississauga,Canada,129,43.5896231,-79.6443879
 Moncton,Canada,104,46.0985679,-64.8004265
-Montréal,Canada,104,45.5031824,-73.5698065
 Mont-Royal,Canada,114,45.5085881,-73.5897111
 Mont-Saint-Hilaire,Canada,92,45.5623512,-73.1918864
 Moose Jaw,Canada,113,50.401515,-105.542908
@@ -2771,8 +2758,6 @@ Red Deer,Canada,102,52.2690628,-113.8141464
 Regina,Canada,131,50.44876,-104.61731
 Repentigny,Canada,118,45.7326055,-73.4528307
 Richmond,Canada,140,49.163168,-123.137414
-Richmond Hill,Canada,121,43.8801166,-79.4392925
-Rock Forest,Canada,146,-1.0,-1.0
 Rouge,Canada,99,43.8049304,-79.1658374
 Rouyn-Noranda,Canada,147,48.2420524,-79.0205378
 Saguenay,Canada,123,48.405959,-71.069183
@@ -2820,7 +2805,6 @@ The Beaches,Canada,140,43.6710244,-79.296712
 Thorold,Canada,122,43.1249127,-79.2005935
 Thunder Bay,Canada,94,49.809661,-88.4811791
 Timmins,Canada,106,48.477473,-81.330414
-Toronto,Canada,140,43.6534817,-79.3839347
 Trois-Rivières,Canada,117,46.3432325,-72.5428485
 Tsawwassen,Canada,93,49.016667,-123.083333
 Uxbridge,Canada,108,44.1088502,-79.1226768
@@ -3351,6 +3335,7 @@ Bafoussam,Cameroon,141,5.4758844,10.4217852
 Bafia,Cameroon,98,4.7399331,11.2205928
 Bafang,Cameroon,80,5.158664,10.179748
 Akonolinga,Cameroon,102,3.77339,12.244917
+Beijing,China,125,40.190632,116.412144
 Zhefang,China,126,24.2565509,98.2774901
 Zhangfeng,China,121,35.2021591,115.9942807
 Zepu,China,149,28.299633,102.8618525
@@ -3366,10 +3351,8 @@ Shache,China,104,38.374286,77.2297132
 Ruidian,China,138,31.665682,117.0108738
 Qushi,China,84,26.761476,114.068294
 Qiemo,China,132,37.998243,85.812932
-Qarek,China,89,-1.0,-1.0
 Qamdo,China,129,31.1449718,97.1698896
 Yingjiang,China,86,24.8677811,97.945787
-Oytograk,China,110,-1.0,-1.0
 Nagqu,China,131,32.663572,88.931464
 Qaraqash,China,89,37.2714124,79.7377057
 Mengmao,China,142,24.0183022,97.8420174
@@ -3427,11 +3410,7 @@ Altay,China,115,47.1001782,88.4341751
 Aksu,China,107,41.1677575,80.2582136
 Oymak,China,135,47.878094,86.98955
 Kax,China,121,43.7065232,83.7634349
-Baytokay,China,75,-1.0,-1.0
 Yengitam,China,132,43.7448612,81.6861306
-Dadamtu,China,91,-1.0,-1.0
-Yuqunweng,China,125,-1.0,-1.0
-Panjim,China,94,-1.0,-1.0
 Liangji,China,143,33.9618322,117.9658655
 Lanshan,China,120,35.0535022,118.3418084
 Qing’an,China,100,47.0617345,127.6452162
@@ -3577,8 +3556,6 @@ Yongning,China,101,28.1588774,105.4412586
 Yongjia,China,129,28.156278,120.6879204
 Yongfeng,China,80,27.3188556,115.4176205
 Yongchuan,China,136,29.29285,105.870081
-Yongbei,China,120,26.6889408,100.7463074
-Yong’an,China,98,25.9441979,117.3599501
 Yizhuang,China,122,39.6759959,116.454153
 Yishui,China,75,27.3783174,116.34058
 Yinma,China,137,36.6552908,119.467122
@@ -3618,9 +3595,6 @@ Yangliuqing,China,81,39.1414621,116.9960349
 Yanghe,China,80,31.0940343,113.5818435
 Yanggu,China,82,36.1142991,115.7857865
 Yangcun,China,107,34.6695013,109.950339
-Yancheng,China,114,33.349559,120.1577019
-Yan’an,China,144,36.5963951,109.4855629
-Yajiang,China,137,30.0351362,101.0139231
 Ya'an,China,82,29.8931184,102.7416508
 Tongshan,China,79,34.1824217,117.1638669
 Xuyong,China,75,28.10265,105.43281
@@ -3826,7 +3800,6 @@ Sitou,China,114,36.3135858,118.4050245
 Sishui,China,143,35.6648659,117.2457433
 Simen,China,120,30.1626083,121.0373768
 Simao,China,101,22.8272471,100.9650146
-Dachang Shandao,China,138,-1.0,-1.0
 Sihu,China,85,34.62558,117.9694066
 Shunhe,China,149,34.8075739,114.4262177
 Shuizhai,China,99,25.547752,109.315191
@@ -3990,7 +3963,6 @@ Ningbo,China,120,29.8622194,121.6203873
 Nianbo,China,124,23.3715433,106.4885171
 Neijiang,China,99,25.105613,114.97957
 Nanzhou,China,96,23.066723,113.29256434636355
-Nanzhang Chengguanzhen,China,131,-1.0,-1.0
 Nanyang,China,136,33.0010496,112.5292693
 Nanxi,China,119,28.8921783,104.9535077
 Nantong,China,122,31.9827896,120.8904588
@@ -4525,7 +4497,6 @@ Bengbu,China,140,30.7904211,93.1447641
 Beiwangli,China,138,37.7650186,114.638077
 Beisu,China,134,35.3579,116.891
 Beimeng,China,124,36.6009918,119.5028823
-Beijing,China,125,40.190632,116.412144
 Beihai,China,103,21.6740808,109.3729721
 Beidao,China,142,16.96255,112.3116439756453
 Beidaihehaibin,China,82,-1.0,-1.0
@@ -5138,9 +5109,6 @@ Siyeke,China,138,36.8787777,81.5233439
 Tumxuk,China,114,39.8664885,79.0724013
 Wulong,China,119,29.3284452,107.7552723
 Chongzuo,China,88,22.4910206,107.328244
-Zhakou,China,113,29.921964,112.201761
-Fangchenggang,China,142,21.8615,108.0271898
-Dali Old Town,China,97,25.6972982,100.1651657
 Haidong Zhen,China,132,25.7170874,100.2545425
 Yinqiao Zhen,China,89,25.7598742,100.1216459
 Wanqiao Zhen,China,75,25.7991937,100.1220887
@@ -8393,6 +8361,7 @@ Nasinu,Fiji,104,-18.0964402,178.4807568
 Stanley,Falkland Islands,85,-51.6930616,-57.856525
 Palikir - National Government Center,Micronesia,143,-1.0,-1.0
 Tórshavn,Faroe Islands,104,62.012,-6.768
+Paris,France,109,48.8534951,2.3483915
 Yerres,France,147,48.716811,2.4879753
 Wittenheim,France,90,47.8080799,7.3373681
 Wattrelos,France,135,50.7016015,3.2153907
@@ -8580,7 +8549,6 @@ Pertuis,France,103,43.6951468,5.5032671
 Perpignan,France,113,42.6985304,2.8953121
 Périgueux,France,127,45.1909365,0.7184407
 Pau,France,130,43.2957547,-0.3685668
-Paris,France,109,48.8534951,2.3483915
 Pantin,France,144,48.8965023,2.4019804
 Pamiers,France,137,43.1147515,1.6082177
 Palaiseau,France,121,48.7144587,2.2453842
@@ -9051,6 +9019,8 @@ Libreville,Gabon,102,0.4086518,9.4418849
 Lambaréné,Gabon,109,-0.6942603,10.2236482
 Koulamoutou,Gabon,86,-1.1340007,12.4672747
 Franceville,Gabon,141,-1.6343979,13.5894808
+London,United Kingdom,116,51.4893335,-0.14405508452768728
+Liverpool,United Kingdom,141,53.4071991,-2.99168
 York,United Kingdom,127,53.96565785,-1.0743052444639218
 Yeovil,United Kingdom,77,50.9420451,-2.6318629
 Yeadon,United Kingdom,108,53.8636612,-1.6850787
@@ -9385,12 +9355,10 @@ Longfield,United Kingdom,143,51.3962097,0.300103
 Long Eaton,United Kingdom,93,52.8985715,-1.270813
 Londonderry County Borough,United Kingdom,141,54.99955485,-7.322581762158622
 Derry,United Kingdom,116,54.9978678,-7.3213056
-London,United Kingdom,116,51.4893335,-0.14405508452768728
 Lofthouse,United Kingdom,142,53.7292788,-1.4975139
 Llanelli,United Kingdom,95,51.6797331,-4.1620223
 Llandudno,United Kingdom,128,53.322475,-3.8243251
 Livingston,United Kingdom,147,55.8831932,-3.5149461
-Liverpool,United Kingdom,141,53.4071991,-2.99168
 Littlehampton,United Kingdom,124,50.8095801,-0.5424424
 Litherland,United Kingdom,88,53.4720901,-2.995685
 Lisburn,United Kingdom,129,54.5112856,-6.046717
@@ -10993,6 +10961,9 @@ Kadima Zoran,Israel,113,32.281965650000004,34.91045480112891
 Kiryat Ono,Israel,139,32.0594063,34.8575826143052
 Binyamina-Giv'at Ada,Israel,85,32.5202891,34.9435862
 Douglas,Isle of Man,120,54.149774,-4.4779021
+Mumbai,India,132,19.0785451,72.878176
+Ranchi,India,94,23.3700501,85.3250387
+Panaji,India,100,15.4989946,73.8282141
 Pūnch,India,98,33.7670004,74.0957143
 Keelakarai,India,102,10.0308721,79.1272366
 Zunheboto,India,77,26.0,94.5
@@ -11510,7 +11481,6 @@ Rānībennur,India,76,14.625888,75.6357245
 Rānia,India,92,29.569683599999998,74.7337535170843
 Rangia,India,127,26.54052695,91.59884012878476
 Rangāpāra,India,138,26.8177808,92.6862372
-Ranchi,India,94,23.3700501,85.3250387
 Rānāvāv,India,75,21.6851263,69.78610848018495
 Rānāghāt,India,131,23.1738124,88.563677
 Rāmtek,India,102,21.3935847,79.2999141
@@ -11530,7 +11500,6 @@ Rāmganj Mandi,India,88,24.6453169,75.9430409
 Rameswaram,India,96,9.2388621,79.33260795536674
 Rāmāpuram,India,97,13.4556319,79.158683
 Ramanathapuram,India,131,9.3895523,78.85907071521498
-Closepet,India,102,-1.0,-1.0
 Rāmachandrapuram,India,115,16.820723700000002,82.06252456511933
 Rājūra,India,120,21.1790861,77.83036561259618
 Rājula,India,105,21.038617,71.4438845
@@ -11624,7 +11593,6 @@ Pīpri,India,132,21.69618115,75.96110669288277
 Pipraich,India,148,26.8280867,83.53576
 Pipili,India,124,20.08895415,85.82359032799489
 Pīpār,India,108,26.37576115,73.54972117275184
-Pinjaur,India,115,-1.0,-1.0
 Pindwāra,India,150,23.42342155,74.72110241876643
 Pināhat,India,128,26.8851057,78.374679
 Pimpri,India,150,18.623185399999997,73.80199315
@@ -11712,7 +11680,6 @@ Pandua,India,80,23.07026605,88.25833944146513
 Pāndhurnā,India,81,21.5954798,78.5258489
 Pandharpur,India,101,17.7255921,75.30019362933085
 French Rocks,India,126,12.5011414,76.6731501
-Panaji,India,100,15.4989946,73.8282141
 Panāgar,India,91,24.69711155,79.48629669423633
 Palwal,India,113,28.1405741,77.3259802
 Pāloncha,India,117,17.5743048,80.66594966376546
@@ -12967,7 +12934,6 @@ Botād,India,84,22.1686,71.6685
 Borsad,India,132,22.4094019,72.905252
 Borivli,India,131,19.2251085,72.8502063
 Bongaigaon,India,147,26.412376950000002,90.57149765106257
-Mumbai,India,132,19.0785451,72.878176
 Bolpur,India,103,23.661154,87.6962424
 Bokāro,India,116,23.8034925,85.6923824
 Bokajān,India,122,26.0235087,93.7707012
@@ -14409,6 +14375,7 @@ Aqaba,Jordan,106,29.5266483,35.0075433
 Karak City,Jordan,133,31.2218805,35.5220577
 Russeifa,Jordan,102,32.0174989,36.0434611
 Rukban,Jordan,133,32.066667,36.35
+Tokyo,Japan,116,35.6821936,139.762221
 Shingū,Japan,85,33.7241003,135.9930029
 Atsugi,Japan,87,35.4433894,139.3783891
 Akashi,Japan,120,34.6832635,134.9476925
@@ -14486,7 +14453,6 @@ Tosu,Japan,111,33.3778536,130.5061966
 Tondabayashichō,Japan,96,34.4997399,135.6020457
 Tomioka,Japan,122,36.2598266,138.8899792
 Tomigusuku,Japan,86,26.1772381,127.6863791
-Tokyo,Japan,116,35.6821936,139.762221
 Tokuyama,Japan,120,34.0510183,131.8020941
 Tokushima,Japan,143,33.9196418,134.2509634
 Tokorozawa,Japan,148,35.7994271,139.4687478
@@ -18434,323 +18400,37 @@ Pandan,Philippines,143,11.7198989,122.0945769
 Ayala Alabang,Philippines,89,14.4226096,121.0269407
 Banco Filipino Homes,Philippines,129,14.419610200000001,121.0458988419723
 Apas,Philippines,126,10.337504,123.9055677
-Chuhar Jamali,Pakistan,150,24.3949077,67.9932105
-Rawalakot,Pakistan,126,33.8572284,73.7605747
-Pir Jo Goth,Pakistan,144,27.5913133,68.6184052
-Khairpur Mir’s,Pakistan,99,-1.0,-1.0
-Zhob,Pakistan,85,31.3397058,69.4476997
-Zaida,Pakistan,142,34.0606768,72.4670261
-Zahir Pir,Pakistan,126,28.8126927,70.5177963
-Zafarwal,Pakistan,128,31.4317981,73.6382391
-Yazman,Pakistan,115,29.1242299,71.7483177
-Wazirabad,Pakistan,147,32.433995249999995,74.13088162810784
-Chak Five Hundred Seventy-five,Pakistan,117,-1.0,-1.0
-Warah,Pakistan,138,31.2697565,70.8431969
-Vihari,Pakistan,126,29.982250049999998,72.3209350784457
-Utmanzai,Pakistan,107,34.187678,71.7648372
-Uthal,Pakistan,101,25.8071934,66.6219059
-Usta Muhammad,Pakistan,148,28.1773027,68.0488066
-Umarkot,Pakistan,139,28.8212149,70.1450046
-Ubauro,Pakistan,95,28.1646085,69.7299309
-Turbat,Pakistan,150,26.0027894,63.0505609
-Tordher,Pakistan,135,33.9909477,72.2878566
-Topi,Pakistan,124,34.0725642,72.62261591182556
-Toba Tek Singh,Pakistan,102,30.9777056,72.4860799
-Thul,Pakistan,110,26.6051524,67.488592
-Thatta,Pakistan,103,32.2548912,74.3559511
-Tharu Shah,Pakistan,100,26.9421961,68.118847
-Taunsa,Pakistan,148,30.89201435,70.61446946944781
-Tank,Pakistan,119,32.2096916,70.3881146
-Tangi,Pakistan,88,34.301484,71.6518839
-Tando Muhammad Khan,Pakistan,130,25.122798,68.5343177
-Tando Jam,Pakistan,95,25.4245266,68.5296162
-Tando Allahyar,Pakistan,120,25.2934734,68.6095986
-Tando Adam,Pakistan,98,25.7620954,68.6578079
-Tandlianwala,Pakistan,82,31.0321973,73.1330041
-Talhar,Pakistan,102,24.8846389,68.8144297
-Talamba,Pakistan,97,30.5220203,72.4070037
-Talagang,Pakistan,81,32.9235108,72.4139769
-Thal,Pakistan,123,24.925,69.694444
-Swabi,Pakistan,143,34.2215152,72.1025761
-Surkhpur,Pakistan,126,32.7160582,74.4461411
-Sukkur,Pakistan,75,27.6961883,68.8588754
-Sukheke Mandi,Pakistan,90,31.9657541,73.5606253
-Sodhri,Pakistan,125,32.9230605,71.3149752
-Sita Road,Pakistan,135,27.0400167,67.8466955
-Sinjhoro,Pakistan,113,26.032562,68.8077659
-Sillanwali,Pakistan,129,31.8231777,72.54120549200508
-Sibi,Pakistan,146,29.5500097,67.8833398
-Sialkot,Pakistan,130,32.4935378,74.5411575
-Shujaabad,Pakistan,106,29.8809972,71.2931695
-Shorkot,Pakistan,127,30.8349067,72.0764093
-Shikarpur,Pakistan,87,27.9577983,68.6465513
-Shekhupura,Pakistan,90,31.7085285,73.9864014
-Sharqpur Sharif,Pakistan,107,-1.0,-1.0
-Shakargarh,Pakistan,89,32.2631481,75.1604548
-Shahr Sultan,Pakistan,83,29.5748052,71.0222905
-Shahpur Chakar,Pakistan,118,26.1549688,68.6481209
-Shahkot,Pakistan,142,31.5780991,73.4766278
-Shahdadpur,Pakistan,127,25.9217599,68.6223211
-Shahdad Kot,Pakistan,90,27.8958663,68.2181841
-Shabqadar,Pakistan,141,34.2146534,71.5559253
-Sehwan,Pakistan,129,26.4255959,67.8625638
-Sargodha,Pakistan,102,32.0889657,72.6776943
-Sarai Sidhu,Pakistan,150,-1.0,-1.0
-Sarai Naurang,Pakistan,114,32.7952141,70.7721742
-Sarai Alamgir,Pakistan,131,32.9019199,73.7535419
-Sangla Hill,Pakistan,108,31.7169296,73.3760623
-Sanghar,Pakistan,105,26.0470447,68.9492402
-Sambrial,Pakistan,112,32.4756481,74.3529135
-Sakrand,Pakistan,113,26.1369684,68.27542022776319
-Sahiwal,Pakistan,111,30.6715098,73.1110572
-Sahiwal,Pakistan,104,30.6715098,73.1110572
-Saddiqabad,Pakistan,135,28.3410377,70.1835913
-Rohri,Pakistan,115,27.6776538,68.9124229
-Renala Khurd,Pakistan,145,30.8782508,73.5998771
-Rawalpindi,Pakistan,76,33.5914237,73.0535122
-Ratodero,Pakistan,82,27.8007239,68.2884248
-Ranipur,Pakistan,93,27.287029,68.50438
-Rajanpur,Pakistan,82,29.1042715,70.3283163
-Raja Jang,Pakistan,94,31.2233298,74.2545029
-Raiwind,Pakistan,107,31.2443583,74.2138126
-Rahim Yar Khan,Pakistan,118,28.416667,70.5
-Goth Radhan,Pakistan,97,-1.0,-1.0
-Chenab Nagar,Pakistan,85,31.7580001,72.9060562
-Quetta,Pakistan,130,30.1957677,67.0172447
-Kambar,Pakistan,83,27.5459186,67.8593553
-Qadirpur Ran,Pakistan,78,30.2922792,71.6722363
-Pishin,Pakistan,144,30.5828663,66.9966427
-Pir Mahal,Pakistan,145,30.7654576,72.4344064
-Pindi Gheb,Pakistan,126,33.243710300000004,72.2686198079065
-Pindi Bhattian,Pakistan,91,31.9000019,73.2713766
-Pind Dadan Khan,Pakistan,149,32.5901971,73.0432545
-Phalia,Pakistan,137,32.4329036,73.577159
-Peshawar,Pakistan,81,34.0123846,71.5787458
-Pattoki,Pakistan,139,31.0190575,73.8539011
-Pasrur,Pakistan,106,32.2638734,74.662699
-Pasni,Pakistan,121,25.264384,63.4723455
-Pano Aqil,Pakistan,94,27.7571373,69.06358596588328
-Pakpattan,Pakistan,136,30.3422503,73.3891875
-Paharpur,Pakistan,149,32.1044327,70.9706664
-Pad Idan,Pakistan,122,-1.0,-1.0
-Pabbi,Pakistan,76,34.0091192,71.7972028
-Okara,Pakistan,145,30.8091281,73.4493301
-Nushki,Pakistan,121,29.5388083,66.0228026
-New Mirpur,Pakistan,110,33.1486351,73.7482102
-Nawabshah,Pakistan,105,26.2452915,68.4040229
-Naushahro Firoz,Pakistan,82,-1.0,-1.0
-Naushahra Virkan,Pakistan,80,31.914158,73.9832202
-Naudero,Pakistan,131,27.6647173,68.3600339
-Nasirabad,Pakistan,82,27.3819177,67.9165476
-Narowal,Pakistan,100,32.1009752,74.872238
-Narang Mandi,Pakistan,80,31.9032562,74.5133856
-Naukot,Pakistan,85,26.0418877,69.1226937
-Nankana Sahib,Pakistan,146,31.4548712,73.7090967
-Muzaffargarh,Pakistan,118,30.0743097,71.1906224
+Islamabad,Pakistan,126,33.6938118,73.0651511
+Sakardu,Pakistan,110,35.3235321,75.5464521
+Naran,Pakistan,122,34.9089913,73.6508867
 Muzaffarābād,Pakistan,81,25.7001749,68.2980663
-Mustafabad,Pakistan,95,31.2521717,74.4202195
+Rawalakot,Pakistan,126,33.8572284,73.7605747
+Wazirabad,Pakistan,147,32.433995249999995,74.13088162810784
+Thatta,Pakistan,103,32.2548912,74.3559511
+Quetta,Pakistan,130,30.1957677,67.0172447
+Qadirpur Ran,Pakistan,78,30.2922792,71.6722363
+Pindi Gheb,Pakistan,126,33.243710300000004,72.2686198079065
+Peshawar,Pakistan,81,34.0123846,71.5787458
+Muzaffargarh,Pakistan,118,30.0743097,71.1906224
 Murree,Pakistan,106,33.9056829,73.392674
-Muridke,Pakistan,92,31.8010863,74.2540999
 Multan,Pakistan,149,30.197838,71.4719683
-Moro,Pakistan,84,34.76343955,73.0799631598208
-Mithi,Pakistan,135,24.4800737,69.0787898
-Mitha Tiwana,Pakistan,142,32.2415186,72.1090666
-Mirpur Mathelo,Pakistan,130,28.0224685,69.5521553
-Mirpur Khas,Pakistan,99,25.5262817,69.0110617
-Mingora,Pakistan,129,34.7725022,72.3606728
-Minchianabad,Pakistan,91,-1.0,-1.0
-Mianwali,Pakistan,137,32.5705533,71.5239763
-Mian Channun,Pakistan,131,-1.0,-1.0
-Mehrabpur,Pakistan,99,27.1018685,68.4171295
-Mehar,Pakistan,103,27.3536764,68.6321073
-Matli,Pakistan,102,25.0441564,68.6589358
-Matiari,Pakistan,114,25.5971858,68.4454874
-Mastung,Pakistan,87,29.7990934,66.8475932
-Mardan,Pakistan,129,34.1937969,72.0451467
-Mansehra,Pakistan,121,34.3286855,73.1993125
 Mangla,Pakistan,118,27.4985661,68.4670125
-Mandi Bahauddin,Pakistan,92,32.5846351,73.4914169
-Mananwala,Pakistan,91,31.5912562,73.6918369
-Mamu Kanjan,Pakistan,145,30.8325873,72.7990763
-Malir Cantonment,Pakistan,99,24.9436232,67.2119855
-Malakwal,Pakistan,120,32.5550188,73.2124316
-Mailsi,Pakistan,142,29.7989371,72.1782366
-Mach,Pakistan,125,29.8490276,67.3619542
-Loralai,Pakistan,145,30.366865,68.6000654
-Lodhran,Pakistan,99,29.5390395,71.6344196
-Layyah,Pakistan,84,30.964868,70.9455995
-Larkana,Pakistan,109,27.5564798,68.2101509
-Lalian,Pakistan,78,31.826255099999997,72.80301817938077
-Lala Musa,Pakistan,77,32.699529,73.9576582
-Lakki,Pakistan,115,32.6056744,70.9113526
 Lahore,Pakistan,143,31.5656822,74.3141829
-Ladhewala Waraich,Pakistan,141,-1.0,-1.0
-Lachi,Pakistan,101,33.3822964,71.3381655
-Kunri,Pakistan,101,26.2971,64.8873
-Kunjah,Pakistan,98,32.529715,73.973987
-Kundian,Pakistan,94,32.4559549,71.4812821
 Kulachi,Pakistan,93,31.9299926,70.4592265
-Kot Samaba,Pakistan,93,28.5366294,70.480984
-Kotri,Pakistan,106,28.0072627,68.1593505
-Kot Radha Kishan,Pakistan,128,31.1704788,74.1012446
-Kot Mumin,Pakistan,104,-1.0,-1.0
-Kot Malik Barkhurdar,Pakistan,104,-1.0,-1.0
-Kotli Loharan,Pakistan,78,32.5873613,74.4949718
-Kotli,Pakistan,139,32.6954244,74.2459199
-Kot Ghulam Muhammad,Pakistan,91,32.328922,74.5590707
-Kot Diji,Pakistan,98,27.3430938,68.7093634
-Kot Addu,Pakistan,101,30.4949072,70.971156
-Kohat,Pakistan,122,33.5967144,71.4399944
-Khuzdar,Pakistan,129,27.8000135,66.6166537
-Khushāb,Pakistan,142,32.2903666,72.3515792
-Khurrianwala,Pakistan,144,31.4965411,73.2725991
 Khewra,Pakistan,117,32.6307377,73.0147091
-Kharian,Pakistan,105,32.8100237,73.8663245
-Kharan,Pakistan,100,28.5807325,65.4207071
-Khanpur,Pakistan,145,28.6477403,70.656008
-Khanpur Mahar,Pakistan,110,27.8411234,69.4119882
-Khangarh,Pakistan,105,29.9145114,71.1617046
-Khangah Dogran,Pakistan,100,-1.0,-1.0
 Khalabat,Pakistan,125,34.0197521,72.9095797
-Khairpur Nathan Shah,Pakistan,109,27.0908362,67.7347939
-Khairpur Tamewah,Pakistan,142,-1.0,-1.0
-Khairpur,Pakistan,106,27.5268953,68.7593983
-Kasur,Pakistan,75,31.1175143,74.4478314
 Kashmor,Pakistan,124,28.4322915,69.5814755
-Karor,Pakistan,120,34.4631668,72.8048447
 Karachi,Pakistan,82,24.8546842,67.0207055
-Kanganpur,Pakistan,131,30.7583889,74.1219788
-Kandiaro,Pakistan,114,27.0594568,68.2103517
-Kandhkot,Pakistan,76,28.2449018,69.1814167
-Kamra,Pakistan,102,33.8560901,72.3941358
-Kamoke,Pakistan,145,32.4132826,74.1637877
-Chak One Hundred Twenty Nine Left,Pakistan,146,-1.0,-1.0
-Kamar Mushani,Pakistan,136,32.8444951,71.3654436
-Kamalia,Pakistan,126,30.7269883,72.6450218
 Kalur Kot,Pakistan,77,32.1572558,71.2642781
 Kallar Kahar,Pakistan,109,32.7817846,72.6994097
-Kaleke Mandi,Pakistan,77,31.97639175,73.59980244200311
 Kalat,Pakistan,147,29.029138,66.5887761
 Kalabagh,Pakistan,82,34.0741433,73.3708487
 Kahuta,Pakistan,108,33.5913158,73.3882346
-Kahror Pakka,Pakistan,86,29.6241693,71.9168037
-Kahna Nau,Pakistan,92,-1.0,-1.0
-Kabirwala,Pakistan,87,31.849697,73.9366415
-Johi,Pakistan,96,26.6910715,67.6114174
-Jiwani,Pakistan,84,25.0503174,61.7465561
-Chak Jhumra,Pakistan,122,31.5706658,73.1838035
-Jhol,Pakistan,146,25.9592881,68.8887037
 Jhelum,Pakistan,131,32.9247256,73.719388
-Jhawarian,Pakistan,86,32.3556214,72.6251351
-Jhang Sadr,Pakistan,148,33.6748125,72.6963493
-Jauharabad,Pakistan,119,24.9159921,67.0591937
-Jatoi Shimali,Pakistan,147,-1.0,-1.0
-Jaranwala,Pakistan,94,31.3330181,73.4183387
-Jand,Pakistan,143,33.4317702,72.0196309
-Jampur,Pakistan,144,32.3316194,74.6184078
-Jalalpur Pirwala,Pakistan,111,29.5036455,71.2236784
-Jalalpur Jattan,Pakistan,81,32.64045215,74.20851907318577
-Jahanian Shah,Pakistan,126,32.6173168,74.1654001
-Jacobabad,Pakistan,80,28.2813094,68.4364361
-Islamabad,Pakistan,126,33.6938118,73.0651511
-Hyderabad,Pakistan,116,25.4075358,68.36134563257718
-Hujra Shah Muqim,Pakistan,87,-1.0,-1.0
-Hingorja,Pakistan,108,27.2099599,68.4154594
-Hazro City,Pakistan,89,-1.0,-1.0
-Havelian,Pakistan,121,34.0519127,73.153453
-Haveli Lakha,Pakistan,79,30.450444,73.6974251
-Hasilpur,Pakistan,150,29.6889811,72.5525446
-Chak Thirty-one -Eleven Left,Pakistan,117,-1.0,-1.0
-Harunabad,Pakistan,127,29.6104977,73.1388889
-Harnoli,Pakistan,133,32.2806895,71.5557166
-Haripur,Pakistan,82,33.9944889,72.9331737
-Hangu,Pakistan,128,33.527996,71.0575407
-Hala,Pakistan,143,25.813826249999998,68.42503411821289
-Hafizabad,Pakistan,92,32.072546,73.6857558
-Hadali,Pakistan,119,32.2899889,72.19597599187142
 Gwadar,Pakistan,134,25.1925141,62.327192425359094
-Gujrat,Pakistan,97,32.5686782,74.071481
-Gujranwala,Pakistan,146,32.1525312,74.1933745
-Gujar Khan,Pakistan,121,33.2543205,73.3065712
-Gojra,Pakistan,95,31.1482371,72.6859082
-Ghotki,Pakistan,145,27.9939917,69.3134549
-Ghauspur,Pakistan,126,28.1395069,69.080266
-Gharo,Pakistan,79,27.1646071,68.0054627
-Garh Maharaja,Pakistan,96,30.8334871,71.9037356
-Gambat,Pakistan,120,27.3523967,68.5240326
 Fort Abbas,Pakistan,75,29.1935179,72.8548724
-Fazilpur,Pakistan,83,29.2941852,70.4537782
-Fatehpur,Pakistan,131,35.0690674,72.4869549
-Faruka,Pakistan,135,32.019597,72.4403508
-Faqirwali,Pakistan,137,29.4674919,73.0360814
-Faisalabad,Pakistan,108,31.4220558,73.0923253
-Eminabad,Pakistan,104,32.0419786,74.2601469
-Dunyapur,Pakistan,124,29.8025338,71.741959
-Dunga Bunga,Pakistan,106,29.7537082,73.2446925
-Dullewala,Pakistan,119,31.8371094,71.4338294
 Upper Dir,Pakistan,82,35.1460298,72.0126208
-Dipalpur,Pakistan,148,30.6691771,73.6513733
-Dinga,Pakistan,143,32.6399927,73.7235647
-Dijkot,Pakistan,133,31.2166497,72.995266
-Digri,Pakistan,104,25.1570717,69.1107851
-Dhoro Naro,Pakistan,143,-1.0,-1.0
-Dhanot,Pakistan,101,-1.0,-1.0
-Dera Ismail Khan,Pakistan,141,31.827527,70.9090919
-Dera Ghazi Khan,Pakistan,117,30.0321374,70.6401114
-Dera Bugti,Pakistan,136,29.0348272,69.1631064
-Daur,Pakistan,112,32.5736042,74.2902255
-Daud Khel,Pakistan,135,32.5787959,71.5372703
-Daska Kalan,Pakistan,75,32.3237068,74.34857900699163
-Darya Khan,Pakistan,124,25.4782967,68.4594723
-Dajal,Pakistan,146,29.5563174,70.3797208
-Dadu,Pakistan,149,26.7274836,67.7804974
-Dadhar,Pakistan,76,29.4880699,67.6422752
-Chunian,Pakistan,78,30.9631954,73.9807183
-Chuhar Kana,Pakistan,135,-1.0,-1.0
-Chhor,Pakistan,138,25.5166552,69.8333988
-Choa Saidan Shah,Pakistan,89,32.7207337,72.9856213
 Chishtian,Pakistan,113,29.79365915,72.8572781745865
-Chiniot,Pakistan,147,31.7223135,72.9802538
-Chichawatni,Pakistan,135,30.531691,72.6914049
-Chawinda,Pakistan,76,32.3450662,74.7052122
-Charsadda,Pakistan,125,34.1461506,71.7337464
-Chaman,Pakistan,80,30.915948,66.4631051
-Chakwal,Pakistan,77,32.932827,72.8629763
-Chak Azam Sahu,Pakistan,130,-1.0,-1.0
-Burewala,Pakistan,126,30.1588005,72.6796973
-Bhopalwala,Pakistan,132,31.6238511,73.2017776
-Bhit Shah,Pakistan,118,25.8041728,68.4941635
-Bhimber,Pakistan,131,32.9740589,74.0738531
-Bhera,Pakistan,118,32.4820009,72.9110524
-Bhawana,Pakistan,107,31.5682388,72.6462988
-Bhan,Pakistan,105,26.5564913,67.7216676
-Bhalwal,Pakistan,111,32.2710743,72.896564
-Bhakkar,Pakistan,78,31.6303103,71.0676914
-Mianke Mor,Pakistan,116,-1.0,-1.0
-Bela,Pakistan,134,34.8088222,73.0521155
-Bat Khela,Pakistan,86,34.6159603,71.9722472
-Battagram,Pakistan,126,34.6785555,73.0281188
-Basirpur,Pakistan,99,30.579527,73.8382261
-Bannu,Pakistan,85,32.9857007,70.6036017
-Bahawalpur,Pakistan,140,29.394644,71.6638747
-Bahawalnagar,Pakistan,95,29.9935922,73.2527621
-Badin,Pakistan,109,24.65936175,68.84453797140385
-Baddomalhi,Pakistan,115,31.9915388,74.6645493
-Attock City,Pakistan,133,33.7695323,72.3610911
-Arifwala,Pakistan,145,30.2944504,73.0589418
-Aman Garh,Pakistan,96,34.0094047,71.9387822
-Alipur,Pakistan,97,29.3818018,70.9097965
-Akora,Pakistan,104,33.999666,72.1249601
-Ahmadpur East,Pakistan,130,29.2800515,71.1599395199625
-Abbottabad,Pakistan,134,34.1436136,73.2132747
-Bahawalnagar,Pakistan,140,29.9935922,73.2527621
-Nowshera Cantonment,Pakistan,130,34.00368385,72.0029367413217
-Ahmadpur Sial,Pakistan,135,30.6836301,71.7611651
-New Badah,Pakistan,89,-1.0,-1.0
-Setharja Old,Pakistan,95,27.2039739,68.4767546
-Sook Kalan,Pakistan,98,32.5970714,74.1460371
-Risalpur Cantonment,Pakistan,101,-1.0,-1.0
-Malakwal City,Pakistan,139,-1.0,-1.0
 Żyrardów,Poland,85,52.05553205,20.44464353021984
 Żoliborz,Poland,147,52.2675944,20.9796975
 Zielonka,Poland,81,52.29133185,21.260566162275364
@@ -20625,6 +20305,9 @@ Cyangugu,Rwanda,112,-2.4887775,28.8958127
 Gisenyi,Rwanda,83,-1.693545,29.259855
 Byumba,Rwanda,91,-1.5754340500000001,30.05643857576075
 Butare,Rwanda,116,-2.6053426,29.7401547
+Riyadh,Saudi Arabia,139,24.638916,46.7160104
+Jeddah,Saudi Arabia,131,21.5810088,39.1653612
+Ta’if,Saudi Arabia,128,21.2702801,40.4158308
 Yanbu,Saudi Arabia,119,24.089019,38.0687076
 Umluj,Saudi Arabia,135,25.2341388,37.49803525449069
 Turaif,Saudi Arabia,95,31.6725877,38.6615532
@@ -20645,7 +20328,6 @@ Najrān,Saudi Arabia,76,18.0,45.666667
 Mecca,Saudi Arabia,145,21.420847,39.826869
 Khamis Mushait,Saudi Arabia,108,18.3,42.733333
 Jizan,Saudi Arabia,88,17.333333,42.666667
-Jeddah,Saudi Arabia,131,21.5810088,39.1653612
 Ha'il,Saudi Arabia,133,26.9920987,41.4892578
 Hafar Al-Batin,Saudi Arabia,132,28.4328084,45.9627527
 Duba,Saudi Arabia,130,27.352083,35.6920727
@@ -20655,9 +20337,7 @@ Badr Ḩunayn,Saudi Arabia,75,23.78,38.7907409
 Az Zulfī,Saudi Arabia,91,26.2995806,44.8151967
 Dhahran,Saudi Arabia,131,26.2966528,50.1202146
 Aţ Ţaraf,Saudi Arabia,103,25.36232,49.727572
-Ta’if,Saudi Arabia,128,21.2702801,40.4158308
 As Sulayyil,Saudi Arabia,91,20.459722,45.574444
-Riyadh,Saudi Arabia,139,24.638916,46.7160104
 Ar Rass,Saudi Arabia,78,25.5729395,43.58437858678907
 Arar,Saudi Arabia,120,30.916667,41.5
 An Nimas,Saudi Arabia,91,19.2654551,42.27928534881465
@@ -21524,6 +21204,8 @@ Akouda,Tunisia,122,35.8657303,10.5678382
 Douane,Tunisia,110,36.8465017,10.218166261638665
 Ezzouhour,Tunisia,106,36.797425,10.134098909090909
 Nuku‘alofa,Tonga,91,-21.1343401,-175.201808
+Istanbul,Turkey,147,41.0766019,29.052495
+İzmit,Turkey,127,40.7718611,29.9498078
 Yüksekova,Turkey,91,37.5717687,44.2821698
 Yozgat,Turkey,144,39.7152422,35.170998
 Yeşilli,Turkey,88,39.125126,33.867996
@@ -21824,8 +21506,6 @@ Karacabey,Turkey,132,40.2127591,28.361454
 Karabük,Turkey,78,41.1110349,32.6193901
 Kağızman,Turkey,101,40.1560647,43.15874655531304
 İznik,Turkey,85,40.4303445,29.7223732
-İzmit,Turkey,127,40.7718611,29.9498078
-Istanbul,Turkey,147,41.0766019,29.052495
 İskilip,Turkey,141,40.7306912,34.4710113
 İnegol,Turkey,119,40.0800359,29.5096528
 Horasan,Turkey,123,40.0400073,42.1690102
@@ -22450,6 +22130,9 @@ Bugiri,Uganda,141,0.520721,33.77506982526061
 Arua,Uganda,97,3.0014096,31.009352707358268
 Apac,Uganda,97,1.93372575,32.501802816753795
 Adjumani,Uganda,117,3.23712805,31.785824621769088
+New York City,United States,82,40.7127281,-74.0060152
+Miami,United States,83,25.7741728,-80.19362
+Niagara Falls,United States,99,43.08436,-79.0614686
 Fort Hunt,United States,141,38.739295850000005,-77.05640082425137
 Bessemer,United States,86,33.4017766,-86.954437
 Paducah,United States,98,37.0833893,-88.6000478
@@ -22489,6 +22172,7 @@ Tillmans Corner,United States,106,30.5803797,-88.20981152922351
 Troy,United States,116,42.7284117,-73.6917878
 Trussville,United States,80,33.6196266,-86.6084342
 Tuscaloosa,United States,129,33.2095614,-87.5675258
+Orlando,United States,137,28.5421109,-81.3790304
 Vestavia Hills,United States,81,33.4487989,-86.7879492
 Bella Vista,United States,125,36.4678036,-94.2669727
 Benton,United States,116,45.7162129,-94.0481042
@@ -22640,7 +22324,6 @@ Margate,United States,89,26.2445263,-80.206436
 Meadow Woods,United States,117,28.361473,-81.3649191
 Melbourne,United States,139,28.106471,-80.6371513
 Merritt Island,United States,89,28.3581193,-80.6968385
-Miami,United States,83,25.7741728,-80.19362
 Miami Beach,United States,146,25.7929198,-80.1353006
 Miami Gardens,United States,78,25.9420377,-80.2456045
 Miami Lakes,United States,140,25.9087056,-80.3086619
@@ -22662,7 +22345,6 @@ Ocala,United States,89,29.1871986,-82.1400923
 Ocoee,United States,78,28.5694468,-81.5441944
 Ojus,United States,143,25.9560028,-80.16828015890405
 Opa-locka,United States,102,25.9023168,-80.2503271
-Orlando,United States,137,28.5421109,-81.3790304
 Ormond Beach,United States,84,29.2854132,-81.0557921
 Oviedo,United States,140,28.6702526,-81.2084941
 Pace,United States,139,30.5964175,-87.16626468931867
@@ -24506,9 +24188,7 @@ Nanuet,United States,145,41.0902848,-74.0148205
 New City,United States,120,41.1469917,-73.9902998
 New Rochelle,United States,98,40.9115386,-73.7826363
 New Springville,United States,140,40.5934376,-74.163199
-New York City,United States,82,40.7127281,-74.0060152
 Newburgh,United States,127,41.5034271,-74.0104179
-Niagara Falls,United States,99,43.08436,-79.0614686
 North Amityville,United States,78,40.6976002,-73.425123
 North Babylon,United States,121,40.7164881,-73.3217861
 North Bay Shore,United States,91,40.760191,-73.261674
@@ -26239,10 +25919,11 @@ Aden,Yemen,150,12.833333,44.916667
 Mamoudzou,Mayotte,84,-12.7804136,45.2279761
 Dzaoudzi,Mayotte,81,-12.782151,45.2556923
 Koungou,Mayotte,143,-12.735753,45.2067459
+Cape Town,South Africa,144,-33.928992,18.417396
+White River,South Africa,85,-25.326389,31.014444
 Roodepoort,South Africa,145,-26.1563889,27.8858333
 Zeerust,South Africa,150,-25.537731,26.074382
 Wolmaransstad,South Africa,150,-27.200475,25.979925
-White River,South Africa,85,-25.326389,31.014444
 Emalahleni,South Africa,103,-25.8763485,29.2010447
 Westonaria,South Africa,93,-26.3177778,27.6519444
 Wesselsbron,South Africa,136,-27.853889,26.364722
@@ -26402,7 +26083,6 @@ Kraaifontein,South Africa,128,-33.8477778,18.7161111
 Hermanus,South Africa,145,-34.4175,19.2361111
 Grabouw,South Africa,100,-34.153056,19.013889
 Ceres,South Africa,101,-33.368333,19.309167
-Cape Town,South Africa,144,-33.928992,18.417396
 Atlantis,South Africa,114,-33.5672222,18.5002778
 Rondebosch,South Africa,115,-33.9680556,18.4877778
 Midstream,South Africa,114,-25.9111052,28.1933548
