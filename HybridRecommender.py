@@ -40,8 +40,12 @@ class HybridRecommender:
         if self.collaborative_model is not None:
             collaborative_recs = self.collaborative_model.recommend()
 
-        if self.content_model is not None:
-            content_recs = self.content_model.recommend()
+        if self.content_model is not None and self.collaborative_model is not None:
+
+            country = collaborative_recs[collaborative_recs['Rating'] == max(collaborative_recs['Rating'])]['Country'].values
+            country = str(country[0])
+            print(country)
+            content_recs = self.content_model.recommend(country=country)
 
 
         if self.content_model is None:
@@ -55,7 +59,6 @@ class HybridRecommender:
             recommendations['Score'] = recommendations['Popularity'] * self.alpha + recommendations['Similarity'] * self.gamma
                 
         else:
-            country = collaborative_recs[collaborative_recs['Rating'] == max(collaborative_recs['Rating'])]['Country']
             recommendations = pd.merge(popularity_recs, collaborative_recs, on=('ID', 'Country'), how='outer')
             recommendations = pd.merge(recommendations, content_recs, on=('ID', 'Country'), how='outer')
 
