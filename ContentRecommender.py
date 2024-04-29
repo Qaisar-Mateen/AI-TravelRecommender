@@ -97,7 +97,7 @@ class ContentBaseRecommender:
             if self.data['Country'].iloc[index].lower() != country.lower():# and self.data['avg cost per day'].iloc[index] <= budget+5:
                 recommendation = recommendation._append({'ID': self.data['ID'].iloc[index],
                                                   'Country': self.data['Country'].iloc[index], 
-                                                  #'Cost Per Day': self.data['avg cost per day'].iloc[index], 
+                                                  'Cost Per Day': self.data['avg cost per day'].iloc[index], 
                                                   'Similarity': score[1]}, ignore_index=True)
                 reced += 1
         
@@ -120,7 +120,6 @@ class ContentBaseRecommender:
         # s(self.wait)
         
         if tf_idf and count_vectorizer:
-            #print('\n\nTF-IDF Score Recomendation:\n')
             rec1 = self.get_TF_IDF_recomendation(country, budget, num_of_rec)
             rec2 = self.get_CountVectorizer_recomendation(country, budget, num_of_rec)
             return rec1, rec2

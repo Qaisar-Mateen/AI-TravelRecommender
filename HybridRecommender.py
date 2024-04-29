@@ -44,7 +44,7 @@ class HybridRecommender:
 
             country = collaborative_recs[collaborative_recs['Rating'] == max(collaborative_recs['Rating'])]['Country'].values
             country = str(country[0])
-            print(country)
+            
             content_recs = self.content_model.recommend(country=country)
 
 
