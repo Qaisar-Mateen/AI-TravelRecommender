@@ -12,7 +12,7 @@ def get_places(geo_id, lat, lan):
     return result.json()
 
 def get_iso(lat, lon):
-    url_iso = f'https://api.geoapify.com/v1/isoline?lat={lat}&lon={lon}&type=time&mode=drive&range=1500&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'
+    url_iso = f'https://api.geoapify.com/v1/isoline?lat={lat}&lon={lon}&type=time&mode=drive&range=900&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'
     result = requests.get(url_iso)
     return result.json()
 
@@ -26,6 +26,18 @@ def get_spots(country, map):
     df = df[df['country'] == country][['name', 'lat', 'lng']]
     if len(df) > 4:
         top_three = df.iloc[:3]
+            # get an iso geometry id for each city
+        iso = [get_iso(top_three.iloc[i]['lat'], top_three.iloc[i]['lng'])['properties']['id'] for i in range(len(top_three))]
+            #print(iso)
+            # get places for each city with the iso geometry id
+        places = [get_places(iso[i],df.iloc[i]['lat'],df.iloc[i]['lng']) for i in range(len(iso))]
+
+        print(places)
+
+        for i in range(len(places)):
+            for place in places[i]['features']:
+                map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+    
         remaining = df.iloc[3:]
         remaining = remaining.sample(n=min(5, len(remaining)))
         df = pd.concat([top_three, remaining])
@@ -33,20 +45,10 @@ def get_spots(country, map):
     #print(df)
     #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
     #print(city_cords)
-    # get an iso geometry id for each city
-    #iso = [get_iso(df.iloc[i]['lat'], df.iloc[i]['lng'])['properties']['id'] for i in range(len(df))]
-    #print(iso)
-    # get places for each city with the iso geometry id
-    #places = [get_places(iso[i],df.iloc[i]['lat'],df.iloc[i]['lng']) for i in range(len(iso))]
-
-    #rint(places)
+    
 
     df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
 
-    #for i in range(len(places)):
-    #    for place in places[i]['features']:
-    #        map.add_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
-    
     map.update()
 
 
@@ -137,7 +139,6 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        self.map_widget.set_marker()
         a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
         if a == False:
             tk.messagebox.showerror('Error', str('Address Not Found!!'))
