@@ -7,7 +7,8 @@ import pandas as pd
 import requests, threading
 
 def get_places(geo_id, lat, lan):
-    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=geometry:{geo_id}&bias=proximity:{lat},{lan}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+    #url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=geometry:{geo_id}&bias=proximity:{lat},{lan}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=circle:{lat},{lan},5000&bias=proximity:{lat},{lan}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
     result = requests.get(url)
     return result.json()
 
@@ -20,37 +21,6 @@ def get_iso(lat, lon):
 
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
-
-def get_spots(country, map):
-    df = pd.read_csv('world-cities.csv')
-    df = df[df['country'] == country][['name', 'lat', 'lng']]
-    if len(df) > 4:
-        top_three = df.iloc[:3]
-            # get an iso geometry id for each city
-        iso = [get_iso(top_three.iloc[i]['lat'], top_three.iloc[i]['lng'])['properties']['id'] for i in range(len(top_three))]
-            #print(iso)
-            # get places for each city with the iso geometry id
-        places = [get_places(iso[i],df.iloc[i]['lat'],df.iloc[i]['lng']) for i in range(len(iso))]
-
-        print(places)
-
-        for i in range(len(places)):
-            for place in places[i]['features']:
-                map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
-    
-        remaining = df.iloc[3:]
-        remaining = remaining.sample(n=min(5, len(remaining)))
-        df = pd.concat([top_three, remaining])
-
-    #print(df)
-    #city_cords = [geocoder.osm(df.iloc[i]+", "+country).latlng for i in range(len(df)) if geocoder.osm(df.iloc[i]+", "+country).ok]
-    #print(city_cords)
-    
-
-    df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
-
-    map.update()
-
 
 
 class Card(ctk.CTkFrame):
@@ -109,6 +79,43 @@ class Card(ctk.CTkFrame):
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
             self.map_widget.update()
 
+    def get_spots(country, map, fr):
+        def patani(name):
+            places = [get_places(None,top_three.iloc[i]['lat'],top_three.iloc[i]['lng']) for i in range(len(top_three))]
+
+            print(places)
+
+            for i in range(len(places)):
+                for place in places[i]['features']:
+                    map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+    
+
+
+        df = pd.read_csv('world-cities.csv')
+        df = df[df['country'] == country][['name', 'lat', 'lng']]
+        if len(df) > 4:
+            top_three = df.iloc[:3]
+            # get an iso geometry id for each city
+            #iso = [get_iso(top_three.iloc[i]['lat'], top_three.iloc[i]['lng'])['properties']['id'] for i in range(len(top_three))]
+            #print(iso)
+            # get places for each city with the iso geometry id
+            
+            remaining = df.iloc[3:]
+            remaining = remaining.sample(n=min(5, len(remaining)))
+            df = pd.concat([top_three, remaining])
+
+            for i in range(len(df)):
+                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A',
+                                hover_color='#373737', command=lambda: patani(df.iloc[i]['name'])
+
+                                )
+                btn.grid(row=1+i//2, column=1+i%2, padx=10, pady=10)
+
+        df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
+
+        map.update()
+
+
     def view_detail(self, country):
         global special_cases
 
@@ -155,10 +162,11 @@ class Card(ctk.CTkFrame):
                                 )
         def_but.place(x=15, y=114, anchor='nw')
 
-        detail = ctk.CTkFrame(top, width=800, height=200, corner_radius=19, fg_color='black')
+        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black', direction='horizontal')
         detail.grid(row=2, column=1, padx=10, pady=10)
-
-        threading.Thread(target=get_spots(country, self.map_widget)).start()
+        detail.columnconfigure((0,7), weight=1)
+        
+        threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
     
 def load_more(cur, cards, btn_fr, home):
@@ -182,26 +190,27 @@ def load_more(cur, cards, btn_fr, home):
 
 if __name__ == '__main__':
     id = -1
-    
+    logged = False
     master = ctk.CTk()
     master.title('Login')
-    master.geometry('1323x650')
+    master.geometry('250x300')
     master.resizable(False, False)
     master.columnconfigure((0,7), weight=1)
     master.rowconfigure((0,7), weight=1)
 
-    fr = ctk.CTkFrame(master, width=600, height=300, corner_radius=19)
-    fr.grid(row=1, column=1)
+    fr = ctk.CTkFrame(master, corner_radius=19)
+    fr.grid(row=1, column=1, sticky='nsew')
     fr.columnconfigure((0,7), weight=1)
 
     def login_action(user_id, fr):
-        global id
+        global id, logged
         try:
             user_id = int(user_id)
             ids = pd.read_csv('ratings.csv')
             ids = ids['user'].unique()
             if user_id in ids:
                 id = user_id
+                logged = True
                 fr.destroy()
             else:
                 raise ValueError('User ID not found!!')
@@ -213,15 +222,15 @@ if __name__ == '__main__':
 
     ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(20, 30))
 
-    ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
-    ent.grid(row=1, column=1, pady=10, padx=30)
-    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
-    btn.grid(row=2, column=1, pady=10, padx=10)
+    # ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
+    # ent.grid(row=1, column=1, pady=10, padx=30)
+    # btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
+    # btn.grid(row=2, column=1, pady=10, padx=10)
     
     master.mainloop()
     print(id)
     
-    if id != -1 or id is not None:
+    if logged:
         ctk.AppearanceModeTracker.set_appearance_mode('dark')
         ctk.set_default_color_theme('dark-blue')
 
@@ -234,7 +243,7 @@ if __name__ == '__main__':
         home.place(x=0, y=0, anchor='nw')
         ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
     
-        recomendation = HybridRecommender(collaborative_model=(True, 0, 'CF_Neural_Model3.7.bin'),
+        recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
                         popularity_model=True, content_model=True,
                         popular_weight=0.15, collab_weight=0.7, content_weight=0.15
                         )
@@ -256,4 +265,4 @@ if __name__ == '__main__':
         btn.grid(row=0, column=2, padx=10, pady=1)
         ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
-    app.mainloop()
+        app.mainloop()
