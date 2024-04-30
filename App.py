@@ -79,10 +79,11 @@ class Card(ctk.CTkFrame):
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
             self.map_widget.update()
 
-    def get_spots(a, country, map, fr):
+    def get_spots(self, country, map, fr):
         def patani(x, y):
             places = get_places(None,x,y)
-            map.set_coordinates(x, y)
+            map.set_position (x, y)
+            map.set_zoom(13)
             print(places)
 
             for place in places['features']:
@@ -104,9 +105,9 @@ class Card(ctk.CTkFrame):
             df = pd.concat([top_three, remaining])
 
             for i in range(len(df)):
-                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=350, height=300,
+                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=100, height=80,
                                 hover_color='#373737', command=lambda: patani(df.iloc[i]['lat'], df.iloc[i]['lng']))
-                btn.grid(row=i//2, column=1+i%2, padx=10, pady=10)
+                btn.grid(row=i//5, column=1+i%5, padx=10, pady=10)
 
         df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
 
@@ -159,12 +160,11 @@ class Card(ctk.CTkFrame):
                                 )
         def_but.place(x=15, y=114, anchor='nw')
 
-        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black', orientation='horizontal')
+        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black')#, orientation='horizontal')
         detail.grid(row=2, column=1, padx=10, pady=10)
         detail.columnconfigure((0,7), weight=1)
 
-        #threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
-        self.get_spots(country, self.map_widget, detail)
+        threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
     
 def load_more(cur, cards, btn_fr, home):
