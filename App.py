@@ -80,14 +80,14 @@ class Card(ctk.CTkFrame):
             self.map_widget.update()
 
     def get_spots(country, map, fr):
-        def patani(name):
-            places = [get_places(None,top_three.iloc[i]['lat'],top_three.iloc[i]['lng']) for i in range(len(top_three))]
-
+        def patani(x, y):
+            places = get_places(None,x,y)
+            map.set_coordinates(x, y)
             print(places)
 
-            for i in range(len(places)):
-                for place in places[i]['features']:
-                    map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+            for place in places['features']:
+                map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+            map.update()
     
 
 
@@ -105,11 +105,9 @@ class Card(ctk.CTkFrame):
             df = pd.concat([top_three, remaining])
 
             for i in range(len(df)):
-                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A',
-                                hover_color='#373737', command=lambda: patani(df.iloc[i]['name'])
-
-                                )
-                btn.grid(row=1+i//2, column=1+i%2, padx=10, pady=10)
+                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=350, height=300,
+                                hover_color='#373737', command=lambda: patani(df.iloc[i]['lat'], df.iloc[i]['lng']))
+                btn.grid(row=i//2, column=1+i%2, padx=10, pady=10)
 
         df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
 
@@ -165,7 +163,7 @@ class Card(ctk.CTkFrame):
         detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black', direction='horizontal')
         detail.grid(row=2, column=1, padx=10, pady=10)
         detail.columnconfigure((0,7), weight=1)
-        
+
         threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
     
@@ -220,12 +218,12 @@ if __name__ == '__main__':
             tk.messagebox.showerror('Error', 'An unexpected error occurred: ' + str(e))
 
 
-    ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(20, 30))
+    ctk.CTkLabel(fr, text='Login', font=('Arial', 20, 'bold')).grid(row=0, column=1, pady=(40, 50))
 
-    # ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
-    # ent.grid(row=1, column=1, pady=10, padx=30)
-    # btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
-    # btn.grid(row=2, column=1, pady=10, padx=10)
+    ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
+    ent.grid(row=1, column=1, pady=10, padx=30)
+    btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
+    btn.grid(row=2, column=1, pady=(20,40), padx=10)
     
     master.mainloop()
     print(id)
