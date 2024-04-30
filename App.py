@@ -79,7 +79,7 @@ class Card(ctk.CTkFrame):
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
             self.map_widget.update()
 
-    def get_spots(country, map, fr):
+    def get_spots(a, country, map, fr):
         def patani(x, y):
             places = get_places(None,x,y)
             map.set_coordinates(x, y)
@@ -88,7 +88,6 @@ class Card(ctk.CTkFrame):
             for place in places['features']:
                 map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
             map.update()
-    
 
 
         df = pd.read_csv('world-cities.csv')
@@ -146,7 +145,7 @@ class Card(ctk.CTkFrame):
         
         a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
         if a == False:
-            tk.messagebox.showerror('Error', str('Address Not Found!!'))
+            tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
@@ -160,11 +159,12 @@ class Card(ctk.CTkFrame):
                                 )
         def_but.place(x=15, y=114, anchor='nw')
 
-        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black', direction='horizontal')
+        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black', orientation='horizontal')
         detail.grid(row=2, column=1, padx=10, pady=10)
         detail.columnconfigure((0,7), weight=1)
 
-        threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
+        #threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
+        self.get_spots(country, self.map_widget, detail)
         top.mainloop()
     
 def load_more(cur, cards, btn_fr, home):
