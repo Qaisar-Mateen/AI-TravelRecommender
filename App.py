@@ -6,17 +6,25 @@ from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading
 
-def get_places(geo_id, lat, lon):
-    #url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=geometry:{geo_id}&bias=proximity:{lat},{lan}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+def get_places(geo_id, lat, lon, place=True):
+    url_iso = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=geometry:{geo_id}&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
-          
-    response = requests.get(ID_url)
-    #print(lat, lon, response.json())
-    id = response.json()
-    id = id['results'][0]['place_id']
-    print(id)
-    url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=circle:{lat},{lon},5000&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
-    result = requests.get(url)
+    
+    if place:
+        response = requests.get(ID_url)
+        id = response.json()
+        id = id['results'][0]['place_id']
+        print(id)
+        #url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=circle:{lat},{lon},5000&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
+        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=place:{id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
+        result = requests.get(url)
+    
+    else:
+        iso = get_iso(lat, lon)
+        iso_id = iso['properties']['id']
+        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=geometry:{iso_id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
+        result = requests.get(url)
+    
     return result.json()
 
 def get_iso(lat, lon):
