@@ -16,13 +16,13 @@ def get_places(geo_id, lat, lon, place=True):
         id = id['results'][0]['place_id']
         print(id)
         #url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=circle:{lat},{lon},5000&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
-        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=place:{id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
+        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named&filter=place:{id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
         result = requests.get(url)
     
     else:
         iso = get_iso(lat, lon)
         iso_id = iso['properties']['id']
-        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=geometry:{iso_id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
+        url = f"https://api.geoapify.com/v2/places?categories=accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named&filter=geometry:{iso_id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
         result = requests.get(url)
     
     return result.json()
@@ -101,7 +101,7 @@ class Card(ctk.CTkFrame):
             map.delete_all_marker()
             x, y = self.places[self.places['name'] == str][['lat', 'lng']].values[0]
             map.set_marker(x, y, str)
-            place = get_places(None,x,y)
+            place = get_places(None,x,y,place=True)
             map.set_position (x, y)
             map.set_zoom(13)
             print(place)
