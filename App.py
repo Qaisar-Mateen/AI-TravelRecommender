@@ -99,10 +99,13 @@ class Card(ctk.CTkFrame):
         def patani(str):
             print(str)
             map.delete_all_marker()
+            map.set_address(country, marker=True)
             x, y = self.places[self.places['name'] == str][['lat', 'lng']].values[0]
             map.set_marker(x, y, str)
-            place = get_places(None,x,y,place=True)
-            map.set_position (x, y)
+
+            place = get_places(None, x, y, place=False)
+            
+            map.set_position(x, y)
             map.set_zoom(13)
             print(place)
 
@@ -115,21 +118,15 @@ class Card(ctk.CTkFrame):
         self.places = df[df['country'] == country][['name', 'lat', 'lng']]
         if len(self.places) > 4:
             top_three = self.places.iloc[:3]
-            # get an iso geometry id for each city
-            #iso = [get_iso(top_three.iloc[i]['lat'], top_three.iloc[i]['lng'])['properties']['id'] for i in range(len(top_three))]
-            #print(iso)
-            # get places for each city with the iso geometry id
             
             remaining = self.places.iloc[3:]
             remaining = remaining.sample(n=min(5, len(remaining)))
             self.places = pd.concat([top_three, remaining])
 
             for i in range(len(self.places)):
-                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=100, height=80,
+                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=140, height=90,
                                 hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani(name))
-                btn.grid(row=i//5, column=1+i%5, padx=10, pady=10)
-
-        #df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
+                btn.grid(row=1+i//3, column=1+i%3, padx=10, pady=10)
 
         map.update()
 
@@ -180,9 +177,10 @@ class Card(ctk.CTkFrame):
                                 )
         def_but.place(x=15, y=114, anchor='nw')
 
-        detail = ctk.CTkScrollableFrame(top, width=800, height=200, corner_radius=19, fg_color='black')#, orientation='horizontal')
+        detail = ctk.CTkScrollableFrame(top, width=650, height=200, corner_radius=19, fg_color='black')
         detail.grid(row=2, column=1, padx=10, pady=10)
         detail.columnconfigure((0,7), weight=1)
+        detail.rowconfigure((0,9), weight=1)
 
         threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
