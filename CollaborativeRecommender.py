@@ -114,7 +114,7 @@ class CollaborativeRecommender:
         self.user = user
         self.model_name = model_name
 
-    def updateModel(self, dataset_name=None, epochs=2):
+    def updateModel(self, dataset_name=None, epochs=1):
         df = pd.read_csv(dataset_name)
     
         # loading encoders used during training
@@ -224,4 +224,4 @@ if __name__ == "__main__":
     model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin')
     print(model.recommend(test=True, top_n=16))
 
-    model.updateModel(dataset_name='ratings.csv', epochs=2)
+    model.updateModel(dataset_name='ratings.csv', epochs=1)

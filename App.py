@@ -7,7 +7,6 @@ import pandas as pd
 import requests, threading
 
 def get_places(geo_id, lat, lon, place=True):
-    url_iso = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&filter=geometry:{geo_id}&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
     
     if place:
