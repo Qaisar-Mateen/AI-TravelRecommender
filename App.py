@@ -183,14 +183,14 @@ class Card(ctk.CTkFrame):
         threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
     
-def load_more(cur, cards, btn_fr, home):
+def load_more(cur, cards, btn_fr, home, recommendation):
     
     btn_fr.grid_forget()
     total = cur + 12
     if total > 222:
         total = 222
     
-    rec = recomendation.recommend(top_n=total)
+    rec = recommendation.recommend(top_n=total)
     for i in range(cur, total):
         card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
         card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
@@ -201,6 +201,37 @@ def load_more(cur, cards, btn_fr, home):
     else:
         ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
 
+def home_page(fr):
+
+    home = ctk.CTkScrollableFrame(fr, corner_radius=19, fg_color='transparent', width=1310, height=640)
+    home.grid(row=0, column=0)
+
+    ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(0,2))
+    
+    recommendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
+                        popularity_model=True, content_model=True,
+                        popular_weight=0.15, collab_weight=0.7, content_weight=0.15
+                        )
+    rec = recommendation.recommend(top_n=16)
+
+    cards = []
+    for i in range(len(rec)):
+        card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
+        card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
+        cards.append(card)
+    
+    btn_fr = ctk.CTkFrame(home, fg_color='transparent')
+    btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
+    btn_fr.columnconfigure((0,3), weight=1)
+
+    btn = ctk.CTkButton(btn_fr, text='Load More', font=('Arial', 12), corner_radius=19, fg_color='#1A1A1A', height=30,
+                    hover_color='#373737', command=lambda: load_more(len(cards), cards, btn_fr, home, recommendation), width=100
+                    )
+    btn.grid(row=0, column=2, padx=10, pady=1)
+    ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
+
+def chat_page(fr):
+    pass
 
 if __name__ == '__main__':
     id = -1
@@ -250,33 +281,21 @@ if __name__ == '__main__':
 
         app = ctk.CTk()
         app.title('AI-Travel Recommender')
-        app.geometry('1323x650')
+        app.geometry('1353x680')
         app.resizable(False, False)
+        app.columnconfigure(0, weight=1)
+        app.rowconfigure(0, weight=1)
 
-        home = ctk.CTkScrollableFrame(app, width=1310, height=650, corner_radius=0, fg_color='transparent')
+        home = ctk.CTkTabview(app, width=1353, height=680, corner_radius=0, fg_color='transparent', anchor='n',
+                            segmented_button_fg_color='#1A1A1A', segmented_button_unselected_color='#1A1A1A'
+                            )
         home.place(x=0, y=0, anchor='nw')
-        ctk.CTkLabel(home, text='Top Destinations for you', font=('Arial', 20, 'bold')).grid(row=0, column=0, pady=(30,2))
-    
-        recomendation = HybridRecommender(collaborative_model=(True, id, 'CF_Neural_Model3.7.bin'),
-                        popularity_model=True, content_model=True,
-                        popular_weight=0.15, collab_weight=0.7, content_weight=0.15
-                        )
-        rec = recomendation.recommend(top_n=16)
+        home.add(' Home ')
+        home.add(' Chat ')
+        home.set(' Home ')
 
-        cards = []
-        for i in range(len(rec)):
-            card = Card(home, title=rec['Country'].iloc[i], cr=19, fg_color='gray29', border_width=5)
-            card.grid(row=1+i//4, column=i%4, padx=(40, 0), pady=(40, 0))
-            cards.append(card)
-    
-        btn_fr = ctk.CTkFrame(home, fg_color='transparent')
-        btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
-        btn_fr.columnconfigure((0,3), weight=1)
+        home_page(home.tab(' Home '))
 
-        btn = ctk.CTkButton(btn_fr, text='Load More', font=('Arial', 12), corner_radius=19, fg_color='#1A1A1A', height=30,
-                        hover_color='#373737', command=lambda: load_more(len(cards), cards, btn_fr, home), width=100
-                        )
-        btn.grid(row=0, column=2, padx=10, pady=1)
-        ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
-
+        chat_page(home.tab(' Chat '))
+        
         app.mainloop()
