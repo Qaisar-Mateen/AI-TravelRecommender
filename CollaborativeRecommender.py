@@ -76,7 +76,7 @@ class Dataset:
         }
 
 
-def train_NN(dataset_name, model_name):
+def train_NN(dataset_name, model_name, epochs=20):
     
     df = pd.read_csv(dataset_name)
     
@@ -95,7 +95,7 @@ def train_NN(dataset_name, model_name):
     #es = EarlyStopping(monitor="valid_loss", model_path="model.bin")
 
     model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_), lr=1e-2)
-    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=19, device='cpu')
+    model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=epochs, device='cpu')
 
     print('model trained')
 
@@ -110,18 +110,43 @@ def train_NN(dataset_name, model_name):
 
 
 class CollaborativeRecommender:
-    def __init__(self, user: int, model_name, train: bool=False, dataset_name=None):
+    def __init__(self, user: int, model_name):
         self.user = user
         self.model_name = model_name
-        self.train = train
-        self.dataset_name = dataset_name
+
+    def updateModel(self, dataset_name=None, epochs=2):
+        df = pd.read_csv(dataset_name)
+    
+        # loading encoders used during training
+        with open('user_encoder.pkl', 'rb') as f:
+            lbl_user = pickle.load(f)
+        with open('country_encoder.pkl', 'rb') as f:
+            lbl_country = pickle.load(f)
+
+        # loading pre_trained model
+        model = RecommenderModel(num_users=len(lbl_user.classes_), num_country=len(lbl_country.classes_))
+        model.load('Models/' + self.model_name, device='cpu')
+
+        train_df, test_df = model_selection.train_test_split(df, test_size=0.2, random_state=42, stratify=df.rating.values)
+
+        train_dataset = Dataset(user=train_df.user.values, country=train_df.country.values, rating=train_df.rating.values)
+
+        test_dataset = Dataset(user=test_df.user.values, country=test_df.country.values, rating=test_df.rating.values)
+
+        model.fit(train_dataset, test_dataset, train_bs=1000, valid_bs=1000, fp16=False, epochs=epochs, device='cpu')
+
+        print('model trained')
+
+        input('press any key to save the model')
+
+        model.save('Models/' + self.model_name)
+
+        with open('user_encoder.pkl', 'wb') as f:
+            pickle.dump(lbl_user, f)
+        with open('country_encoder.pkl', 'wb') as f:
+            pickle.dump(lbl_country, f)
 
     def recommend(self, test=False,  top_n: int=222):
-        if self.train:
-            if self.dataset_name is None:
-                raise ValueError('Please provide dataset_name for trainig the model')
-            else:
-                train_NN(self.dataset_name, self.model_name)
 
         # loading encoders used during training
         with open('user_encoder.pkl', 'rb') as f:
@@ -198,3 +223,5 @@ if __name__ == "__main__":
 
     model = CollaborativeRecommender(user=0, model_name='CF_Neural_Model3.7.bin')
     print(model.recommend(test=True, top_n=16))
+
+    model.updateModel(dataset_name='ratings.csv', epochs=2)
