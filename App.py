@@ -28,7 +28,7 @@ class Card(ctk.CTkFrame):
         super().__init__(*args, corner_radius=cr, width=width, height=height, **kwargs)
 
         self.image_dim = (width-32, (height*0.45)-7)
-
+        self.places = None
         if image is None:
             self.image = ctk.CTkImage(dark_image=Image.open('Images/no image d.png'), 
                                     light_image=Image.open('Images/no image l.png'), 
@@ -80,36 +80,41 @@ class Card(ctk.CTkFrame):
             self.map_widget.update()
 
     def get_spots(self, country, map, fr):
-        def patani(x, y):
-            places = get_places(None,x,y)
+
+        def patani(str):
+            print(str)
+            map.delete_all_marker()
+            x, y = self.places[self.places['name'] == str][['lat', 'lng']].values[0]
+            map.set_marker(x, y, str + " city")
+            place = get_places(None,x,y)
             map.set_position (x, y)
             map.set_zoom(13)
-            print(places)
+            print(place)
 
-            for place in places['features']:
-                map.set_marker(place['geometry']['coordinates'][1], place['geometry']['coordinates'][0], place['properties']['name'])
+            for pl in place['features']:
+                map.set_marker(pl['geometry']['coordinates'][1], pl['geometry']['coordinates'][0], pl['properties']['name'])
             map.update()
 
 
         df = pd.read_csv('world-cities.csv')
-        df = df[df['country'] == country][['name', 'lat', 'lng']]
-        if len(df) > 4:
-            top_three = df.iloc[:3]
+        self.places = df[df['country'] == country][['name', 'lat', 'lng']]
+        if len(self.places) > 4:
+            top_three = self.places.iloc[:3]
             # get an iso geometry id for each city
             #iso = [get_iso(top_three.iloc[i]['lat'], top_three.iloc[i]['lng'])['properties']['id'] for i in range(len(top_three))]
             #print(iso)
             # get places for each city with the iso geometry id
             
-            remaining = df.iloc[3:]
+            remaining = self.places.iloc[3:]
             remaining = remaining.sample(n=min(5, len(remaining)))
-            df = pd.concat([top_three, remaining])
+            self.places = pd.concat([top_three, remaining])
 
-            for i in range(len(df)):
-                btn = ctk.CTkButton(fr, text=df.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=100, height=80,
-                                hover_color='#373737', command=lambda: patani(df.iloc[i]['lat'], df.iloc[i]['lng']))
+            for i in range(len(self.places)):
+                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=100, height=80,
+                                hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani(name))
                 btn.grid(row=i//5, column=1+i%5, padx=10, pady=10)
 
-        df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
+        #df.apply(lambda x: map.set_marker(x['lat'], x['lng'], x['name']), axis=1)
 
         map.update()
 
