@@ -1,6 +1,7 @@
 import requests
+import re
 
-prompt = 'i like a place with beautiful nature and culture and some food and i also like places with beaches and nice and warm weather and my budegt perday is 152'#input('Prompt: ')
+prompt = 'i like a place with high skyscrappers and culture and some food and i also like places with beaches and nice and warm weather and my budegt perday is 152'
 
 
 def askAI():
@@ -11,22 +12,23 @@ def askAI():
     a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]',
     'user': '{prompt}',
     }}""",
-      "temperature":0.2,
+      "temperature":0.5,
       "topP":0.3,
       "lengthPenality":0.3,
        "maxTokens": 2000
     }, stream=True)
-      # str = response.text
-      # print(str)
     text = ''
     for chunk in response.iter_content(chunk_size=1024):  
         if chunk:
             text += chunk.decode('utf-8')
-    #print(text)
     return text
 
-#while True:
-#try:
-text = askAI()
+def extract_data(text):
+    matches = re.findall(r'\[([^]]*)\]', text)
+    countries = [country.strip() for country in matches[0].split(',')]
+    return countries
 
-print('Llama3:\n', text)
+text = askAI()
+data = extract_data(text)
+
+print('Llama3:\n', text, '\nExtracted Data:\n', data)
