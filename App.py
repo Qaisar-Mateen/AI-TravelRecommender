@@ -16,7 +16,7 @@ def get_places(geo_id, lat, lon, place=True):
         id = id['results'][0]['place_id']
         print(id)
         #url = f'''https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named,access.yes&filter=circle:{lat},{lon},5000&bias=proximity:{lat},{lon}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'''
-        url = f"https://api.geoapify.com/v2/places?categories=catering.restaurant,accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named&filter=place:{id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
+        url = f"https://api.geoapify.com/v2/places?categories=accommodation.hotel,accommodation.hut,activity,sport,heritage,ski,tourism,leisure,natural,rental.bicycle,rental.ski,entertainment&conditions=named&filter=place:{id}&limit=20&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
         result = requests.get(url)
     
     else:
