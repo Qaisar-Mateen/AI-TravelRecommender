@@ -231,18 +231,30 @@ def home_page(fr):
     ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
 def chat_page(fr):
+
+    def send_message(fr, msg):
+        if msg == '':
+            return
+        
+        
+
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
     chat.grid(row=0, column=1, pady=(0, 5))
 
-    
 
     chat_bar = ctk.CTkFrame(fr, corner_radius=19, width=1290, height=90)
     chat_bar.grid(row=1, column=1, padx=5, pady=5)
     chat.columnconfigure((0,7), weight=1)
 
     chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
-    chat_box.grid(row=0, column=1, padx=20, pady=20)
+    chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
+
+    send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(30,30)),
+                            fg_color='#212121', hover_color='#373737', height=30, width=10, command=lambda: send_message(chat, chat_box.get())
+    send_btn.grid(row=0, column=2, padx=(0, 10), pady=15)
+
+
 
 if __name__ == '__main__':
     id = -1
