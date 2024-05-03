@@ -232,15 +232,17 @@ def home_page(fr):
 
 def chat_page(fr):
     fr.columnconfigure((0,7), weight=1)
-    chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=530, fg_color='transparent')
+    chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
     chat.grid(row=0, column=1, pady=(0, 5))
+
+    
 
     chat_bar = ctk.CTkFrame(fr, corner_radius=19, width=1290, height=90)
     chat_bar.grid(row=1, column=1, padx=5, pady=5)
     chat.columnconfigure((0,7), weight=1)
 
     chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
-    chat_box.grid(row=0, column=1, padx=100, pady=20)
+    chat_box.grid(row=0, column=1, padx=20, pady=20)
 
 if __name__ == '__main__':
     id = -1
