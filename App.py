@@ -122,7 +122,7 @@ class Card(ctk.CTkFrame):
             self.places = pd.concat([top_three, remaining])
 
             for i in range(len(self.places)):
-                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=140, height=90,
+                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=170, height=90,
                                 hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani(name))
                 btn.grid(row=1+i//3, column=1+i%3, padx=10, pady=10)
 
@@ -231,7 +231,16 @@ def home_page(fr):
     ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
 def chat_page(fr):
-    pass
+    fr.columnconfigure((0,7), weight=1)
+    chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=530, fg_color='transparent')
+    chat.grid(row=0, column=1, pady=(0, 5))
+
+    chat_bar = ctk.CTkFrame(fr, corner_radius=19, width=1290, height=90)
+    chat_bar.grid(row=1, column=1, padx=5, pady=5)
+    chat.columnconfigure((0,7), weight=1)
+
+    chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
+    chat_box.grid(row=0, column=1, padx=100, pady=20)
 
 if __name__ == '__main__':
     id = -1
