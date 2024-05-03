@@ -6,6 +6,8 @@ from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading
 
+r = 0
+
 def get_places(geo_id, lat, lon, place=True):
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
     
@@ -232,11 +234,20 @@ def home_page(fr):
 
 def chat_page(fr):
 
-    def send_message(fr, msg):
+    def send_message(fr, msg, msg_box):
         if msg == '':
             return
-        
-        
+        global r
+        msg_box.delete(0, 'end')
+        fr.columnconfigure((0, 1), weight=1)
+        r -=- 1
+        user_fr = ctk.CTkFrame(fr, corner_radius=19)
+        user_fr.grid(row=r, column=1, padx=10, pady=10)
+        ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=600).grid(row=0, column=0, padx=8, pady=8)
+        r -=- 1
+        user_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
+        user_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
+        ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=600).grid(row=0, column=0, padx=8, pady=8, sticky='w')
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
@@ -251,7 +262,7 @@ def chat_page(fr):
     chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
 
     send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(30,30)),
-                            fg_color='#212121', hover_color='#373737', height=30, width=10, command=lambda: send_message(chat, chat_box.get())
+                            fg_color='#212121', hover_color='#373737', height=30, width=10, command=lambda: send_message(chat, chat_box.get(), chat_box))
     send_btn.grid(row=0, column=2, padx=(0, 10), pady=15)
 
 
