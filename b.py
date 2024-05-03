@@ -29,6 +29,6 @@ def extract_data(text):
     return countries
 
 text = askAI()
-data = extract_data(text)
-
-print('Llama3:\n', text, '\nExtracted Data:\n', data)
+#data = extract_data(text)
+print(text)
+#print('Llama3:\n', text, '\nExtracted Data:\n', data)
