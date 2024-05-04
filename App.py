@@ -5,8 +5,10 @@ import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading, re
+import json
 
 r = 0
+api_key = "sk-M7kNhrsehJzOxxvgMDGtT3BlbkFJISmwetFp7wSuImTaeXx"
 
 def get_places(geo_id, lat, lon, place=True):
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
@@ -283,6 +285,64 @@ def askAI_1(prompt):
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
         return True, text
 
+def askAI_2(prompt):
+
+    global api_key
+    
+    if prompt.lower().startswith("/suggest"):
+        prompt = prompt.lower()
+        prompt = prompt.replace("/suggest", "", 1).strip()
+
+        headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {api_key}',
+        }
+
+        data = {
+        'prompt': {
+            'systemPrompt': 'You have to analyse the user prompt and suggest them countries based on their preferences. You only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]',
+            'user': prompt,
+        },
+        'max_tokens': 2000,
+        'temperature': 0.5,
+        'top_p': 0.3,
+        }
+        
+        response = requests.post('https://api.openai.com/v1/engines/davinci-codex/completions', headers=headers, data=json.dumps(data))
+        print(response.json())
+        text = response.json()['choices'][0]['text']['content']
+        
+        matches = re.findall(r'\[([^]]*)\]', text)
+        if matches:
+            countries = [country.strip() for country in matches[0].split(',')]
+        else:
+            countries = []
+        
+        return False, countries
+
+    else:
+        headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {api_key}',
+        }
+
+        data = {
+        'prompt': {
+            'systemPrompt': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.',
+            'user': prompt,
+        },
+        'max_tokens': 2000,
+        'temperature': 1.5,
+        'top_p': 0.3,
+        }
+        
+        response = requests.post('https://api.openai.com/v1/engines/davinci-codex/completions', headers=headers, data=json.dumps(data))
+        print(response.json())
+        text = response.json()['choices'][0]['text']['content']
+
+        return True, text
+    
+
 def chat_page(fr):
 
     def send_message(fr, msg, msg_box):
@@ -296,7 +356,7 @@ def chat_page(fr):
         user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
         ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
 
-        print, respose = askAI_1(msg)
+        print, respose = askAI_2(msg)
         r -=- 1
 
         if print:
