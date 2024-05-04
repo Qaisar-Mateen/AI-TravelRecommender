@@ -295,15 +295,15 @@ def askAI_2(prompt):
         prompt = prompt.lower()
         prompt = prompt.replace("/suggest", "", 1).strip()
         
-        response = client.client.chat.completions.create(
+        response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]"},
             {"role": "user", "content": f"{prompt}"}
         ])
   
-        text = response.choices[0].message
-        print(text)
+        text = response.choices[0].message.content
+        print('\n', text)
 
         matches = re.findall(r'\[([^]]*)\]', text)
         if matches:
@@ -315,15 +315,15 @@ def askAI_2(prompt):
 
     else:
         
-        response = client.client.chat.completions.create(
+        response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt."},
             {"role": "user", "content": f"{prompt}"}
         ])
   
-        text = response.choices[0].message
-        print(text)
+        text = response.choices[0].message.content
+        print('\n', text)
         
         return True, text
     
