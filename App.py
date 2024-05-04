@@ -4,7 +4,7 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-import requests, threading
+import requests, threading, re
 
 r = 0
 
@@ -232,6 +232,7 @@ def home_page(fr):
     btn.grid(row=0, column=2, padx=10, pady=1)
     ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
+
 def askAI_1(prompt):
     if prompt.lower().startswith("/suggest"):
         prompt = prompt.lower()
@@ -255,7 +256,13 @@ def askAI_1(prompt):
             if chunk:
                 text += chunk.decode('utf-8')
         
-        print(text)
+        matches = re.findall(r'\[([^]]*)\]', text)
+        if matches:
+            countries = [country.strip() for country in matches[0].split(',')]
+        else:
+            countries = []
+        
+        return False, countries
 
     else:
         response = requests.post('https://fumes-api.onrender.com/llama3',
@@ -274,7 +281,7 @@ def askAI_1(prompt):
                 text += chunk.decode('utf-8')
 
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
-        return text
+        return True, text
 
 def chat_page(fr):
 
@@ -289,14 +296,18 @@ def chat_page(fr):
         user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
         ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
 
-        respose = askAI_1(msg)
-
+        print, respose = askAI_1(msg)
         r -=- 1
-        ai_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
-        ai_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
-        ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw')
-        ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550).grid(row=0, column=1, padx=8, pady=8, sticky='w')
 
+        if print:
+            ai_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
+            ai_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
+            ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw')
+            ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550).grid(row=0, column=1, padx=8, pady=8, sticky='w')
+
+        else:
+            # display the countries logic here
+            pass
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
