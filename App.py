@@ -5,10 +5,10 @@ import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading, re
-import json
+from openai import OpenAI
 
 r = 0
-api_key = "sk-M7kNhrsehJzOxxvgMDGtT3BlbkFJISmwetFp7wSuImTaeXx"
+api_key = "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"
 
 def get_places(geo_id, lat, lon, place=True):
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
@@ -288,30 +288,23 @@ def askAI_1(prompt):
 def askAI_2(prompt):
 
     global api_key
-    
+
+    client = OpenAI(api_key=api_key)
+
     if prompt.lower().startswith("/suggest"):
         prompt = prompt.lower()
         prompt = prompt.replace("/suggest", "", 1).strip()
-
-        headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}',
-        }
-
-        data = {
-        'prompt': {
-            'systemPrompt': 'You have to analyse the user prompt and suggest them countries based on their preferences. You only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]',
-            'user': prompt,
-        },
-        'max_tokens': 2000,
-        'temperature': 0.5,
-        'top_p': 0.3,
-        }
         
-        response = requests.post('https://api.openai.com/v1/engines/davinci-codex/completions', headers=headers, data=json.dumps(data))
-        print(response.json())
-        text = response.json()['choices'][0]['text']['content']
-        
+        response = client.client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]"},
+            {"role": "user", "content": f"{prompt}"}
+        ])
+  
+        text = response.choices[0].message
+        print(text)
+
         matches = re.findall(r'\[([^]]*)\]', text)
         if matches:
             countries = [country.strip() for country in matches[0].split(',')]
@@ -321,25 +314,17 @@ def askAI_2(prompt):
         return False, countries
 
     else:
-        headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}',
-        }
-
-        data = {
-        'prompt': {
-            'systemPrompt': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.',
-            'user': prompt,
-        },
-        'max_tokens': 2000,
-        'temperature': 1.5,
-        'top_p': 0.3,
-        }
         
-        response = requests.post('https://api.openai.com/v1/engines/davinci-codex/completions', headers=headers, data=json.dumps(data))
-        print(response.json())
-        text = response.json()['choices'][0]['text']['content']
-
+        response = client.client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt."},
+            {"role": "user", "content": f"{prompt}"}
+        ])
+  
+        text = response.choices[0].message
+        print(text)
+        
         return True, text
     
 
