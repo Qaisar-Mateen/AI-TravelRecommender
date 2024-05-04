@@ -284,10 +284,9 @@ def chat_page(fr):
         
         global r
         msg_box.delete(0, 'end')
-        fr.columnconfigure((0, 1), weight=1)
         r -=- 1
         user_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='#373737')
-        user_fr.grid(row=r, column=1, padx=10, pady=10, sticky='e')
+        user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
         ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
 
         respose = askAI_1(msg)
@@ -295,18 +294,18 @@ def chat_page(fr):
         r -=- 1
         ai_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
         ai_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
-        ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw' if len(respose) >= 550 else 'w')
+        ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw')
         ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550).grid(row=0, column=1, padx=8, pady=8, sticky='w')
 
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
     chat.grid(row=0, column=1, pady=(0, 5))
-
+    chat.columnconfigure(1, weight=1)
 
     chat_bar = ctk.CTkFrame(fr, corner_radius=19, width=1290, height=90)
     chat_bar.grid(row=1, column=1, padx=5, pady=5)
-    chat.columnconfigure((0,7), weight=1)
+    chat_bar.columnconfigure((0,7), weight=1)
 
     chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
     chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
