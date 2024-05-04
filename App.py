@@ -233,23 +233,48 @@ def home_page(fr):
     ctk.CTkFrame(btn_fr, fg_color='transparent', width=35, height=30).grid(row=0, column=1)
 
 def askAI_1(prompt):
-    response = requests.post('https://fumes-api.onrender.com/llama3',
-    json={
-    'prompt': f"""{{
-    'systemPrompt': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.',
-    'user': '{prompt}',
-    }}""",
-      "temperature":1.6,
-       "maxTokens": 1000
-    }, stream=True)
+    if prompt.lower().startswith("/suggest"):
+        prompt = prompt.lower()
+        prompt = prompt.replace("/suggest", "", 1).strip()
 
-    text = ''
-    for chunk in response.iter_content(chunk_size=1024):  
-        if chunk:
-            text += chunk.decode('utf-8')
+        response = requests.post('https://fumes-api.onrender.com/llama3',
+        json={
+        'prompt': f"""{{
+        'systemPrompt': 'You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Folloe
+        a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]',
+        'user': '{prompt}',
+        }}""",
+        "temperature":0.5,
+        "topP":0.3,
+        "lengthPenality":0.3,
+        "maxTokens": 2000
+        }, stream=True)
+        
+        text = ''
+        for chunk in response.iter_content(chunk_size=1024):
+            if chunk:
+                text += chunk.decode('utf-8')
+        
+        print(text)
 
-    text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
-    return text
+    else:
+        response = requests.post('https://fumes-api.onrender.com/llama3',
+        json={
+        'prompt': f"""{{
+        'systemPrompt': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.',
+        'user': '{prompt}',
+        }}""",
+        "temperature":1.6,
+        "maxTokens": 1000
+        }, stream=True)
+
+        text = ''
+        for chunk in response.iter_content(chunk_size=1024):  
+            if chunk:
+                text += chunk.decode('utf-8')
+
+        text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
+        return text
 
 def chat_page(fr):
 
