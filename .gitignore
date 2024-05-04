@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 # country_encoder.pkl
 # user_encoder.pkl
+OpenAI_API.bin

@@ -4,11 +4,10 @@ import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
-import requests, threading, re
+import requests, threading, re, pickle
 from openai import OpenAI
 
 r = 0
-api_key = "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"
 
 def get_places(geo_id, lat, lon, place=True):
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
@@ -286,8 +285,9 @@ def askAI_1(prompt):
         return True, text
 
 def askAI_2(prompt):
-
-    global api_key
+    api_key = None
+    with open('OpenAI_API.bin', 'rb') as f:
+            api_key = pickle.load(f)
 
     client = OpenAI(api_key=api_key)
 
