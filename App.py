@@ -1,12 +1,13 @@
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageTk
 import tkinter as tk
 import tkintermapview as map
 from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading, re, pickle
 from openai import OpenAI
-import json
+import json, time
+from tkGIF import gifplay
 
 r = 0
 
@@ -103,7 +104,7 @@ class Card(ctk.CTkFrame):
         def patani(str):
             print(str)
             map.delete_all_marker()
-            map.set_address(country, marker=True)
+            #map.set_address(country, marker=True)
             x, y = self.places[self.places['name'] == str][['lat', 'lng']].values[0]
             map.set_marker(x, y, str)
 
@@ -117,6 +118,33 @@ class Card(ctk.CTkFrame):
                 map.set_marker(pl['geometry']['coordinates'][1], pl['geometry']['coordinates'][0], pl['properties']['name'])
             map.update()
 
+
+        def patani_wrapper(name):
+            act = threading.active_count()
+            threading.Thread(target=patani, args=(name,), daemon=True).start()
+
+            top = ctk.CTkToplevel()
+            top.title('Please Wait...')
+            top.geometry('300x100')
+            top.grab_set()
+            top.resizable(False, False)
+            top.columnconfigure((0,5), weight=1)
+            top.rowconfigure((0,5), weight=1)
+
+
+            icon_lbl = ctk.CTkLabel(top, text='')
+            icon_lbl.grid(row=1, column=1, padx=10, pady=10)
+
+            gif = gifplay(icon_lbl,'./Images/loading.gif', 0.1)
+
+            gif.play()
+
+            while threading.active_count() > act:
+                top.update()
+                time.sleep(0.1)
+
+            top.destroy()
+            top.mainloop()
 
         df = pd.read_csv('world-cities.csv')
         self.places = df[df['country'] == country][['name', 'lat', 'lng']]
@@ -133,7 +161,7 @@ class Card(ctk.CTkFrame):
 
         for i in range(len(self.places)):
             btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=170, height=90,
-                                hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani(name))
+                                hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani_wrapper(name))
             btn.grid(row=1+i//3, column=1+i%3, padx=10, pady=10)
 
         map.update()
@@ -168,16 +196,16 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        try:
-           a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
-           if not a:
-                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
+        # try:
+        #    a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
+        #    if not a:
+        #         tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
 
-        except Exception as e:
-            if '403' in str(e):
-                tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
-            else:
-                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
+        # except Exception as e:
+        #     if '403' in str(e):
+        #         tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
+        #     else:
+        #         tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
@@ -196,7 +224,7 @@ class Card(ctk.CTkFrame):
         detail.columnconfigure((0,7), weight=1)
         detail.rowconfigure((0,9), weight=1)
 
-        threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
+        threading.Thread(target=self.get_spots(country, self.map_widget, detail), daemon=True).start()
         top.mainloop()
     
 
