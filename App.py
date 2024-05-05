@@ -298,7 +298,7 @@ def askAI_2(prompt):
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]"},
+            {"role": "system", "content": "You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3, ...., country Name N]"},
             {"role": "user", "content": f"{prompt}"}
         ])
   
@@ -332,11 +332,11 @@ def askAI_2(prompt):
 
 def show_recommendation(fr, countries, row):
 
-    roll = ctk.CTkScrollableFrame(fr, corner_radius=19, fg_color='transparent', orientation='horizontal')
+    roll = ctk.CTkScrollableFrame(fr, corner_radius=19, fg_color='transparent', orientation='horizontal', width=1310, height=250)
     roll.grid(row=row, column=0, padx=20, pady=20, columnspan=3)
 
     if len(countries) == 0:
-        ctk.CTkLabel(fr, text='No countries found!!', font=('Arial', 14, 'bold')).grid(row=0, column=0, padx=10, pady=10)
+        ctk.CTkLabel(fr, text='No countries found!!', font=('Arial', 14, 'bold')).grid(row=row, column=0, padx=10, pady=10)
         return
 
     for i in range(len(countries)):
@@ -357,7 +357,7 @@ def chat_page(fr):
         user_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='#373737')
         user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
         ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
-
+        fr.update()
         print, respose = askAI_2(msg)
         r -=- 1
 
