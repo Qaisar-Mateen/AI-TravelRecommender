@@ -125,7 +125,7 @@ class Card(ctk.CTkFrame):
 
             top = ctk.CTkToplevel()
             top.title('Please Wait...')
-            top.geometry('300x100')
+            top.geometry('300x150')
             top.grab_set()
             top.resizable(False, False)
             top.columnconfigure((0,5), weight=1)
@@ -134,6 +134,8 @@ class Card(ctk.CTkFrame):
 
             icon_lbl = ctk.CTkLabel(top, text='')
             icon_lbl.grid(row=1, column=1, padx=10, pady=10)
+
+            ctk.CTkLabel(top, text='Please wait while the little elves draw your map', wraplength=150, font=('Arial', 13)).grid(row=2, column=1, padx=10, pady=5)
 
             gif = gifplay(icon_lbl,'./Images/loading.gif', 0.01)
             gif.play()
