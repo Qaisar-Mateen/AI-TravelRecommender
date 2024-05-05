@@ -436,14 +436,15 @@ def chat_page(fr):
             ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550).grid(row=0, column=1, padx=8, pady=8, sticky='w')
 
         else:
-            # display the countries logic here
             show_recommendation(fr, respose, r)
+
+        fr._parent_canvas.yview_moveto(1.0)
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
     chat.grid(row=0, column=1, pady=(0, 5))
     chat.columnconfigure(1, weight=1)
-
+    
     chat_bar = ctk.CTkFrame(fr, corner_radius=19, width=1290, height=90)
     chat_bar.grid(row=1, column=1, padx=5, pady=5)
     chat_bar.columnconfigure((0,7), weight=1)
@@ -451,7 +452,7 @@ def chat_page(fr):
     chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
     chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
 
-    send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(20,20)),
+    send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(27,27)),
                             fg_color='#212121', hover_color='#373737', height=30, width=10, command=lambda: send_message(chat, chat_box.get(), chat_box))
     send_btn.grid(row=0, column=2, padx=(0, 10), pady=15)
 
