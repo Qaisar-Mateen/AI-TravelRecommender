@@ -42,8 +42,8 @@ class HybridRecommender:
 
         if self.content_model is not None and self.collaborative_model is not None:
 
-            country = collaborative_recs[collaborative_recs['Rating'] == max(collaborative_recs['Rating'])]['Country'].values
-            country = str(country[0])
+            country = collaborative_recs.sort_values('Rating', ascending=False)['Country'].head(3).value
+            country = list(map(str, country))
             
             content_recs = self.content_model.recommend(country=country)
 
