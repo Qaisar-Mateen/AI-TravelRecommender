@@ -425,7 +425,9 @@ def chat_page(fr):
         user_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='#373737')
         user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
         ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
+        fr._parent_canvas.yview_moveto(1.0)
         fr.update()
+
         print, respose = askAI_2(msg)
         r -=- 1
 
@@ -439,6 +441,7 @@ def chat_page(fr):
             show_recommendation(fr, respose, r)
 
         fr._parent_canvas.yview_moveto(1.0)
+        fr.update()
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
