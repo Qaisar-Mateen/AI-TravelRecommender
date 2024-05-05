@@ -35,6 +35,9 @@ def get_iso(lat, lon):
     return result.json()
 
 
+convo_history = []
+
+
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
                 'palau': 'Ngerulmud,palau', 'Armenia': 'Yerevan,Armenia', 'Sudan':'Khartoum,Sudan'}
 
@@ -119,8 +122,7 @@ class Card(ctk.CTkFrame):
         self.places = df[df['country'] == country][['name', 'lat', 'lng']]
         
         if len(self.places) == 0:
-            # create a lablel saying no places found
-            ctk.CTkLabel(fr, text='No Cities Data Available for this Country', font=('Arial', 14, 'bold')).grid(row=1, column=1, padx=10, pady=10)
+            ctk.CTkLabel(fr, text='No Cities Data Available for this Country!!', font=('Arial', 14, 'bold')).grid(row=1, column=1, padx=10, pady=10)
 
         if len(self.places) > 4:
             top_three = self.places.iloc[:3]
@@ -343,6 +345,7 @@ def askAI_2(prompt):
         return False, countries
 
     else:
+        global convo_history
         # premade personas
         arro = 'Act as an arrogant AI who thinks its better than everyone else and knows everything. You have to generate a response based on the user prompt.'
         nor = "Act as a Travel Agent of the user and chat with the user. You have to generate a response based on the user prompt."
@@ -352,10 +355,13 @@ def askAI_2(prompt):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": f"{batman}"},
+            *convo_history,
             {"role": "user", "content": f"{prompt}"}
         ])
   
         text = response.choices[0].message.content
+        convo_history.append({"role": "user", "content": f"{prompt}"})
+        convo_history.append({"role": "assistant", "content": f"{text}"})
         return True, text
     
 
