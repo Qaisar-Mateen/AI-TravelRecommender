@@ -6,6 +6,7 @@ from HybridRecommender import HybridRecommender
 import pandas as pd
 import requests, threading, re, pickle
 from openai import OpenAI
+import json
 
 r = 0
 
@@ -32,7 +33,6 @@ def get_iso(lat, lon):
     url_iso = f'https://api.geoapify.com/v1/isoline?lat={lat}&lon={lon}&type=time&mode=drive&range=900&apiKey=d76f029b27e04a9cb47a5356a7bf2a87'
     result = requests.get(url_iso)
     return result.json()
-
 
 
 special_cases = {'Greenland': 'Kalaallit Nunaat', 'Bangladesh': 'Dhaka,Bangladesh', 'Jordan': 'Amman,Jordan', 'Lebanon': 'Beirut,Lebanon',
@@ -241,11 +241,13 @@ def askAI_1(prompt):
 
         response = requests.post('https://fumes-api.onrender.com/llama3',
         json={
-        'prompt': f"""{{
-        'systemPrompt': 'You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Folloe
-        a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]',
-        'user': '{prompt}',
-        }}""",
+        'prompt': [
+            {
+                'role': 'system',
+                'content': 'You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3...]'
+            },
+            {'role': 'user','content': f'{prompt}'}
+        ],
         "temperature":0.5,
         "topP":0.3,
         "lengthPenality":0.3,
@@ -255,7 +257,12 @@ def askAI_1(prompt):
         text = ''
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:
-                text += chunk.decode('utf-8')
+                chunk_decoded = chunk.decode('utf-8')
+                data = json.loads(chunk_decoded)
+                content = data.get('choices', [{}])[0].get('delta', {}).get('content', '')
+                text += content
+
+           
         
         matches = re.findall(r'\[([^]]*)\]', text)
         if matches:
@@ -268,18 +275,24 @@ def askAI_1(prompt):
     else:
         response = requests.post('https://fumes-api.onrender.com/llama3',
         json={
-        'prompt': f"""{{
-        'systemPrompt': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.',
-        'user': '{prompt}',
-        }}""",
+        'prompt': [
+        {
+            'role': 'system',
+            'content': 'Act as a good and nice AI and chat with the user. You have to generate a response based on the user prompt.'
+        },
+        {'role': 'user','content': f'{prompt}'}
+        ],
         "temperature":1.6,
         "maxTokens": 1000
         }, stream=True)
-
+        
         text = ''
-        for chunk in response.iter_content(chunk_size=1024):  
+        for chunk in response.iter_content(chunk_size=1024):
             if chunk:
-                text += chunk.decode('utf-8')
+                chunk_decoded = chunk.decode('utf-8')
+                data = json.loads(chunk_decoded)
+                content = data.get('choices', [{}])[0].get('delta', {}).get('content', '')
+                text += content
 
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
         return True, text

@@ -1,5 +1,5 @@
 import requests
-import re
+import re, json
 from openai import OpenAI
 
 prompt = 'i like a place with high skyscrappers and culture and some food and i also like places with beaches and nice and warm weather and my budegt perday is 152'
@@ -17,16 +17,22 @@ def askAI():
       "lengthPenality":0.3,
        "maxTokens": 2000
     }, stream=True)
+            
     text = ''
-    for chunk in response.iter_content(chunk_size=1024):  
-        if chunk:
-            text += chunk.decode('utf-8')
-    return text
+    for chunk in response.iter_content(chunk_size=1024):
+            if chunk:
+                chunk_decoded = chunk.decode('utf-8')
+                data = json.loads(chunk_decoded)
+                content = data.get('choices', [{}])[0].get('delta', {}).get('content', '')
+                text += content
+
+      
 
 def extract_data(text):
     matches = re.findall(r'\[([^]]*)\]', text)
     countries = [country.strip() for country in matches[0].split(',')]
     return countries
+
 def ask():
         import pickle
 
