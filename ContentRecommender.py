@@ -54,11 +54,11 @@ class ContentBaseRecommender:
         return data
 
 
-    def get_TF_IDF_recomendation(self, country, budget, num_of_rec=5):
+    def get_TF_IDF_recomendation(self, keywords_matrix, budget, num_of_rec=5):
 
-        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
-        
-        sim_scores = list(enumerate(self.cosine_sim[idx]))
+        #idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
+        self.cosine_sim = cosine_similarity(keywords_matrix, self.tf_idf_matrix)
+        sim_scores = list(enumerate(self.cosine_sim[0]))
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         #print(sim_scores)
         country_indices = [i[0] for i in sim_scores]
@@ -80,10 +80,12 @@ class ContentBaseRecommender:
         return recommendation
 
 
-    def get_CountVectorizer_recomendation(self, country, budget, num_of_rec=5):
+    def get_CountVectorizer_recomendation(self, keywords, budget, num_of_rec=5):
         
-        idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
-        sim_scores = list(enumerate(self.sim[idx]))
+        #idx = self.data[self.data['Country'].str.lower() == country.lower()].index[0]
+        self.sim = cosine_similarity(keywords, self.vec_matrix)
+
+        sim_scores = list(enumerate(self.sim[0]))
 
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         #print('score: ',sim_scores)
@@ -109,30 +111,34 @@ class ContentBaseRecommender:
 
     def recommend(self, country, budget=200, num_of_rec=222, tf_idf=True, count_vectorizer=False):
 
-        like_df = self.data[self.data['Country'].str.lower() == country.lower()]
+        keywords = []
+        for count in country:
+            like_df = self.data[self.data['Country'].str.lower() == count.lower()]
+            if like_df.empty:
+                print(f'Country {count} not found')
+            else:
+                keywords.append(like_df['keywords'].values[0])
         
-        if like_df.empty:
-            print('Country not found')
-            exit(0)
-        #print(like_df)
-
-        # print('generating recommendations...')
-        # s(self.wait)
+        keywords = ' '.join(keywords)
         
         if tf_idf and count_vectorizer:
-            rec1 = self.get_TF_IDF_recomendation(country, budget, num_of_rec)
-            rec2 = self.get_CountVectorizer_recomendation(country, budget, num_of_rec)
+            tf_idf_matrix = self.tf_idf.transform([keywords])
+            vec_matrix = self.vec.transform([keywords])
+            rec1 = self.get_TF_IDF_recomendation(tf_idf_matrix, budget, num_of_rec)
+            rec2 = self.get_CountVectorizer_recomendation(vec_matrix, budget, num_of_rec)
             return rec1, rec2
         
         elif tf_idf:
-            return self.get_TF_IDF_recomendation(country, budget, num_of_rec)
+            tf_idf_matrix = self.tf_idf.transform([keywords])
+            print(keywords)
+            return self.get_TF_IDF_recomendation(tf_idf_matrix, budget, num_of_rec)
 
         elif count_vectorizer:
-            return self.get_CountVectorizer_recomendation(country, budget, num_of_rec)
+            vec_matrix = self.vec.transform([keywords])
+            return self.get_CountVectorizer_recomendation(vec_matrix, budget, num_of_rec)
 
 
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
-    country = input('Enter a country you like: ')
-    budget = int(input('Enter your budget: '))
-    recommender.recommend(country, budget, 5, count_vectorizer=True)
+    
+    print(recommender.recommend(['Pakistan', 'India', 'Japan'], count_vectorizer=False))
