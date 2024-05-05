@@ -131,7 +131,6 @@ class Card(ctk.CTkFrame):
 
         map.update()
 
-
     def view_detail(self, country):
         global special_cases
 
@@ -186,6 +185,7 @@ class Card(ctk.CTkFrame):
         threading.Thread(target=self.get_spots(country, self.map_widget, detail)).start()
         top.mainloop()
     
+
 def load_more(cur, cards, btn_fr, home, recommendation):
     
     btn_fr.grid_forget()
@@ -203,6 +203,7 @@ def load_more(cur, cards, btn_fr, home, recommendation):
         btn_fr.grid(row=2+len(cards)//4, column=0, columnspan=4, pady=30, sticky='ew')
     else:
         ctk.CTkLabel(home, text='', fg_color='transparent').grid(row=2+len(cards)//4, column=0, columnspan=4, pady=20)
+
 
 def home_page(fr):
 
@@ -299,6 +300,7 @@ def askAI_1(prompt):
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
         return True, text
 
+
 def askAI_2(prompt):
     api_key = None
     with open('OpenAI_API.bin', 'rb') as f:
@@ -337,7 +339,7 @@ def askAI_2(prompt):
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": f"{nor}"},
+            {"role": "system", "content": f"{batman}"},
             {"role": "user", "content": f"{prompt}"}
         ])
   
