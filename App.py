@@ -314,19 +314,36 @@ def askAI_2(prompt):
         return False, countries
 
     else:
+        # premade personas
+        arro = 'Act as an arrogant AI who thinks its better than everyone else and knows everything. You have to generate a response based on the user prompt.'
+        nor = "Act as a Travel Agent of the user and chat with the user. You have to generate a response based on the user prompt."
+        batman = "Act as Batman and chat with the user. You have to generate a response based on the user prompt."
         
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Act as an arrogant AI who thinks its better than everyone else and knows everything. You have to generate a response based on the user prompt."},
+            {"role": "system", "content": f"{nor}"},
             {"role": "user", "content": f"{prompt}"}
         ])
   
         text = response.choices[0].message.content
-        print('\n', text)
-        
         return True, text
     
+
+def show_recommendation(fr, countries, row):
+
+    roll = ctk.CTkScrollableFrame(fr, corner_radius=19, fg_color='transparent', orientation='horizontal')
+    roll.grid(row=row, column=0, padx=20, pady=20, columnspan=3)
+
+    if len(countries) == 0:
+        ctk.CTkLabel(fr, text='No countries found!!', font=('Arial', 14, 'bold')).grid(row=0, column=0, padx=10, pady=10)
+        return
+
+    for i in range(len(countries)):
+        card = Card(roll, title=countries[i], cr=19, fg_color='gray29', border_width=5)
+        card.grid(row=0, column=i, padx=(40, 0) , pady=15)
+
+
 
 def chat_page(fr):
 
@@ -352,7 +369,7 @@ def chat_page(fr):
 
         else:
             # display the countries logic here
-            pass
+            show_recommendation(fr, respose, r)
 
     fr.columnconfigure((0,7), weight=1)
     chat = ctk.CTkScrollableFrame(fr, corner_radius=19, width=1310, height=510, fg_color='transparent')
