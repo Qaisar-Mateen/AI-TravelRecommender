@@ -22,6 +22,7 @@ def askAI():
     buffer = ''
     for chunk in response.iter_content(chunk_size=1024):
         if chunk:
+            print(chunk.decode('utf-8'))
             buffer += chunk.decode('utf-8')
             try:
                 data = json.loads(buffer)
@@ -32,7 +33,7 @@ def askAI():
                 # If a JSONDecodeError is raised, it means that the buffer does not contain a complete JSON object
                 # So we just continue accumulating chunks in the buffer
                 pass
-            
+
     return text
 
       
