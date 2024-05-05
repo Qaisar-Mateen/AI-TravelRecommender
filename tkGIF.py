@@ -20,7 +20,7 @@ class gifplay:
             except:
                 break
         print(i)
-        self.totalFrames=i-1
+        self.totalFrames= i-1
         self.delay=delay
         self.labelspace=label
         self.labelspace.image=self.frame[0]
@@ -34,6 +34,10 @@ class gifplay:
     def infinite(self):
         i=0
         while 1:
-            self.labelspace.configure(image=self.frame[i])
-            i=(i+1)%self.totalFrames
-            time.sleep(self.delay)
+            if self.labelspace.winfo_exists():  # Check if the widget still exists
+                self.labelspace.configure(image=self.frame[i])
+                i=(i+1)%self.totalFrames
+                time.sleep(self.delay)
+            
+            else:
+                break  # Exit the loop if the widget no longer exists

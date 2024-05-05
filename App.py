@@ -120,8 +120,8 @@ class Card(ctk.CTkFrame):
 
 
         def patani_wrapper(name):
-            act = threading.active_count()
-            threading.Thread(target=patani, args=(name,), daemon=True).start()
+            th = threading.Thread(target=patani, args=(name,), daemon=True)
+            th.start()
 
             top = ctk.CTkToplevel()
             top.title('Please Wait...')
@@ -135,13 +135,12 @@ class Card(ctk.CTkFrame):
             icon_lbl = ctk.CTkLabel(top, text='')
             icon_lbl.grid(row=1, column=1, padx=10, pady=10)
 
-            gif = gifplay(icon_lbl,'./Images/loading.gif', 0.1)
-
+            gif = gifplay(icon_lbl,'./Images/loading.gif', 0.01)
             gif.play()
 
-            while threading.active_count() > act:
+            while th.is_alive():
                 top.update()
-                time.sleep(0.1)
+                time.sleep(0.01)
 
             top.destroy()
             top.mainloop()
