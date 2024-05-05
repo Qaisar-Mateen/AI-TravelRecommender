@@ -298,7 +298,7 @@ def askAI_2(prompt):
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You have to analyse the user prompt and suggest them countries based on their preferences. you only have to suggest them countries based on their preferences. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3, ...., country Name N]"},
+            {"role": "system", "content": "You have to analyse the user prompt and suggest them more than 5 countries based on their preferences. you only have to suggest them countries based on their preferences and write the standand Name for the countries. You Have to Follow a specific format to suggest them countries in all cases no exception. The format is: [country Name1, Country Name2, Country Name3, ...., country Name N]"},
             {"role": "user", "content": f"{prompt}"}
         ])
   
@@ -332,7 +332,7 @@ def askAI_2(prompt):
 
 def show_recommendation(fr, countries, row):
 
-    roll = ctk.CTkScrollableFrame(fr, corner_radius=19, fg_color='transparent', orientation='horizontal', width=1310, height=250)
+    roll = ctk.CTkScrollableFrame(fr, corner_radius=19, orientation='horizontal', width=1250, height=250)
     roll.grid(row=row, column=0, padx=20, pady=20, columnspan=3)
 
     if len(countries) == 0:
@@ -343,7 +343,10 @@ def show_recommendation(fr, countries, row):
         if '...' in countries[i]:
             countries[i] = countries[i].replace('...', '')
         card = Card(roll, title=countries[i], cr=19, fg_color='gray29', border_width=5)
-        card.grid(row=0, column=i, padx=(40, 0) , pady=15)
+        if i == len(countries)-1:
+            card.grid(row=0, column=i, padx=(40, 40) , pady=15)
+        else:
+            card.grid(row=0, column=i, padx=(40, 0) , pady=15)
 
 
 
