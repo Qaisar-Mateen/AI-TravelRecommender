@@ -130,7 +130,6 @@ class ContentBaseRecommender:
         
         elif tf_idf:
             tf_idf_matrix = self.tf_idf.transform([keywords])
-            print(keywords)
             return self.get_TF_IDF_recomendation(tf_idf_matrix, budget, num_of_rec)
 
         elif count_vectorizer:
@@ -140,5 +139,5 @@ class ContentBaseRecommender:
 
 if __name__ == '__main__':
     recommender = ContentBaseRecommender('world-countries.csv', .5)
-    
+
     print(recommender.recommend(['Pakistan', 'India', 'Japan'], count_vectorizer=False))
