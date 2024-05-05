@@ -456,7 +456,7 @@ def chat_page(fr):
     chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
 
     send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(27,27)),
-                            fg_color='#212121', hover_color='#373737', height=30, width=10, command=lambda: send_message(chat, chat_box.get(), chat_box))
+                            fg_color='#212121', hover_color='#373737', height=30, width=1, command=lambda: send_message(chat, chat_box.get(), chat_box))
     send_btn.grid(row=0, column=2, padx=(0, 10), pady=15)
 
 
