@@ -117,6 +117,7 @@ class Card(ctk.CTkFrame):
 
         df = pd.read_csv('world-cities.csv')
         self.places = df[df['country'] == country][['name', 'lat', 'lng']]
+        
         if len(self.places) > 4:
             top_three = self.places.iloc[:3]
             
@@ -124,10 +125,10 @@ class Card(ctk.CTkFrame):
             remaining = remaining.sample(n=min(5, len(remaining)))
             self.places = pd.concat([top_three, remaining])
 
-            for i in range(len(self.places)):
-                btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=170, height=90,
+        for i in range(len(self.places)):
+            btn = ctk.CTkButton(fr, text=self.places.iloc[i]['name'], corner_radius=19, fg_color='#1A1A1A', width=170, height=90,
                                 hover_color='#373737', command=lambda name=self.places.iloc[i]['name']: patani(name))
-                btn.grid(row=1+i//3, column=1+i%3, padx=10, pady=10)
+            btn.grid(row=1+i//3, column=1+i%3, padx=10, pady=10)
 
         map.update()
 
