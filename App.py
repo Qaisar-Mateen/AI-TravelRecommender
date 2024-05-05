@@ -118,6 +118,10 @@ class Card(ctk.CTkFrame):
         df = pd.read_csv('world-cities.csv')
         self.places = df[df['country'] == country][['name', 'lat', 'lng']]
         
+        if len(self.places) == 0:
+            # create a lablel saying no places found
+            ctk.CTkLabel(fr, text='No Cities Data Available for this Country', font=('Arial', 14, 'bold')).grid(row=1, column=1, padx=10, pady=10)
+
         if len(self.places) > 4:
             top_three = self.places.iloc[:3]
             
@@ -163,7 +167,10 @@ class Card(ctk.CTkFrame):
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
         try:
-            self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
+           a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
+           if not a:
+                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
+
         except Exception as e:
             if '403' in str(e):
                 tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
