@@ -161,9 +161,13 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
-        if a == False:
-            tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
+        try:
+            self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
+        except Exception as e:
+            if '403' in str(e):
+                tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
+            else:
+                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
@@ -364,7 +368,6 @@ def show_recommendation(fr, countries, row):
             card.grid(row=0, column=i, padx=(40, 40) , pady=15)
         else:
             card.grid(row=0, column=i, padx=(40, 0) , pady=15)
-
 
 
 def chat_page(fr):
