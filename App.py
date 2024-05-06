@@ -103,8 +103,8 @@ class Card(ctk.CTkFrame):
             best_result = None
 
             for result in response['results']:
-                if result['confidence'] > highest_confidence:
-                    highest_confidence = result['confidence']
+                if result['rank']['confidence'] > highest_confidence:
+                    highest_confidence = result['rank']['confidence']
                     best_result = result
 
             if best_result is not None:
@@ -155,7 +155,6 @@ class Card(ctk.CTkFrame):
             for pl in place['features']:
                 map.set_marker(pl['geometry']['coordinates'][1], pl['geometry']['coordinates'][0], pl['properties']['name'])
             map.update()
-
 
         def patani_wrapper(name):
             th = threading.Thread(target=patani, args=(name,), daemon=True)
@@ -221,7 +220,7 @@ class Card(ctk.CTkFrame):
 
         self.search_entry = ctk.CTkEntry(search_frame, width=400, height=30, corner_radius=19)
         self.search_entry.grid(row=0, column=1)
-        self.search_button.bind('<return>', lambda e: self.search())
+        self.search_entry.bind('<Return>', lambda e: self.search())
 
         search_button = ctk.CTkButton(search_frame, text='', width=20, height=30, fg_color='#1A1A1A',
                                     corner_radius=19, command=self.search, hover_color='#373737',
