@@ -11,6 +11,16 @@ from tkGIF import gifplay
 
 r = 0
 
+def geo_code(place):
+    url = f"https://api.geoapify.com/v1/geocode/search?text={place}&limit=1&type=country&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
+    response = requests.get(url)
+    
+    latitude = response['results'][0]['lat']
+    longitude = response['results'][0]['lon']
+
+    return latitude, longitude
+
+
 def get_places(geo_id, lat, lon, place=True):
     ID_url = f"https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"
     
@@ -104,7 +114,13 @@ class Card(ctk.CTkFrame):
         def patani(str):
             print(str)
             map.delete_all_marker()
+
+            # using different api to get the geo code as i am blocked by the previous api :( 
+            lat, lng = geo_code(country)
+            map.set_position(lat, lng)
+
             # map.set_address(country, marker=True)
+            
             x, y = self.places[self.places['name'] == str][['lat', 'lng']].values[0]
             map.set_marker(x, y, str)
 
@@ -197,16 +213,21 @@ class Card(ctk.CTkFrame):
         self.map_widget.grid(row=0, column=1, padx=1, pady=1)
         self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
         
-        try:
-           a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
-           if not a:
-                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
 
-        except Exception as e:
-            if '403' in str(e):
-                tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
-            else:
-                tk.messagebox.showerror('Error', str('Check Internet Connection\nTime Out, Address Not Found!!'))
+        lat, lng = geo_code(country)
+        map.set_position(lat, lng)
+
+        # try:
+        #    a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
+        #    if not a:
+        #         tk.messagebox.showerror('Error', str('Check Internet Connection\n Connection Time Out!!'))
+
+        # except Exception as e:
+        #     if '403' in str(e):
+        #         tk.messagebox.showerror('Error-403', str('request blocked by the server\nTry again later!!'))
+        #     else:
+        #         tk.messagebox.showerror('Error', str('Check Internet Connection\n Connection Time Out!!'))
+
 
         sat_but = ctk.CTkButton(self.map_widget, text='', width=26, height=26, command=self.satelite_tile,
                                 image=ctk.CTkImage(dark_image=Image.open('Images/satellite.png'), size=(20,20)),
@@ -343,12 +364,6 @@ def askAI_1(prompt):
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
         return True, text
 
-def geo_code(place):
-    url = f"https://api.geoapify.com/v1/geocode/search?text={place}&limit=1&type=country&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
-    response = requests.get(url)
-
-    return response.json()[]
-
 
 def askAI_2(prompt):
     api_key = None
@@ -460,6 +475,8 @@ def chat_page(fr):
 
     chat_box = ctk.CTkEntry(chat_bar, width=900, height=30, corner_radius=19, placeholder_text='Type your message here...')
     chat_box.grid(row=0, column=1, padx=(20, 10), pady=15)
+
+    chat_box.bind('<Return>', lambda e: send_message(chat, chat_box.get(), chat_box))
 
     send_btn = ctk.CTkButton(chat_bar, text='', corner_radius=19, image=ctk.CTkImage(dark_image=Image.open('Images/send.png'), size=(27,27)),
                             fg_color='#212121', hover_color='#373737', height=30, width=1, command=lambda: send_message(chat, chat_box.get(), chat_box))
