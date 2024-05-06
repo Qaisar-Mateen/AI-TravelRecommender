@@ -14,7 +14,8 @@ r = 0
 def geo_code(place):
     url = f"https://api.geoapify.com/v1/geocode/search?text={place}&limit=1&type=country&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
     response = requests.get(url)
-    
+
+    response = response.json()
     latitude = response['results'][0]['lat']
     longitude = response['results'][0]['lon']
 
@@ -92,8 +93,20 @@ class Card(ctk.CTkFrame):
             return
         
         try:
-            self.map_widget.set_address(self.search_entry.get(), marker=True)
-            #self.map_widget.set_zoom(10)
+            
+            url = f"https://api.geoapify.com/v1/geocode/search?text={self.search_entry.get()}&limit=1&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
+            response = requests.get(url)
+    
+            response = response.json()
+
+            text = response['results'][0]['formatted']
+            latitude = response['results'][0]['lat']
+            longitude = response['results'][0]['lon']
+
+            self.map_widget.set_position(latitude, longitude, marker=True, text=text)
+
+            # self.map_widget.set_address(self.search_entry.get(), marker=True)
+            # self.map_widget.set_zoom(10)
             self.map_widget.update()
 
         except Exception as e:
@@ -421,7 +434,7 @@ def show_recommendation(fr, countries, row):
     roll.grid(row=row, column=0, padx=20, pady=20, columnspan=3)
 
     if len(countries) == 0:
-        ctk.CTkLabel(fr, text='No countries found!!', font=('Arial', 14, 'bold')).grid(row=row, column=0, padx=10, pady=10)
+        ctk.CTkLabel(fr, text='No countries found :(', font=('Arial', 14, 'bold')).grid(row=row, column=0, padx=10, pady=10)
         return
 
     for i in range(len(countries)):
@@ -445,7 +458,7 @@ def chat_page(fr):
         r -=- 1
         user_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='#373737')
         user_fr.grid(row=r, column=2, padx=10, pady=10, sticky='e')
-        ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550).grid(row=0, column=0, padx=8, pady=8, sticky='e')
+        ctk.CTkLabel(user_fr, text=msg, corner_radius=19, wraplength=550, font=('Arial', 13, 'bold')).grid(row=0, column=0, padx=8, pady=8, sticky='e')
         fr._parent_canvas.yview_moveto(1.0)
         fr.update()
 
@@ -456,7 +469,7 @@ def chat_page(fr):
             ai_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
             ai_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
             ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw')
-            ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550).grid(row=0, column=1, padx=8, pady=8, sticky='w')
+            ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550, font=('Arial', 14, 'bold')).grid(row=0, column=1, padx=8, pady=8, sticky='w')
 
         else:
             show_recommendation(fr, respose, r)
