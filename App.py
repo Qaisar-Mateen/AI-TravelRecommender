@@ -343,6 +343,12 @@ def askAI_1(prompt):
         text = text.replace('YOU CAN BUY ME COFFE! https://buymeacoffee.com/mygx', '')
         return True, text
 
+def geo_code(place):
+    url = f"https://api.geoapify.com/v1/geocode/search?text={place}&limit=1&type=country&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
+    response = requests.get(url)
+
+    return response.json()[]
+
 
 def askAI_2(prompt):
     api_key = None
@@ -497,6 +503,8 @@ if __name__ == '__main__':
 
     ent = ctk.CTkEntry(fr, placeholder_text='Enter User ID', height=30, corner_radius=19)
     ent.grid(row=1, column=1, pady=10, padx=30)
+    ent.bind('<Return>', lambda e: login_action(ent.get(), master))
+
     btn = ctk.CTkButton(fr, text='Login', corner_radius=19, height=30, width=90, command=lambda: login_action(ent.get(), master))
     btn.grid(row=2, column=1, pady=(20,40), padx=10)
     
