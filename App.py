@@ -94,16 +94,25 @@ class Card(ctk.CTkFrame):
         
         try:
             
-            url = f"https://api.geoapify.com/v1/geocode/search?text={self.search_entry.get()}&limit=1&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
+            url = f"https://api.geoapify.com/v1/geocode/search?text={self.search_entry.get()}&limit=20&format=json&apiKey=d76f029b27e04a9cb47a5356a7bf2a87"      
             response = requests.get(url)
     
             response = response.json()
 
-            text = response['results'][0]['formatted']
-            latitude = response['results'][0]['lat']
-            longitude = response['results'][0]['lon']
+            highest_confidence = 0
+            best_result = None
 
-            self.map_widget.set_position(latitude, longitude, marker=True, text=text)
+            for result in response['results']:
+                if result['confidence'] > highest_confidence:
+                    highest_confidence = result['confidence']
+                    best_result = result
+
+            if best_result is not None:
+                text = best_result['formatted']
+                latitude = best_result['lat']
+                longitude = best_result['lon']
+
+                self.map_widget.set_position(latitude, longitude, marker=True, text=text)
 
             # self.map_widget.set_address(self.search_entry.get(), marker=True)
             # self.map_widget.set_zoom(10)
@@ -130,7 +139,7 @@ class Card(ctk.CTkFrame):
 
             # using different api to get the geo code as i am blocked by the previous api :( 
             lat, lng = geo_code(country)
-            map.set_position(lat, lng)
+            map.set_position(lat, lng, marker=True, text=country)
 
             # map.set_address(country, marker=True)
             
@@ -212,6 +221,7 @@ class Card(ctk.CTkFrame):
 
         self.search_entry = ctk.CTkEntry(search_frame, width=400, height=30, corner_radius=19)
         self.search_entry.grid(row=0, column=1)
+        self.search_button.bind('<return>', lambda e: self.search())
 
         search_button = ctk.CTkButton(search_frame, text='', width=20, height=30, fg_color='#1A1A1A',
                                     corner_radius=19, command=self.search, hover_color='#373737',
@@ -228,7 +238,7 @@ class Card(ctk.CTkFrame):
         
 
         lat, lng = geo_code(country)
-        self.map_widget.set_position(lat, lng)
+        self.map_widget.set_position(lat, lng, marker=True, text=country)
 
         # try:
         #    a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
@@ -469,7 +479,7 @@ def chat_page(fr):
             ai_fr = ctk.CTkFrame(fr, corner_radius=19, fg_color='transparent')
             ai_fr.grid(row=r, column=0, padx=10, pady=10, sticky='w')
             ctk.CTkLabel(ai_fr, text='AI:', text_color='#2563A9', corner_radius=19).grid(row=0, column=0, padx=0, sticky='nw')
-            ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550, font=('Arial', 14, 'bold')).grid(row=0, column=1, padx=8, pady=8, sticky='w')
+            ctk.CTkLabel(ai_fr, text=respose, corner_radius=19, wraplength=550, font=('Arial', 13, 'bold')).grid(row=0, column=1, padx=8, pady=8, sticky='w')
 
         else:
             show_recommendation(fr, respose, r)
