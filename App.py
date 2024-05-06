@@ -228,7 +228,7 @@ class Card(ctk.CTkFrame):
         
 
         lat, lng = geo_code(country)
-        map.set_position(lat, lng)
+        self.map_widget.set_position(lat, lng)
 
         # try:
         #    a = self.map_widget.set_address(special_cases.get(country)if special_cases.get(country)else country,marker=True,text=country)
