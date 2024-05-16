@@ -1,8 +1,108 @@
 # AI-Travel Companion (Travel Recommender) Project Report
 
+# AI-Travel Companion (Travel Recommender) Project Report
+
 Authors: Abdullah Dar, Qaisar Mateen, Usman Faisal
 
 Date: May 2024
+
+---
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Project Description](#project-description)
+- [Workflow](#workflow)
+  - [Countries Recommender](#countries-recommender)
+  - [AI Travel Agent Chatbot](#ai-travel-agent-chatbot)
+- [Module Breakdown](#module-breakdown)
+  - [Countries Recommender](#countries-recommender-1)
+  - [AI Travel Agent Chatbot](#ai-travel-agent-chatbot-1)
+- [Methodologies and Approaches](#methodologies-and-approaches)
+  - [Recommendation Generation](#recommendation-generation)
+  - [Natural Language Processing (NLP) Model](#natural-language-processing-nlp-model)
+- [Datasets](#datasets)
+- [Results](#results)
+- [Comparison with Existing Methods](#comparison-with-existing-methods)
+- [Challenges and Solutions](#challenges-and-solutions)
+- [References](#references)
+
+---
+
+## Introduction
+
+The travel industry is evolving rapidly with the integration of artificial intelligence (AI) technologies...
+
+---
+
+## Project Description
+
+The AI-Travel Companion is designed to assist travelers in planning their trips efficiently...
+
+---
+
+## Workflow
+
+### Countries Recommender
+
+The Countries Recommender module comprises the following sub-modules...
+
+---
+
+### AI Travel Agent Chatbot
+
+The second module, AI Travel Agent Chatbot, utilizes the Llama3 model with a persona...
+
+---
+
+## Module Breakdown
+
+### Countries Recommender
+
+The Countries Recommender module includes the following sub-recommenders...
+
+---
+
+### AI Travel Agent Chatbot
+
+The AI Travel Agent Chatbot module can be divided into two submodules...
+
+---
+
+## Methodologies and Approaches
+
+The AI-Travel Companion employs a variety of machine learning techniques and natural language processing (NLP) model to enhance recommendation accuracy and user experience...
+
+---
+
+## Datasets
+
+The AI-Travel Companion uses various datasets including World Countries Dataset, World Cities Dataset, Ratings Dataset, and World Popularity Dataset...
+
+---
+
+## Results
+
+The AI-Travel Companion's Collaborative Filter Recommender has been evaluated using Mean Square Error (MSE) and Root Mean Square Error (RMSE) metrics...
+
+---
+
+## Comparison with Existing Methods
+
+The AI-Travel Companion's hybrid recommendation approach, integration of popularity and visitor analysis, and interactive chatbot module set it apart from traditional travel recommendation systems...
+
+---
+
+## Challenges and Solutions
+
+During the development of the AI-Travel Companion, several challenges were encountered and resolved, including model performance, algorithm selection, dataset acquisition, and API integration...
+
+---
+
+## References
+
+For external libraries and datasets used in the project, refer to the following links...
+
 
 ## Introduction
 
