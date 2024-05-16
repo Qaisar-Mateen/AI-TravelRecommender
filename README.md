@@ -41,7 +41,7 @@ The Countries Recommender module comprises the following sub-modules:
 - Collaborative Filter Recommender: Uses an Artificial Neural Network (ANN) model to predict ratings for countries.
 - Content-based Recommender: Calculates similarity scores for countries based on user preferences.
 
-![Recommender Engine](Recommender%20Engine.png)
+![Recommender Engine](Images/Recommender%20Engine.png)
 
 Each sub-recommender loads the necessary dataset and performs preprocessing specific to its algorithm. The recommendations from these sub-recommenders are then combined using a Weighted Hybrid Recommender, which employs a weighted sum method to generate final recommendations. These recommendations are displayed through a Graphical User Interface (GUI), allowing users to view details about countries, explore cities from the city dataset, and access popular spots and accommodations fetched from APIs.
 
@@ -96,7 +96,7 @@ The AI-Travel Companion uses various datasets including World Countries Dataset,
 
 The AI-Travel Companion's Collaborative Filter Recommender has been evaluated using Mean Square Error (MSE) and Root Mean Square Error (RMSE) metrics, with the best model achieving a loss of 0.58 and RMSE of 0.74. The system's performance ensures accurate and reliable travel recommendations.
 
-![Result Graph](Recommender%20Engine.png)
+![Result Graph](Images/results.png)
 
 ## Comparison with Existing Methods
 
