@@ -27,6 +27,10 @@
 
 The travel industry is evolving rapidly with the integration of artificial intelligence (AI) technologies. The AI-Travel Companion project aims to revolutionize the travel experience by providing personalized recommendations to travelers based on their preferences, interests, and historical data and it also gives its user access to an AI travel Agent with its custom commands. This report presents an overview of the AI-Travel Companion system, its functionalities, methodologies, and results.
 
+## Demo
+
+The working demo of the project is shown below.
+
 ## Project Description
 
 The AI-Travel Companion is designed to assist travelers in planning their trips efficiently. It incorporates machine learning algorithms to analyze user preferences to generate customized travel recommendations. The system offers suggestions for countries they should visit and a map to view and see some of the destinations in that country with real-time data requested through API.
