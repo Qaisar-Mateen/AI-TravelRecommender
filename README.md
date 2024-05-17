@@ -5,6 +5,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Demo](#demo)
 - [Project Description](#project-description)
 - [Workflow](#workflow)
   - [Countries Recommender](#countries-recommender)
