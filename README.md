@@ -6,6 +6,8 @@
 
 - [Introduction](#introduction)
 - [Demo](#demo)
+    - [Recommender Demo](#recommender-demo)
+    - [Chat Demo](#chat-demo)
 - [Project Description](#project-description)
 - [Workflow](#workflow)
   - [Countries Recommender](#countries-recommender)
@@ -30,6 +32,11 @@ The travel industry is evolving rapidly with the integration of artificial intel
 ## Demo
 
 The working demo of the project is shown below.
+
+### Recommender Demo
+
+The demo for the recommender module is shown below.
+![RecommenderDemo](Images/recommendDemo.gif)
 
 ## Project Description
 
