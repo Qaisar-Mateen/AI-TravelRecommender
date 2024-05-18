@@ -4,3 +4,4 @@ pandas
 tez
 customtkinter
 tkintermapview
+tkGIF
