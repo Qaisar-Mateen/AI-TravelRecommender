@@ -39,6 +39,12 @@ The demo for the recommender module is shown below.
 
 ![RecommenderDemo](Images/recommendDemo.mp4)
 
+### Chat Demo
+
+The demo for the Chat module of the recommender is shown below.
+
+![ChatDemo](Images/chatDemo.mp4)
+
 ## Project Description
 
 The AI-Travel Companion is designed to assist travelers in planning their trips efficiently. It incorporates machine learning algorithms to analyze user preferences to generate customized travel recommendations. The system offers suggestions for countries they should visit and a map to view and see some of the destinations in that country with real-time data requested through API.
