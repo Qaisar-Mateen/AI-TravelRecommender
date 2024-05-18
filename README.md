@@ -37,13 +37,13 @@ The working demo of the project is shown below.
 
 The demo for the recommender module is shown below.
 
-![RecommenderDemo](Images/recommendDemo.mp4)
+![RecommenderDemo](Images/recommendDemo.gif)
 
 ### Chat Demo
 
 The demo for the Chat module of the recommender is shown below.
 
-![ChatDemo](Images/chatDemo.mp4)
+![ChatDemo](Images/chatDemo.gif)
 
 ## Project Description
 
