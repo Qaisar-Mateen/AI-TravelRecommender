@@ -37,13 +37,13 @@ The working demo of the project is shown below.
 
 The demo for the recommender module is shown below.
 
-![RecommenderDemo](Images/recommendDemo.gif)
+![RecommenderDemo](https://github.com/Qaisar-Mateen/AI-TravelRecommender/blob/main/Images/recommendDemo.gif)
 
 ### Chat Demo
 
 The demo for the Chat module of the recommender is shown below.
 
-![ChatDemo](Images/chatDemo.gif)
+![ChatDemo](https://github.com/Qaisar-Mateen/AI-TravelRecommender/blob/main/Images/chatDemo.gif)
 
 ## Project Description
 
