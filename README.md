@@ -36,7 +36,8 @@ The working demo of the project is shown below.
 ### Recommender Demo
 
 The demo for the recommender module is shown below.
-![RecommenderDemo](Images/recommendDemo.gif)
+
+![RecommenderDemo](Images/recommendDemo.mp4)
 
 ## Project Description
 
